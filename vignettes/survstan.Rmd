@@ -1,0 +1,53 @@
+---
+title: "Introduction to the R package survstan"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the R package survstan}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(survstan)
+library(dplyr)
+
+ovarian <- ovarian %>%
+  mutate(
+    rx = as.factor(rx)
+  )
+
+# fitting the model:
+fit <- aftreg(Surv(futime, fustat) ~ rx + age, baseline = "weibull", data = ovarian, init = 0)
+
+# investigating the fitted model:
+estimates(fit)
+coef(fit)
+confint(fit)
+summary(fit)
+tidy(fit)
+vcov(fit)
+
+
+# residual plots:
+ggresiduals(fit, type = "coxsnell")
+ggresiduals(fit, type = "coxsnell")
+ggresiduals(fit, type = "coxsnell")
+
+
+# Deviance analysis:
+fit1 <- aftreg(Surv(futime, fustat) ~ 1, baseline = "weibull", data = ovarian, init = 0)
+fit2 <- aftreg(Surv(futime, fustat) ~ rx, baseline = "weibull", data = ovarian, init = 0)
+fit3 <- aftreg(Surv(futime, fustat) ~ rx + ecog.ps, baseline = "weibull", data = ovarian, init = 0)
+
+anova(fit1, fit2, fit3)
+
+AIC(fit1, fit2, fit3)
+
+```

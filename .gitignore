@@ -6,3 +6,6 @@
 inst/stuff
 docs
 cran-comments.md
+inst/doc
+/doc/
+/Meta/
