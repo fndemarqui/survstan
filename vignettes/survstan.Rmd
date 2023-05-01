@@ -37,8 +37,8 @@ vcov(fit)
 
 # residual plots:
 ggresiduals(fit, type = "coxsnell")
-ggresiduals(fit, type = "coxsnell")
-ggresiduals(fit, type = "coxsnell")
+ggresiduals(fit, type = "martingale")
+ggresiduals(fit, type = "deviance")
 
 
 # Deviance analysis:
