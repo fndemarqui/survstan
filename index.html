@@ -84,6 +84,121 @@
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"fndemarqui/survstan"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="inference-procedures">Inference procedures<a class="anchor" aria-label="anchor" href="#inference-procedures"></a>
+</h2>
+<p>Let <span class="math inline">(<em>t</em><sub><em>i</em></sub>,<em>δ</em><sub><em>i</em></sub>)</span> be the observed survival time and its corresponding failure indicator, <span class="math inline"><em>i</em> = 1, ⋯, <em>n</em></span>, and <span class="math inline"><strong>θ</strong></span> be a <span class="math inline"><em>k</em> × 1</span> vector of parameters. Then, the likelihood function for right-censored survival data under independent censoring can be expressed as:</p>
+<p>The maximum likelihood estimate (MLE) of <span class="math inline"><strong>θ</strong></span> is obtained by directly maximization of <span class="math inline">log (<em>L</em>(<strong>θ</strong>))</span> using the <code><a href="https://mc-stan.org/rstan/reference/stanmodel-method-optimizing.html" class="external-link">rstan::optimizing()</a></code> function. The function <code><a href="https://mc-stan.org/rstan/reference/stanmodel-method-optimizing.html" class="external-link">rstan::optimizing()</a></code> further provides the hessian matrix of <span class="math inline">log (<em>L</em>(<strong>θ</strong>))</span>, needed to obtain the observed Fisher information matrix, which is given by:</p>
+<p>Inferences on <span class="math inline"><strong>θ</strong></span> are then based on the asymptotic properties of the MLE, <span class="math inline">$\hat{\boldsymbol{\theta}}$</span>, that state that:</p>
+</div>
+<div class="section level2">
+<h2 id="baseline-distributions">Baseline Distributions<a class="anchor" aria-label="anchor" href="#baseline-distributions"></a>
+</h2>
+<p>Some of the most popular baseline survival distributions are implemented in the R package survstan. Such distributions include:</p>
+<ul>
+<li>Exponential</li>
+<li>Weibull</li>
+<li>Lognormal</li>
+<li>Loglogistic</li>
+</ul>
+<p>The parametrizations adopted in the package survstan are presented next.</p>
+<div class="section level3">
+<h3 id="exponential-distribution">Exponential Distribution<a class="anchor" aria-label="anchor" href="#exponential-distribution"></a>
+</h3>
+<p>If <span class="math inline"><em>T</em> ∼ Exp(<em>λ</em>)</span>, then</p>
+<p><span class="math display"><em>f</em>(<em>t</em>|<em>λ</em>) = <em>λ</em>exp {−<em>λ</em><em>t</em>}<em>I</em><sub>[0, ∞)</sub>(<em>t</em>),</span> where <span class="math inline"><em>λ</em> &gt; 0</span> is the rate parameter.</p>
+<p>The survival and hazard functions in this case are given by:</p>
+<p><span class="math display"><em>S</em>(<em>t</em>|<em>λ</em>) = exp {−<em>λ</em><em>t</em>}</span> and <span class="math display"><em>h</em>(<em>t</em>|<em>λ</em>) = <em>λ</em>.</span></p>
+</div>
+<div class="section level3">
+<h3 id="weibull-distribution">Weibull Distribution<a class="anchor" aria-label="anchor" href="#weibull-distribution"></a>
+</h3>
+<p>If <span class="math inline"><em>T</em> ∼ Weibull(<em>α</em>,<em>γ</em>)</span>, then</p>
+<p><span class="math display">$$
+f(t|\alpha, \gamma) = \frac{\alpha}{\gamma^{\alpha}}t^{\alpha-1}\exp\left\{-\left(\frac{t}{\gamma}\right)^{\alpha}\right\}I_{[0, \infty)}(t),
+$$</span> where <span class="math inline"><em>α</em> &gt; 0</span> and <span class="math inline"><em>γ</em> &gt; 0</span> are the shape and scale parameters, respectively.</p>
+<p>The survival and hazard functions in this case are given by:</p>
+<p><span class="math display">$$
+        S(t|\alpha, \gamma) = \exp\left\{-\left(\frac{t}{\gamma}\right)^{\alpha}\right\}
+$$</span> and <span class="math display">$$
+        h(t|\alpha, \gamma) = \frac{\alpha}{\gamma^{\alpha}}t^{\alpha-1}.
+$$</span></p>
+</div>
+<div class="section level3">
+<h3 id="lognormal-distribution">Lognormal Distribution<a class="anchor" aria-label="anchor" href="#lognormal-distribution"></a>
+</h3>
+<p>If <span class="math inline"><em>T</em> ∼ LN(<em>μ</em>,<em>σ</em>)</span>, then</p>
+<p><span class="math display">$$
+f(t|\mu, \sigma) = \frac{1}{\sqrt{2\pi}t\sigma}\exp\left\{-\frac{1}{2}\left(\frac{log(t)-\mu}{\sigma}\right)^2\right\}I_{[0, \infty)}(t),
+$$</span> where <span class="math inline"> − ∞ &lt; <em>μ</em> &lt; ∞</span> and <span class="math inline"><em>σ</em> &gt; 0</span> are the mean and standard deviation in the log scale of <span class="math inline"><em>T</em></span>.</p>
+<p>The survival and hazard functions in this case are given by:</p>
+<p><span class="math display">$$S(t|\mu, \sigma) = \Phi\left(\frac{-log(t)+\mu}{\sigma}\right)$$</span> and <span class="math display">$$h(t|\mu, \sigma) = \frac{f(t|\mu, \sigma)}{S(t|\mu, \sigma)},$$</span> where <span class="math inline"><em>Φ</em>(⋅)</span> is the cumulative distribution function of the standard normal distribution.</p>
+</div>
+<div class="section level3">
+<h3 id="loglogistic-distribution">Loglogistic Distribution<a class="anchor" aria-label="anchor" href="#loglogistic-distribution"></a>
+</h3>
+<p>If <span class="math inline"><em>T</em> ∼ LL(<em>α</em>,<em>γ</em>)</span>, then</p>
+<p><span class="math display">$$
+    f(t|\alpha, \gamma) = \frac{\frac{\alpha}{\gamma}\left(\frac{t}{\gamma}\right)^{\alpha-1}}{\left[1 + \left(\frac{t}{\gamma}\right)^{\alpha}\right]^2}I_{[0, \infty)}(t), ~ \alpha&gt;0, \gamma&gt;0,
+$$</span></p>
+<p>where <span class="math inline"><em>α</em> &gt; 0</span> and <span class="math inline"><em>γ</em> &gt; 0</span> are the shape and scale parameters, respectively.</p>
+<p>The survival and hazard functions in this case are given by:</p>
+<p><span class="math display">$$S(t|\alpha, \gamma) = \frac{1}{1+ \left(\frac{t}{\gamma}\right)^{\alpha}}$$</span> and <span class="math display">$$
+    h(t|\alpha, \gamma) = \frac{\frac{\alpha}{\gamma}\left(\frac{t}{\gamma}\right)^{\alpha-1}}{1 + \left(\frac{t}{\gamma}\right)^{\alpha}}.
+$$</span></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="regression-models">Regression models<a class="anchor" aria-label="anchor" href="#regression-models"></a>
+</h2>
+<p>When covariates are available, it is possible to fit four different regression models with the R package survstan:</p>
+<ul>
+<li>accelerated failure time (AFT) models;</li>
+<li>proportional hazards (PH) models;</li>
+<li>proportional odds (PO) models;</li>
+<li>accelerated hazard (AH) models.</li>
+</ul>
+<p>Let <span class="math inline"><strong>x</strong></span> be a <span class="math inline">1 × <em>p</em></span> vector of covariates, <span class="math inline"><strong>β</strong></span> a <span class="math inline"><em>p</em> × 1</span> of regression coefficients, and <span class="math inline"><strong>θ</strong></span> a vector of parameters associated with some baseline survival distribution, and denote by <span class="math inline"><strong>Θ</strong> = (<strong>θ</strong>,<strong>β</strong>)<sup><em>T</em></sup></span> the full vector of parameters. Here, to ensure identifiability, in all regression structures the linear predictor <span class="math inline"><strong>x</strong><strong>β</strong></span> does not include a intercept term.</p>
+<p>The regression survival models implemented in the R package survstan are briefly described in the sequel.</p>
+<div class="section level3">
+<h3 id="accelerate-failure-time-models">Accelerate Failure Time Models<a class="anchor" aria-label="anchor" href="#accelerate-failure-time-models"></a>
+</h3>
+<p>Accelerated failure time (AFT) models are defined as</p>
+<p><span class="math display"><em>T</em> = exp {<strong>x</strong><strong>β</strong>}<em>ν</em>,</span> where <span class="math inline"><em>ν</em></span> follows a baseline distribution with survival function <span class="math inline"><em>S</em><sub>0</sub>(⋅|<strong>θ</strong>)</span> so that</p>
+<p><span class="math display"><em>f</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = <em>e</em><sup>−<strong>x</strong><strong>β</strong></sup><em>f</em><sub>0</sub>(<em>t</em><em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)</span> and</p>
+<p><span class="math display"><em>S</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = <em>S</em><sub>0</sub>(<em>t</em><em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>).</span></p>
+</div>
+<div class="section level3">
+<h3 id="proportional-hazards-models">Proportional Hazards Models<a class="anchor" aria-label="anchor" href="#proportional-hazards-models"></a>
+</h3>
+<p>Proportional hazards (PH) models are defined as</p>
+<p><span class="math display"><em>h</em>(<em>t</em>|<em>Θ</em>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>},</span> where <span class="math inline"><em>h</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)</span> is a baseline hazard function so that</p>
+<p><span class="math display"><em>f</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>−<em>H</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)<em>e</em><sup><strong>x</strong><strong>β</strong></sup>},</span> and</p>
+<p><span class="math display"><em>S</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = exp {−<em>H</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)<em>e</em><sup><strong>x</strong><strong>β</strong></sup>}.</span></p>
+</div>
+<div class="section level3">
+<h3 id="proportional-odds-models">Proportional Odds Models<a class="anchor" aria-label="anchor" href="#proportional-odds-models"></a>
+</h3>
+<p>Proportional Odds (PO) models are defined as</p>
+<p><span class="math display"><em>R</em>(<em>t</em>|<em>Θ</em>,<strong>x</strong>) = <em>R</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>},</span> where <span class="math inline">$\displaystyle R_{0}(t|\boldsymbol{\theta}) = \frac{1-S_{0}(t|\boldsymbol{\theta})}{S_{0}(t|\boldsymbol{\theta})} = \exp\{H_{0}(t|\boldsymbol{\theta})\}-1$</span> is a baseline odds function so that</p>
+<p><span class="math display">$$
+f(t|\boldsymbol{\Theta}, \mathbf{x}) = \frac{h_{0}(t|\boldsymbol{\theta})\exp\{\mathbf{x} \boldsymbol{\beta} + H_{0}(t|\boldsymbol{\theta})\}}{[1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}]^2}.
+$$</span></p>
+<p>and</p>
+<p><span class="math display">$$
+S(t|\boldsymbol{\Theta}, \mathbf{x}) = \frac{1}{1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}}.
+$$</span></p>
+</div>
+<div class="section level3">
+<h3 id="accelerated-hazard-models">Accelerated Hazard Models<a class="anchor" aria-label="anchor" href="#accelerated-hazard-models"></a>
+</h3>
+<p>Accelerated hazard (AH) models are defined as</p>
+<p><span class="math display"><em>h</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em><em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)</span></p>
+<p>so that</p>
+<p><span class="math display"><em>S</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = exp {−<em>H</em><sub>0</sub>(<em>t</em><em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)<em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>}</span></p>
+<p><span class="math display"><em>f</em>(<em>t</em>|<strong>θ</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em><em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)exp {−<em>H</em><sub>0</sub>(<em>t</em><em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)<em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>}.</span></p>
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
