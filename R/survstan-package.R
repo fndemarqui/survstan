@@ -8,6 +8,7 @@
 #' @useDynLib survstan, .registration = TRUE
 #' @import methods
 #' @import Rcpp
+#' @import survival
 #' @importFrom rstan sampling
 #'
 #' @references
