@@ -39,3 +39,6 @@ SystemRequirements: GNU make
 URL: https://github.com/fndemarqui/survstan,
     https://fndemarqui.github.io/survstan/
 BugReports: https://github.com/fndemarqui/survstan/issues
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
