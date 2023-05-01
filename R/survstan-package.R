@@ -11,10 +11,21 @@
 #' @import survival
 #' @importFrom dplyr %>% bind_cols select
 #' @importFrom ggplot2 aes ggplot geom_abline geom_point geom_jitter geom_smooth position_jitter labs xlab xlim ylim
+#' @importFrom Rdpack reprompt
 #' @importFrom rlang .data
 #' @importFrom rstan sampling
 #'
 #' @references
-#' Stan Development Team (2022). RStan: the R interface to Stan. R package version 2.21.5. https://mc-stan.org
+#'
+#' \insertRef{rstan}{survstan}
+#'
+#' \insertRef{bookLawless}{survstan}
+#'
+#' \insertRef{1983Bennett}{survstan}
+#'
+#' \insertRef{2000Chen}{survstan}
+#'
+NULL
+
 #'
 NULL
