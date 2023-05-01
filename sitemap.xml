@@ -25,6 +25,15 @@
     <loc>https://fndemarqui.github.io/survstan/reference/ahreg.html</loc>
   </url>
   <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/coef.survstan.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/confint.survstan.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/estimates.html</loc>
+  </url>
+  <url>
     <loc>https://fndemarqui.github.io/survstan/reference/index.html</loc>
   </url>
   <url>
@@ -41,5 +50,8 @@
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/survstan-package.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/vcov.survstan.html</loc>
   </url>
 </urlset>
