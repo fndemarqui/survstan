@@ -31,5 +31,6 @@ LinkingTo:
     rstan (>= 2.18.1),
     StanHeaders (>= 2.18.0)
 SystemRequirements: GNU make
-URL: https://github.com/fndemarqui/survstan
+URL: https://github.com/fndemarqui/survstan,
+    https://fndemarqui.github.io/survstan/
 BugReports: https://github.com/fndemarqui/survstan/issues
