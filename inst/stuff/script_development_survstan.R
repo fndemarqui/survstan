@@ -16,12 +16,13 @@ usethis::use_build_ignore("inst/stuff")
 # usethis::use_cran_comments()
 
 # One time set-up with Git, Github, and Github Actions
-gitcreds::gitcreds_set()
-usethis::use_github_action("pkgdown")
-usethis::use_pkgdown_github_pages()
-usethis::use_github_action("check-standard")
-usethis::use_git(message = "Initial commit")
-usethis::use_github(private = FALSE)
+# gitcreds::gitcreds_set()
+# usethis::use_git(message = "Initial commit")
+# usethis::use_github(private = FALSE)
+# usethis::use_github_action("pkgdown")
+# usethis::use_pkgdown_github_pages()
+# usethis::use_github_action("check-standard")
+
 
 
 usethis::use_git_ignore("cran-comments.md")
