@@ -15,3 +15,13 @@ the ANOVA table.
 \description{
 Compute analysis of variance (or deviance) tables for one or more fitted model objects.
 }
+\examples{
+\donttest{
+library(survstan)
+fit1 <- aftreg(Surv(futime, fustat) ~ 1, data = ovarian, baseline = "weibull", init = 0)
+fit2 <- aftreg(Surv(futime, fustat) ~ rx, data = ovarian, baseline = "weibull", init = 0)
+fit3 <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+anova(fit1, fit2, fit3)
+}
+
+}

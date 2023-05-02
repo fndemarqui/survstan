@@ -26,3 +26,12 @@ poreg returns an object of class "poreg" containing the fitted model.
 \description{
 Function to fit proportional odds (PO) models.
 }
+\examples{
+\donttest{
+library(survstan)
+fit <- poreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+summary(fit)
+}
+
+
+}

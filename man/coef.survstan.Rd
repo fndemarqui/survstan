@@ -17,3 +17,11 @@ the estimated regression coefficients
 \description{
 Estimated regression coefficients
 }
+\examples{
+\donttest{
+library(survstan)
+fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+coef(fit)
+}
+
+}

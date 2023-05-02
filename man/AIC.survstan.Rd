@@ -19,3 +19,13 @@ the Akaike information criterion.
 \description{
 Akaike information criterion
 }
+\examples{
+\donttest{
+library(survstan)
+fit1 <- aftreg(Surv(futime, fustat) ~ 1, data = ovarian, baseline = "weibull", init = 0)
+fit2 <- aftreg(Surv(futime, fustat) ~ rx, data = ovarian, baseline = "weibull", init = 0)
+fit3 <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+AIC(fit1, fit2, fit3)
+}
+
+}

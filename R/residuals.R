@@ -21,6 +21,15 @@ ggresiduals <- function(object, ...) UseMethod("ggresiduals")
 #' @param type type of residuals used in the plot: coxsnell (default), martingale and deviance.
 #' @param ... further arguments passed to or from other methods.
 #' @return the desired residual plot.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' ovarian$rx <- as.factor(ovarian$rx)
+#' fit <- aftreg(Surv(futime, fustat) ~ age + rx, data = ovarian, baseline = "weibull", init = 0)
+#' ggresiduals(fit, type = "coxsnell")
+#' ggresiduals(fit, type = "martingale")
+#' ggresiduals(fit, type = "deviance")
+#' }
 #'
 ggresiduals.survstan <- function(object, type = c("coxsnell", "martingale", "deviance"), ...){
 

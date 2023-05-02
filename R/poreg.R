@@ -8,6 +8,13 @@
 #' @param baseline the chosen baseline distribution; options currently available are: exponential, weibull, lognormal and loglogistic distributions.
 #' @param ... further arguments passed to other methods.
 #' @return poreg returns an object of class "poreg" containing the fitted model.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit <- poreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' summary(fit)
+#' }
+#'
 #'
 poreg <- function(formula, data, baseline = c("exponential", "weibull", "lognormal", "loglogistic"), ...){
   baseline <- tolower(baseline)

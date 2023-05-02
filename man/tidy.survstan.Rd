@@ -22,3 +22,11 @@ Tidy a survstan object
 \details{
 Convert a fitted model into a tibble.
 }
+\examples{
+\donttest{
+library(survstan)
+fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+tidy(fit)
+}
+
+}

@@ -17,3 +17,11 @@ The model matrix (or matrices) for the fit.
 \description{
 Reconstruct the model matrix for a survstan model.
 }
+\examples{
+\donttest{
+library(survstan)
+fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+model.matrix(fit)
+}
+
+}

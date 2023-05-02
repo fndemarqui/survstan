@@ -11,6 +11,14 @@ get_arg_names <- function(...) {
 #' @param ... further arguments passed to or from other methods.
 #' @param k numeric, the penalty per parameter to be used; the default k = 2 is the classical AIC.
 #' @return the Akaike information criterion.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit1 <- aftreg(Surv(futime, fustat) ~ 1, data = ovarian, baseline = "weibull", init = 0)
+#' fit2 <- aftreg(Surv(futime, fustat) ~ rx, data = ovarian, baseline = "weibull", init = 0)
+#' fit3 <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' AIC(fit1, fit2, fit3)
+#' }
 #'
 AIC.survstan <- function(object, ..., k = 2){
   objects <- c(as.list(environment()), list(...))

@@ -20,6 +20,12 @@ tidy <- function(object, conf.level = 0.95, ...) UseMethod("tidy")
 #' @details Convert a fitted model into a tibble.
 #' @param ... further arguments passed to or from other methods.
 #' @return a tibble with a summary of the fit.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' tidy(fit)
+#' }
 #'
 tidy.survstan <- function(object, conf.level = 0.95, ...){
   alpha <- 1 - conf.level

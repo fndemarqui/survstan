@@ -21,3 +21,11 @@
 \description{
 Confidence intervals for the regression coefficients
 }
+\examples{
+\donttest{
+library(survstan)
+fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+confint(fit)
+}
+
+}

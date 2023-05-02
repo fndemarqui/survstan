@@ -26,3 +26,12 @@ phreg returns an object of class "phreg" containing the fitted model.
 \description{
 Function to fit proportional hazards (PH) models.
 }
+\examples{
+\donttest{
+library(survstan)
+fit <- phreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+summary(fit)
+}
+
+
+}

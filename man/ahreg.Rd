@@ -26,3 +26,12 @@ ahreg returns an object of class "ahreg" containing the fitted model.
 \description{
 Function to fit accelerated hazard (AH) models.
 }
+\examples{
+\donttest{
+library(survstan)
+fit <- ahreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+summary(fit)
+}
+
+
+}

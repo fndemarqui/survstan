@@ -10,6 +10,12 @@
 #' @param object an object of the class survstan.
 #' @param ... further arguments passed to or from other methods.
 #' @return  The model matrix (or matrices) for the fit.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' model.matrix(fit)
+#' }
 #'
 model.matrix.survstan <- function(object, ...){
   mf <- stats::model.frame(object)

@@ -19,3 +19,11 @@ the variance-covariance matrix associated with the parameters estimators.
 \description{
 This function extracts and returns the variance-covariance matrix associated with the regression coefficients when the maximum likelihood estimation approach is used in the model fitting.
 }
+\examples{
+\donttest{
+library(survstan)
+fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+vcov(fit)
+}
+
+}

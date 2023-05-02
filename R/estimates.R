@@ -9,6 +9,12 @@
 #' @param all logical; if FALSE (default), only covariance matrix associated with regression coefficients is returned; if TRUE, the full covariance matrix is returned.
 #' @param ... further arguments passed to or from other methods.
 #' @return  the variance-covariance matrix associated with the parameters estimators.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' vcov(fit)
+#' }
 #'
 vcov.survstan <- function(object, all = FALSE, ...){
   p <- object$p
@@ -34,6 +40,12 @@ vcov.survstan <- function(object, all = FALSE, ...){
 #' @param object an object of the class survstan.
 #' @param ... further arguments passed to or from other methods.
 #' @return  the parameters estimates of a given survstan model.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' estimates(fit)
+#' }
 #'
 estimates <- function(object, ...){
   return(object$estimates)
@@ -48,6 +60,12 @@ estimates <- function(object, ...){
 #' @param object an object of the class survstan
 #' @param ... further arguments passed to or from other methods
 #' @return  the estimated regression coefficients
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' coef(fit)
+#' }
 #'
 coef.survstan <- function(object, ...){
   p <- object$p
@@ -70,6 +88,12 @@ coef.survstan <- function(object, ...){
 #' @param parm a specification of which parameters are to be given confidence intervals, either a vector of numbers or a vector of names. If missing, all parameters are considered.
 #' @param ... further arguments passed to or from other methods.
 #' @return  100(1-alpha) confidence intervals for the regression coefficients.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' confint(fit)
+#' }
 #'
 confint.survstan <- function(object, parm = NULL, level=0.95, ...){
   alpha <- 1 - level

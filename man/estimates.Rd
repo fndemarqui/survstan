@@ -17,3 +17,11 @@ the parameters estimates of a given survstan model.
 \description{
 Parameters estimates of a survstan model
 }
+\examples{
+\donttest{
+library(survstan)
+fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+estimates(fit)
+}
+
+}

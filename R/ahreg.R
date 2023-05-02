@@ -8,6 +8,13 @@
 #' @param baseline the chosen baseline distribution; options currently available are: exponential, weibull, lognormal and loglogistic distributions.
 #' @param ... further arguments passed to other methods.
 #' @return ahreg returns an object of class "ahreg" containing the fitted model.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit <- ahreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' summary(fit)
+#' }
+#'
 #'
 ahreg <- function(formula, data, baseline = c("exponential", "weibull", "lognormal", "loglogistic"), ...){
   baseline <- tolower(baseline)

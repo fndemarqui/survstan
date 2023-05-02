@@ -14,6 +14,14 @@ extract_formulas <- function(object){
 #' @export
 #' @param ... further arguments passed to or from other methods.
 #' @return  the ANOVA table.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit1 <- aftreg(Surv(futime, fustat) ~ 1, data = ovarian, baseline = "weibull", init = 0)
+#' fit2 <- aftreg(Surv(futime, fustat) ~ rx, data = ovarian, baseline = "weibull", init = 0)
+#' fit3 <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' anova(fit1, fit2, fit3)
+#' }
 #'
 anova.survstan <- function(...){
   models <- c(as.list(environment()), list(...))
