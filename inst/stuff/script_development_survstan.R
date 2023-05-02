@@ -75,6 +75,9 @@ devtools::check_win_release()
 devtools::check_win_develop()
 
 cran_prep <- rhub::check_for_cran()
-usethis::use_github_action("check-standard")
 
 #devtools::check_rhub(email = "fndemarqui@est.ufmg.br")
+
+
+# devtools::release(check = TRUE)
+devtools::submit_cran()
