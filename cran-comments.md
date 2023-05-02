@@ -18,7 +18,6 @@
   GNU make is a SystemRequirements.
 
 0 errors ✔ | 1 warning ✖ | 3 notes ✖
-
 * Package also checked using GHA workflow.
 
 * This is a new release.
