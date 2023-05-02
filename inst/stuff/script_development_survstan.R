@@ -8,6 +8,9 @@
 
 usethis::use_git_ignore("inst/stuff")
 usethis::use_build_ignore("inst/stuff")
+usethis::use_git_ignore(".Rd2pdf10127")
+usethis::use_build_ignore(".Rd2pdf10127")
+
 
 # One time set-up
 # usethis::use_mit_license()
@@ -75,7 +78,7 @@ devtools::check_win_release()
 devtools::check_win_develop()
 
 cran_prep <- rhub::check_for_cran()
-
+devtools::check_rhub(email = "fndemarqui@est.ufmg.br")
 #devtools::check_rhub(email = "fndemarqui@est.ufmg.br")
 
 
