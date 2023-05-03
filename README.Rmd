@@ -24,6 +24,12 @@ The R package survstan can be used to fit right-censored survival data under ind
 
 ## Installation
 
+You can install the released version of survstan from [CRAN](https://CRAN.R-project.org) with:
+
+```{r, eval=FALSE}
+install.packages("survstan")
+```
+
 You can install the development version of survstan from GitHub with:
 
 ```{r, eval=FALSE}
@@ -220,10 +226,11 @@ so that
 $$S(t|\boldsymbol{\Theta},\mathbf{x}) = \exp\left\{- H_{0}\left(t e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)e^{-\mathbf{x}\boldsymbol{\beta}}
 \right\}
 $$
-
+and
 $$f(t|\boldsymbol{\theta}, \mathbf{x}) = h_{0}\left(te^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)\exp\left\{- H_{0}\left(t e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)e^{-\mathbf{x}\boldsymbol{\beta}}
 \right\}.
 $$
+
 
 
 

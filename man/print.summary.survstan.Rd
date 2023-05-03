@@ -12,8 +12,8 @@
 \item{...}{further arguments passed to or from other methods.}
 }
 \value{
-a summary of the fitted model.
+No return value, called for side effects.
 }
 \description{
-Print the summary.survstan output
+Produces a printed summary of a fitted survstan model.
 }

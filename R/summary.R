@@ -1,9 +1,10 @@
 #' Print the summary.survstan output
 #'
 #' @export
+#' @description Produces a printed summary of a fitted survstan model.
 #' @param x an object of the class summary.survstan.
 #' @param ... further arguments passed to or from other methods.
-#' @return a summary of the fitted model.
+#' @return No return value, called for side effects.
 #'
 print.summary.survstan <- function(x, ...){
   cat("Call:\n")
@@ -31,9 +32,10 @@ print.summary.survstan <- function(x, ...){
 #'
 #' @aliases summary.survstan
 #' @export
-#' @param object an object of the class 'survstan'.
+#' @param object the result of a call to summary.survstan
 #' @param conf.level the confidence level required.
 #' @param ... further arguments passed to or from other methods.
+#' @return an object of the class summary.survstan containing a summary of the fitted model.
 #'
 summary.survstan <- function(object, conf.level = 0.95, ...){
   p <- object$p

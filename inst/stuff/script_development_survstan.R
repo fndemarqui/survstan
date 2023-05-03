@@ -75,7 +75,7 @@ devtools::release_checks()
 devtools::missing_s3()
 devtools::check_win_devel()
 devtools::check_win_release()
-devtools::check_win_develop()
+
 
 cran_prep <- rhub::check_for_cran()
 devtools::check_rhub(email = "fndemarqui@est.ufmg.br")

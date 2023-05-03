@@ -7,11 +7,14 @@
 \method{summary}{survstan}(object, conf.level = 0.95, ...)
 }
 \arguments{
-\item{object}{an object of the class 'survstan'.}
+\item{object}{the result of a call to summary.survstan}
 
 \item{conf.level}{the confidence level required.}
 
 \item{...}{further arguments passed to or from other methods.}
+}
+\value{
+an object of the class summary.survstan containing a summary of the fitted model.
 }
 \description{
 Summary for a survstan object

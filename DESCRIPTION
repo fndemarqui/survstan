@@ -1,5 +1,5 @@
 Package: survstan
-Title: Fitting Survival Regression Models via Stan 
+Title: Fitting Survival Regression Models via 'Stan' 
 Version: 0.0.1
 Authors@R: 
     person(given = "Fabio",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre", "cph"),
            email = "fndemarqui@est.ufmg.br",
            comment = c(ORCID = "0000-0001-9236-1986"))
-Description: The R package survstan enables one to fit parametric survival regression models under the maximum likelihood approach via Stan. Implemented regression models include accelerated failure time models, proportional hazards models, proportional odds models, and accelerated hazard models. Available baseline survival distributions include exponential, Weibull, log-normal, and log-logistic distributions.
+Description: Parametric survival regression models under the maximum likelihood approach via 'Stan'. Implemented regression models include accelerated failure time models, proportional hazards models, proportional odds models, and accelerated hazard models. Available baseline survival distributions include exponential, Weibull, log-normal, and log-logistic distributions. References: Lawless (2002) <ISBN:9780471372158>; Bennett (1982) <doi:10.1002/sim.4780020223>; Chen and Wang(2000) <doi:10.1080/01621459.2000.10474236>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

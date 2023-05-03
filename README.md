@@ -16,6 +16,13 @@ procedures are currently based on the maximum likelihood (ML) approach.
 
 ## Installation
 
+You can install the released version of survstan from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("survstan")
+```
+
 You can install the development version of survstan from GitHub with:
 
 ``` r
@@ -206,8 +213,7 @@ so that
 
 $$S(t|\boldsymbol{\Theta},\mathbf{x}) = \exp\left\{- H_{0}\left(t e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)e^{-\mathbf{x}\boldsymbol{\beta}}
 \right\}
-$$
-
+$$ and
 $$f(t|\boldsymbol{\theta}, \mathbf{x}) = h_{0}\left(te^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)\exp\left\{- H_{0}\left(t e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)e^{-\mathbf{x}\boldsymbol{\beta}}
 \right\}.
 $$
