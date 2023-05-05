@@ -2,3 +2,6 @@ url: https://fndemarqui.github.io/survstan/
 template:
   bootstrap: 5
 
+template:
+  params:
+    ganalytics: G-QSWS1T8YR3

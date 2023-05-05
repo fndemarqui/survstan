@@ -9,6 +9,9 @@
     sub-directories of 1Mb or more:
       libs  41.1Mb
 
+❯ checking for future file timestamps ... NOTE
+  unable to verify current time
+
 ❯ checking dependencies in R code ... NOTE
   Namespaces in Imports field not imported from:
     ‘RcppParallel’ ‘rstantools’
@@ -17,7 +20,9 @@
 ❯ checking for GNU extensions in Makefiles ... NOTE
   GNU make is a SystemRequirements.
 
-0 errors ✔ | 1 warning ✖ | 3 notes ✖
+0 errors ✔ | 1 warning ✖ | 4 notes ✖
+
+
 * Package also checked using GHA workflow.
 
 * This is a new release.
