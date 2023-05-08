@@ -4,10 +4,15 @@
 # survstan
 
 <!-- badges: start -->
-<!-- badges: end -->
 
-The aim of the R package survstan is to provide a toolkit for fitting
-survival models using Stan.
+[![R build
+status](https://github.com/fndemarqui/survstan/workflows/R-CMD-check/badge.svg)](https://github.com/fndemarqui/survstan/actions)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/survstan)](https://cran.r-project.org/package=survstan)
+[![Downloads](https://cranlogs.r-pkg.org/badges/survstan)](https://cran.r-project.org/package=survstan)
+[![Total
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/survstan?color=orange)](https://cran.r-project.org/package=survstan)
+<!-- badges: end --> The aim of the R package survstan is to provide a
+toolkit for fitting survival models using Stan.
 
 The R package survstan can be used to fit right-censored survival data
 under independent censoring. The implemented models allow the fitting of
