@@ -43,6 +43,10 @@ $\boldsymbol{\theta}$ be a $k \times 1$ vector of parameters. Then, the
 likelihood function for right-censored survival data under independent
 censoring can be expressed as:
 
+$$
+L(\boldsymbol{\theta}) = \prod_{i=1}^{n}f(t_{i}|\boldsymbol{\theta})^{\delta_{i}}S(t_{i}|\boldsymbol{\theta})^{1-\delta_{i}}.
+$$
+
 The maximum likelihood estimate (MLE) of $\boldsymbol{\theta}$ is
 obtained by directly maximization of $\log(L(\boldsymbol{\theta}))$
 using the `rstan::optimizing()` function. The function
@@ -50,8 +54,16 @@ using the `rstan::optimizing()` function. The function
 $\log(L(\boldsymbol{\theta}))$, needed to obtain the observed Fisher
 information matrix, which is given by:
 
+$$
+        \mathscr{I}(\hat{\boldsymbol{\theta}}) = -\frac{\partial^2}{\partial \boldsymbol{\theta}\boldsymbol{\theta}'} \log L(\boldsymbol{\theta})\mid_{\boldsymbol{\theta}=\hat{\boldsymbol{\theta}}},
+$$
+
 Inferences on $\boldsymbol{\theta}$ are then based on the asymptotic
 properties of the MLE, $\hat{\boldsymbol{\theta}}$, that state that:
+
+$$
+\hat{\boldsymbol{\theta}} \asymp N_{k}(\boldsymbol{\theta}, \mathscr{I}^{-1}(\hat{\boldsymbol{\theta}})).
+$$
 
 ## Baseline Distributions
 
