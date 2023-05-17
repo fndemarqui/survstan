@@ -83,6 +83,10 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
   upr <- estimate + d
   tbl <- cbind(estimate, se, lwr, upr)
 
+  conf_labels <- round(100*(c(alpha/2, 1-alpha/2)),1)
+  conf_labels <- paste0(conf_labels, "%")
+  colnames(tbl) <- c(colnames(tbl)[1:2], conf_labels)
+
   message <- switch(survreg,
     "aft" = "Accelerated failure time model fit \n",
     "ph" = "Proportional hazards model fit \n",

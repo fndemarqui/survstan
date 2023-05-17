@@ -77,7 +77,7 @@ ggresiduals.survstan <- function(object, type = c("coxsnell", "martingale", "dev
         )
         if(is.factor(df$x)){
           plots[[j]] <- ggplot(data = df, aes(x = .data$x, y = .data$martingale)) +
-            geom_jitter(position=position_jitter(0.1))
+            geom_jitter(position=position_jitter(0.1)) +
             xlab(labels[j])
         }else{
           plots[[j]] <- ggplot(data = df, aes(x = .data$x, y = .data$martingale)) +

@@ -28,6 +28,12 @@ anova.survstan <- function(...){
 
   J <- nargs()
   labels <- paste0("Model ", 1:J, ":")
+  # labels <- c()
+  # for(j in 1:J){
+  #   labels[j] <- models[[j]]$baseline
+  # }
+  # labels <- paste0(labels, " ",1:J, ":")
+
   k <- c()
   df <- c()
   k[J] <- length(models[[J]]$estimates)
@@ -57,6 +63,7 @@ anova.survstan <- function(...){
     cat("\n")
     for(j in 1:J){
       cat("Model", j, ": ", deparse(formulas[[j]]), "\n")
+      #cat(labels[j], deparse(formulas[[j]]), "\n")
     }
     cat("--- \n")
     stats::printCoefmat(tab, P.values=TRUE, has.Pvalue = TRUE, na.print = "-")
