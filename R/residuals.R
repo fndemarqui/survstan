@@ -65,7 +65,7 @@ ggresiduals.survstan <- function(object, type = c("coxsnell", "martingale", "dev
     }else{
       labels <- names(mf)[-1]
       tb <- mf %>%
-        select(labels)
+        select(all_of(labels))
       labels <- names(tb)
       q <- ncol(tb)
 

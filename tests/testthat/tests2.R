@@ -3,69 +3,94 @@ library(survstan)
 
 ovarian$rx <- as.factor(ovarian$rx)
 
-aft <- aftreg(Surv(futime, fustat) ~ age + rx, data = ovarian,
-              baseline = "loglogistic", init = 0)
+newdata <- expand.grid(
+  age = c(50, 60),
+  rx = as.factor(1:2)
+)
 
-ph <- phreg(Surv(futime, fustat) ~ age + rx, data = ovarian,
-            baseline = "loglogistic", init = 0)
+baselines <- c("exponential", "weibull", "lognormal", "loglogistic")
 
-ah <- ahreg(Surv(futime, fustat) ~ age + rx, data = ovarian,
-            baseline = "loglogistic", init = 0)
+for(baseline in baselines){
 
-po <- poreg(Surv(futime, fustat) ~ age + rx, data = ovarian,
-            baseline = "loglogistic", init = 0)
+  aft <- aftreg(Surv(futime, fustat) ~ age + rx, data = ovarian,
+                baseline = baseline, init = 0)
 
-tidy(aft)
-tidy(ph)
-tidy(po)
-tidy(ah)
+  ph <- phreg(Surv(futime, fustat) ~ age + rx, data = ovarian,
+              baseline = baseline, init = 0)
 
-summary(aft)
-summary(ph)
-summary(po)
-summary(ah)
+  ah <- ahreg(Surv(futime, fustat) ~ age + rx, data = ovarian,
+              baseline = baseline, init = 0)
 
-coef(aft)
-coef(ph)
-coef(po)
-coef(ah)
+  po <- poreg(Surv(futime, fustat) ~ age + rx, data = ovarian,
+              baseline = baseline, init = 0)
 
-confint(aft)
-confint(ph)
-confint(po)
-confint(ah)
+  yp <- ypreg(Surv(futime, fustat) ~ age + rx, data = ovarian,
+              baseline = baseline, init = 0)
 
-estimates(aft)
-estimates(ph)
-estimates(po)
-estimates(ah)
+  tidy(aft)
+  tidy(ph)
+  tidy(po)
+  tidy(ah)
+  tidy(yp)
 
-vcov(aft)
-vcov(ph)
-vcov(po)
-vcov(ah)
+  summary(aft)
+  summary(ph)
+  summary(po)
+  summary(ah)
+  summary(yp)
+  coef(aft)
+  coef(ph)
+  coef(po)
+  coef(ah)
+  coef(yp)
 
-AIC(aft, ph, po, ah)
+  confint(aft)
+  confint(ph)
+  confint(po)
+  confint(ah)
+  confint(yp)
+  estimates(aft)
+  estimates(ph)
+  estimates(po)
+  estimates(ah)
+  estimates(yp)
+  vcov(aft)
+  vcov(ph)
+  vcov(po)
+  vcov(ah)
+  vcov(yp)
+  AIC(aft, ph, po, ah)
 
 
-ggresiduals(aft, "coxsnell")
-ggresiduals(aft, "martingale")
-ggresiduals(aft, "deviance")
+  ggresiduals(aft, "coxsnell")
+  ggresiduals(aft, "martingale")
+  ggresiduals(aft, "deviance")
 
-ggresiduals(ph, "coxsnell")
-ggresiduals(ph, "martingale")
-ggresiduals(ph, "deviance")
+  ggresiduals(ph, "coxsnell")
+  ggresiduals(ph, "martingale")
+  ggresiduals(ph, "deviance")
 
-ggresiduals(po, "coxsnell")
-ggresiduals(po, "martingale")
-ggresiduals(po, "deviance")
+  ggresiduals(po, "coxsnell")
+  ggresiduals(po, "martingale")
+  ggresiduals(po, "deviance")
 
-ggresiduals(ah, "coxsnell")
-ggresiduals(ah, "martingale")
-ggresiduals(ah, "deviance")
+  ggresiduals(ah, "coxsnell")
+  ggresiduals(ah, "martingale")
+  ggresiduals(ah, "deviance")
 
-model.matrix(aft)
-model.matrix(ph)
-model.matrix(po)
-model.matrix(ah)
+  ggresiduals(yp, "coxsnell")
+  ggresiduals(yp, "martingale")
+  ggresiduals(yp, "deviance")
 
+  model.matrix(aft)
+  model.matrix(ph)
+  model.matrix(po)
+  model.matrix(ah)
+  model.matrix(yp)
+
+  surv_aft <- survfit(aft, newdata)
+  surv_ah <- survfit(ah, newdata)
+  surv_ph <- survfit(ph, newdata)
+  surv_po <- survfit(po, newdata)
+  surv_yp <- survfit(yp, newdata)
+}

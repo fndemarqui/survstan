@@ -12,7 +12,7 @@ data{
   matrix[p == 0 ? 0 : n, p] X;
   real tau;
   int baseline;
-  int survreg;    // 1 - AFT; 2 - PH; 3 - PO; 4 - AH
+  int survreg;    // 1 - AFT; 2 - PH; 3 - PO; 4 - AH; 5 - YP
 }
 
 transformed data{
@@ -21,6 +21,7 @@ transformed data{
   int is_lambda = 0;
   int is_mu = 0;
   int is_sigma = 0;
+  int is_phi = 0;
 
   vector[p == 0 ? n : 0] zeros;
 
@@ -43,11 +44,16 @@ transformed data{
     is_gamma = 1;
   }
 
+  if(survreg == 5){
+    is_phi = 1;
+  }
+
 
 }
 
 parameters{
   vector[p == 0 ? 0 : p] beta;
+  vector[is_phi == 0 ? 0 : p] phi;
   real<lower=0> alpha[is_alpha == 0 ? 0 : 1];
   real<lower=0> gamma[is_gamma == 0 ? 0 : 1];
   real<lower=0> lambda[is_lambda == 0 ? 0 : 1];
@@ -63,6 +69,8 @@ model{
   vector[n] loglik;
   vector[n] lpdf;
   vector[n] lsurv;
+  vector[survreg == 5 ? n : 0] lp_long;
+  vector[survreg == 5 ? n : 0] ratio;
 
   if(p>0){
     lp = X*beta;
@@ -108,8 +116,16 @@ model{
     loglik = loglik_ph(lpdf, lsurv, event, lp, tau);
   }else if(survreg == 3){ //PO model
     loglik = loglik_po(lpdf, lsurv, event, lp, tau);
-  }else{ //AH model
+  }else if(survreg == 4){ //AH model
     loglik = loglik_ah(lpdf, lsurv, event, lp, tau);
+  }else{
+      if(p>0){
+        lp_long = X*phi;
+      }else{
+        lp_long = zeros;
+      }
+    ratio =  exp(X*(beta-phi));
+    loglik = loglik_yp(event, lpdf, lsurv, lp, lp_long, ratio, tau);
   }
 
   target += sum(loglik);

@@ -38,7 +38,14 @@ print.summary.survstan <- function(x, ...){
 #' @return an object of the class summary.survstan containing a summary of the fitted model.
 #'
 summary.survstan <- function(object, conf.level = 0.95, ...){
-  p <- object$p
+
+  labels <- object$labels
+  if(object$survreg == "yp"){
+    p <- 2*object$p
+    labels <- c(paste0("short-", labels), paste0("long-", labels))
+  }else{
+    p <- object$p
+  }
   n <- object$n
   survreg <- object$survreg
 
@@ -51,7 +58,7 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
   AIC <- -2*loglik + 2*k
   BIC <- -2*loglik + k*log(n)
 
-  labels <- object$labels
+
 
   if(p>0){
     coefficients <- estimates[1:p]
@@ -91,7 +98,8 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
     "aft" = "Accelerated failure time model fit \n",
     "ph" = "Proportional hazards model fit \n",
     "po" = "Proportional odds model fit \n",
-    "ah" = "Accelerated hazard model fit \n"
+    "ah" = "Accelerated hazard model fit \n",
+    "yp" = "Yang and Prentice model fit \n"
   )
 
   if(p>0){

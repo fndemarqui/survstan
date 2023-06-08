@@ -9,7 +9,7 @@
 #' @import methods
 #' @import Rcpp
 #' @import survival
-#' @importFrom dplyr %>% bind_cols select
+#' @importFrom dplyr %>% all_of bind_cols desc select
 #' @importFrom ggplot2 aes ggplot geom_abline geom_point geom_jitter geom_smooth position_jitter labs xlab xlim ylim
 #' @importFrom Rdpack reprompt
 #' @importFrom rlang .data
@@ -24,6 +24,8 @@
 #' \insertRef{1983Bennett}{survstan}
 #'
 #' \insertRef{2000Chen}{survstan}
+#'
+#' \insertRef{2021_Demarqui}{survstan}
 #'
 NULL
 

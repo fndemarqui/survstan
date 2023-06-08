@@ -10,7 +10,7 @@ get_arg_names <- function(...) {
 #' @param object an object of the class survstan.
 #' @param ... further arguments passed to or from other methods.
 #' @param k numeric, the penalty per parameter to be used; the default k = 2 is the classical AIC.
-#' @return the Akaike information criterion.
+#' @return  the Akaike information criterion value when a single model is passed to the function; otherwise, a data.frame with the Akaike information criterion values and the number of parameters is returned.
 #' @examples
 #' \donttest{
 #' library(survstan)
@@ -28,14 +28,21 @@ AIC.survstan <- function(object, ..., k = 2){
   objects <- objects[-2]
   J <- nargs()
   aic <- c()
+  npars <- c()
   for(j in 1:J){
     loglik <- objects[[j]]$loglik
-    npar <- length(objects[[j]]$estimates)
-    aic[j] <- -2*loglik + k*npar
+    npars[j] <- length(objects[[j]]$estimates)
+    aic[j] <- -2*loglik + k*npars[j]
   }
   if(length(argnames)>1){
-    names(aic) <- argnames
-    aic <- sort(aic)
+    # names(aic) <- argnames
+    # aic <- sort(aic)
+    aic <- data.frame(
+      fit = argnames,
+      aic = aic,
+      npars = npars
+    ) %>%
+      dplyr::arrange(aic)
   }
   return(aic)
 }

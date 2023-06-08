@@ -153,6 +153,7 @@ regression models with the R package survstan:
 - proportional hazards (PH) models;
 - proportional odds (PO) models;
 - accelerated hazard (AH) models.
+- Yang and Prentice (YP) models.
 
 Let $\mathbf{x}$ be a $1\times p$ vector of covariates,
 $\boldsymbol{\beta}$ a $p \times 1$ of regression coefficients, and
@@ -234,3 +235,21 @@ $$ and
 $$f(t|\boldsymbol{\theta}, \mathbf{x}) = h_{0}\left(te^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)\exp\left\{- H_{0}\left(t e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)e^{-\mathbf{x}\boldsymbol{\beta}}
 \right\}.
 $$
+
+### Yang and Prentice Models
+
+The survival function of the Yang and Prentice (YP) model is given by:
+
+$$S(t|\boldsymbol{\theta},\boldsymbol{\beta}, \boldsymbol{\phi}) = \left[1+\frac{\kappa_{S}}{\kappa_{L}}R_{0}(t|\boldsymbol{\theta})\right]^{-\kappa_{L}}.
+$$
+
+The hazard and the probability density functions are then expressed as:
+
+$$h(t|\boldsymbol{\theta},\boldsymbol{\beta}, \boldsymbol{\phi}) = \frac{\kappa_{S}h_{0}(t|\boldsymbol{\theta})\exp\{H_{0}(t|\boldsymbol{\theta})\}}{\left[1+\frac{\kappa_{S}}{\kappa_{L}}R_{0}(t|\boldsymbol{\theta})\right]}
+$$ and
+
+$$f(t|\boldsymbol{\theta},\boldsymbol{\beta}, \boldsymbol{\phi}) = \kappa_{S}h_{0}(t|\boldsymbol{\theta})\exp\{H_{0}(t|\boldsymbol{\theta})\}\left[1+\frac{\kappa_{S}}{\kappa_{L}}R_{0}(t|\boldsymbol{\theta})\right]^{-(1+\kappa_{L})},
+$$
+
+respectively, where $\kappa_{S} = \exp\{\mathbf{x}\boldsymbol{\beta}\}$
+and $\kappa_{L} = \exp\{\mathbf{x}\boldsymbol{\beta}\}$.

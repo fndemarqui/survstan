@@ -46,6 +46,22 @@ surv_po <- function(time, pars, lp, baseline, p){
 }
 
 
+surv_yp <- function(time, pars, lp_short, lp_long, baseline, p){
+  p <- 2*p
+  H0 <- switch(baseline,
+               exponential = -stats::pexp(time, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
+               weibull = -stats::pweibull(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               lognormal = -stats::plnorm(time, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               loglogistic = -actuar::pllogis(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE)
+  )
+  ratio <- exp(lp_short - lp_long)
+  Rt = expm1(H0)*ratio
+  theta <- exp(lp_long)
+  surv <- exp(-theta*log1p(Rt))
+  return(surv)
+}
+
+
 #---------------------------------------------
 #' survfit method for survstan models
 #'
@@ -57,13 +73,26 @@ surv_po <- function(time, pars, lp, baseline, p){
 #' @param newdata a data frame containing the set of explanatory variables.
 #' @param ... further arguments passed to or from other methods.
 #' @return  a list containing the estimated survival probabilities.
-
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' library(ggplot2)
+#' data(ipass)
+#' ipass$arm <- as.factor(ipass$arm)
+#' fit <- ypreg(Surv(time, status)~arm, data=ipass, baseline = "weibull")
+#' summary(fit)
+#' newdata <- data.frame(arm=as.factor(0:1))
+#' surv <- survfit(fit, newdata)
+#' ggplot(surv, aes(x=time, y=surv, color = arm)) +
+#'   geom_line()
+#' }
+#'
 survfit.survstan <- function(formula, newdata, ...){
   object <- formula
   baseline <- object$baseline
   survreg <- object$survreg
   mf <- object$mf
-  Terms <- delete.response(object$terms)
+  Terms <- stats::delete.response(object$terms)
   labels <- names(mf)[-1]
   time <- c(0,sort( stats::model.response(mf)[,1]))
   labels <- match.arg(names(newdata), labels, several.ok = TRUE)
@@ -72,6 +101,11 @@ survfit.survstan <- function(formula, newdata, ...){
   p <- object$p
   beta <- pars[1:p]
   lp <- as.numeric(X%*%beta)
+  if(survreg == "yp"){
+    phi <- pars[(p+1):(2*p)]
+    lp_short <- lp
+    lp_long <- as.numeric(X%*%phi)
+  }
 
   newdata$lp <- lp
   df <- data.frame(
@@ -86,7 +120,8 @@ survfit.survstan <- function(formula, newdata, ...){
     "aft" = with(df, surv_aft(time, pars, lp, baseline, p)),
     "ph" = with(df, surv_ph(time, pars, lp, baseline, p)),
     "po" = with(df, surv_po(time, pars, lp, baseline, p)),
-    "ah" = with(df, surv_ah(time, pars, lp, baseline, p))
+    "ah" = with(df, surv_ah(time, pars, lp, baseline, p)),
+    "yp" = with(df, surv_yp(time, pars, lp_short, lp_long, baseline, p))
   )
 
   surv <- df %>%
@@ -94,7 +129,7 @@ survfit.survstan <- function(formula, newdata, ...){
       id = as.factor(rep(1:J, n)),
       surv  = surv
     ) %>%
-    dplyr::relocate(id, .before = time)
+    dplyr::relocate(.data$id, .before = time)
 
   return(surv)
 }

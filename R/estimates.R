@@ -17,7 +17,12 @@
 #' }
 #'
 vcov.survstan <- function(object, all = FALSE, ...){
-  p <- object$p
+  if(object$survreg == "yp"){
+    p <- 2*object$p
+  }else{
+    p <- object$p
+  }
+
   labels <- names(object$estimates)
   if(!isTRUE(all) & p > 0){
     V <- object$V[1:p, 1:p, drop = FALSE]

@@ -19,3 +19,18 @@ a list containing the estimated survival probabilities.
 \description{
 Computes the predicted survivor function for a phpe model.
 }
+\examples{
+\donttest{
+library(survstan)
+library(ggplot2)
+data(ipass)
+ipass$arm <- as.factor(ipass$arm)
+fit <- ypreg(Surv(time, status)~arm, data=ipass, baseline = "weibull")
+summary(fit)
+newdata <- data.frame(arm=as.factor(0:1))
+surv <- survfit(fit, newdata)
+ggplot(surv, aes(x=time, y=surv, color = arm)) +
+  geom_line()
+}
+
+}

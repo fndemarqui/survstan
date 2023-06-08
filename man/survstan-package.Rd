@@ -16,4 +16,6 @@ The aim of the R package survstan is to provide a toolkit for fitting survival m
 \insertRef{1983Bennett}{survstan}
 
 \insertRef{2000Chen}{survstan}
+
+\insertRef{2021_Demarqui}{survstan}
 }

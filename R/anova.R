@@ -27,12 +27,12 @@ anova.survstan <- function(...){
   models <- c(as.list(environment()), list(...))
 
   J <- nargs()
-  labels <- paste0("Model ", 1:J, ":")
-  # labels <- c()
-  # for(j in 1:J){
-  #   labels[j] <- models[[j]]$baseline
-  # }
-  # labels <- paste0(labels, " ",1:J, ":")
+  #labels <- paste0("Model ", 1:J, ":")
+  labels <- c()
+  for(j in 1:J){
+    labels[j] <- with(models[[j]], paste0(baseline, "(", survreg ,")"))
+  }
+  labels <- paste0(labels, " ",1:J, ":")
 
   k <- c()
   df <- c()
@@ -52,24 +52,37 @@ anova.survstan <- function(...){
     p.value[j] <- stats::pchisq(LR[j], df = df[j], lower.tail = FALSE)
   }
 
-  check <- rep(survreg[1], J)
-  if(isTRUE(all.equal(check, survreg))){
-    tab <- cbind("loglik" = loglik[-J], LR, df, 'Pr(>Chi)' = p.value)
-    aux <- matrix(c(loglik[J], NA, NA, NA), nrow = 1)
-    tab <- rbind(tab, aux)
-    rownames(tab) <- labels
-    formulas <- sapply(models, extract_formulas)
+  # check <- rep(survreg[1], J)
+  # if(isTRUE(all.equal(check, survreg))){
+  #   tab <- cbind("loglik" = loglik[-J], LR, df, 'Pr(>Chi)' = p.value)
+  #   aux <- matrix(c(loglik[J], NA, NA, NA), nrow = 1)
+  #   tab <- rbind(tab, aux)
+  #   rownames(tab) <- labels
+  #   formulas <- sapply(models, extract_formulas)
+  #
+  #   cat("\n")
+  #   for(j in 1:J){
+  #     cat("Model", j, ": ", deparse(formulas[[j]]), "\n")
+  #     #cat(labels[j], deparse(formulas[[j]]), "\n")
+  #   }
+  #   cat("--- \n")
+  #   stats::printCoefmat(tab, P.values=TRUE, has.Pvalue = TRUE, na.print = "-")
+  # }else{
+  #   warning("Only models belonging to the same regression class are allowed!")
+  # }
 
-    cat("\n")
-    for(j in 1:J){
-      cat("Model", j, ": ", deparse(formulas[[j]]), "\n")
-      #cat(labels[j], deparse(formulas[[j]]), "\n")
-    }
-    cat("--- \n")
-    stats::printCoefmat(tab, P.values=TRUE, has.Pvalue = TRUE, na.print = "-")
-  }else{
-    warning("Only models belonging to the same regression class are allowed!")
+  tab <- cbind("loglik" = loglik[-J], LR, df, 'Pr(>Chi)' = p.value)
+  aux <- matrix(c(loglik[J], NA, NA, NA), nrow = 1)
+  tab <- rbind(tab, aux)
+  rownames(tab) <- labels
+  formulas <- sapply(models, extract_formulas)
+
+  cat("\n")
+  for(j in 1:J){
+    #cat("Model", j, ": ", deparse(formulas[[j]]), "\n")
+    cat(labels[j], deparse(formulas[[j]]), "\n")
   }
-
+  cat("--- \n")
+  stats::printCoefmat(tab, P.values=TRUE, has.Pvalue = TRUE, na.print = "-")
 
 }

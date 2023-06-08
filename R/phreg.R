@@ -6,6 +6,8 @@
 #' @param formula an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.
 #' @param data data an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which function is called.
 #' @param baseline the chosen baseline distribution; options currently available are: exponential, weibull, lognormal and loglogistic distributions.
+#' @param dist alternative way to specify the baseline distribution (for compability with the \code{\link[survival]{survreg}} function); default is NULL.
+#' @param init initial values specification (default value is 0); see the detailed documentation for \code{init} in \code{\link[rstan]{optimizing}}.
 #' @param ... further arguments passed to other methods.
 #' @return phreg returns an object of class "phreg" containing the fitted model.
 #' @examples
@@ -16,7 +18,10 @@
 #' }
 #'
 #'
-phreg <- function(formula, data, baseline = c("exponential", "weibull", "lognormal", "loglogistic"), ...){
+phreg <- function(formula, data, baseline = c("exponential", "weibull", "lognormal", "loglogistic"), dist = NULL, init = 0, ...){
+  if(!is.null(dist)){
+    baseline <- dist
+  }
   baseline <- tolower(baseline)
   baseline <- match.arg(baseline)
   mf <- stats::model.frame(formula, data)
@@ -45,8 +50,8 @@ phreg <- function(formula, data, baseline = c("exponential", "weibull", "lognorm
 
   stan_data <- list(time=y, event=event, X=X, n=n, p=p,
                     baseline=baseline, survreg = 2, tau = tau)
-  fit <- rstan::optimizing(stanmodels$survreg, data = stan_data, hessian = TRUE, ...)
-  res <- reparametrization(fit, output$baseline, labels, tau, p)
+  fit <- rstan::optimizing(stanmodels$survreg, data = stan_data, hessian = TRUE, init = init, ...)
+  res <- reparametrization(fit, survreg = "ph", output$baseline, labels, tau, p)
   output$estimates <- res$estimates
   output$V <- res$V
   output$loglik = fit$value

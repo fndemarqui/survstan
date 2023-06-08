@@ -24,6 +24,7 @@ summary(po)
 summary(ah)
 
 AIC(aft, ph, po, ah)
+logLik(aft, ph, po, ah)
 
 
 ggresiduals(aft, "coxsnell")

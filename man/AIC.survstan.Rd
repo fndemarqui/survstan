@@ -14,7 +14,7 @@
 \item{k}{numeric, the penalty per parameter to be used; the default k = 2 is the classical AIC.}
 }
 \value{
-the Akaike information criterion.
+the Akaike information criterion value when a single model is passed to the function; otherwise, a data.frame with the Akaike information criterion values and the number of parameters is returned.
 }
 \description{
 Akaike information criterion

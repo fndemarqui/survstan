@@ -8,6 +8,8 @@ poreg(
   formula,
   data,
   baseline = c("exponential", "weibull", "lognormal", "loglogistic"),
+  dist = NULL,
+  init = 0,
   ...
 )
 }
@@ -17,6 +19,10 @@ poreg(
 \item{data}{data an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which function is called.}
 
 \item{baseline}{the chosen baseline distribution; options currently available are: exponential, weibull, lognormal and loglogistic distributions.}
+
+\item{dist}{alternative way to specify the baseline distribution (for compability with the \code{\link[survival]{survreg}} function); default is NULL.}
+
+\item{init}{initial values specification (default value is 0); see the detailed documentation for \code{init} in \code{\link[rstan]{optimizing}}.}
 
 \item{...}{further arguments passed to other methods.}
 }
