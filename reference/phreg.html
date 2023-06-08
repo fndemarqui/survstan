@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,6 +64,8 @@
 <span>  <span class="va">formula</span>,</span>
 <span>  <span class="va">data</span>,</span>
 <span>  baseline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exponential"</span>, <span class="st">"weibull"</span>, <span class="st">"lognormal"</span>, <span class="st">"loglogistic"</span><span class="op">)</span>,</span>
+<span>  dist <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  init <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -80,6 +82,14 @@
 
 <dt>baseline</dt>
 <dd><p>the chosen baseline distribution; options currently available are: exponential, weibull, lognormal and loglogistic distributions.</p></dd>
+
+
+<dt>dist</dt>
+<dd><p>alternative way to specify the baseline distribution (for compability with the <code><a href="https://rdrr.io/pkg/survival/man/survreg.html" class="external-link">survreg</a></code> function); default is NULL.</p></dd>
+
+
+<dt>init</dt>
+<dd><p>initial values specification (default value is 0); see the detailed documentation for <code>init</code> in <code><a href="https://mc-stan.org/rstan/reference/stanmodel-method-optimizing.html" class="external-link">optimizing</a></code>.</p></dd>
 
 
 <dt>...</dt>

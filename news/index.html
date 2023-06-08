@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,10 +54,23 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.0.9000" id="survstan-0009000">survstan 0.0.0.9000<a class="anchor" aria-label="anchor" href="#survstan-0009000"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.0.1" id="survstan-001">survstan 0.0.1<a class="anchor" aria-label="anchor" href="#survstan-001"></a></h2><p class="text-muted">CRAN release: 2023-05-04</p>
 <ul><li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
 </ul></div>
-  </main></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.2" id="survstan-002">survstan 0.0.2<a class="anchor" aria-label="anchor" href="#survstan-002"></a></h2>
+<ul><li>Implementation of the Yang and Prentice (YP) model for dealing with survival data with possibly crossing survival curves.</li>
+<li>Implementation of survfit.survstan method for all implemented models.</li>
+<li>Improvement in the output of the anova.survstan function: now the chosen regression model and baseline distribution are displayed in the ANOVA table.</li>
+<li>Addition of dist argument in the model fitting functions (aftreg(), ahreg(), phreg(), poreg() and ypreg()) as an alternative way to specify the baseline distribution (for compability with the survival::survreg() function).</li>
+<li>Addition of init argument in the model fitting functions (aftreg(), ahreg(), phreg(), poreg() and ypreg()) with default value equals to 0 to fix the initial starting values when calling the rstan::optimizing() function.</li>
+<li>Addition of extractAIC.survstan method required in the stats::step() function for carrying out model selection via stepwise procedures.</li>
+<li>Addition of logLik.survstan method to extract the log-likelihood value of a fitted model.</li>
+<li>AIC.survstan method now returns a data.frame with the aic values along with the corresponding number of model parameters when more than one fit is passed to the method.</li>
+<li>Addition of gastric and ipass datasets.</li>
+</ul></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

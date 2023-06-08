@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,18 +178,20 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span>, <span class="va">fit3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Model 1 :  Surv(futime, fustat) ~ 1 </span></span>
-<span><span class="co">#&gt; Model 2 :  Surv(futime, fustat) ~ rx </span></span>
-<span><span class="co">#&gt; Model 3 :  Surv(futime, fustat) ~ rx + ecog.ps </span></span>
+<span><span class="co">#&gt; weibull(aft) 1: Surv(futime, fustat) ~ 1 </span></span>
+<span><span class="co">#&gt; weibull(aft) 2: Surv(futime, fustat) ~ rx </span></span>
+<span><span class="co">#&gt; weibull(aft) 3: Surv(futime, fustat) ~ rx + ecog.ps </span></span>
 <span><span class="co">#&gt; --- </span></span>
-<span><span class="co">#&gt;             loglik        LR df Pr(&gt;Chi)</span></span>
-<span><span class="co">#&gt; Model 1: -97.95390   1.73882  2   0.4192</span></span>
-<span><span class="co">#&gt; Model 2: -97.36415   0.55932  1   0.4545</span></span>
-<span><span class="co">#&gt; Model 3: -97.08449         -  -        -</span></span>
+<span><span class="co">#&gt;                    loglik        LR df Pr(&gt;Chi)</span></span>
+<span><span class="co">#&gt; weibull(aft) 1: -97.95390   1.73882  2   0.4192</span></span>
+<span><span class="co">#&gt; weibull(aft) 2: -97.36415   0.55932  1   0.4545</span></span>
+<span><span class="co">#&gt; weibull(aft) 3: -97.08449         -  -        -</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span>, <span class="va">fit3</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     fit1     fit2     fit3 </span></span>
-<span><span class="co">#&gt; 199.9078 200.7283 202.1690</span></span></code></pre></div>
+<span><span class="co">#&gt;    fit      aic npars</span></span>
+<span><span class="co">#&gt; 1 fit1 199.9078     2</span></span>
+<span><span class="co">#&gt; 2 fit2 200.7283     3</span></span>
+<span><span class="co">#&gt; 3 fit3 202.1690     4</span></span></code></pre></div>
   </main>
 </div>
 

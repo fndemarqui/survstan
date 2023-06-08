@@ -43,10 +43,19 @@
     <loc>https://fndemarqui.github.io/survstan/reference/confint.survstan.html</loc>
   </url>
   <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/cross_time-methods.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/cross_time.html</loc>
+  </url>
+  <url>
     <loc>https://fndemarqui.github.io/survstan/reference/estimates.html</loc>
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/extractAIC.survstan.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/gastric.html</loc>
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/ggresiduals.html</loc>
@@ -56,6 +65,12 @@
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/ipass.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/logLik.survstan.html</loc>
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/model.matrix.survstan.html</loc>
@@ -85,6 +100,12 @@
     <loc>https://fndemarqui.github.io/survstan/reference/tidy.survstan.html</loc>
   </url>
   <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/tidy.ypreg.html</loc>
+  </url>
+  <url>
     <loc>https://fndemarqui.github.io/survstan/reference/vcov.survstan.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/ypreg.html</loc>
   </url>
 </urlset>
