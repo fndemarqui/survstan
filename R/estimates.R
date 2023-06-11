@@ -74,6 +74,11 @@ estimates <- function(object, ...){
 #'
 coef.survstan <- function(object, ...){
   p <- object$p
+  if(survreg == "yp"){
+    p <- 2*p
+    labels <- c(paste0("short-", labels), paste0("long-", labels))
+  }
+
   if(p>0){
     coeffs <- object$estimates[1:p]
   }else{
