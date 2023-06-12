@@ -129,7 +129,8 @@ survfit.survstan <- function(formula, newdata, ...){
       id = as.factor(rep(1:J, n)),
       surv  = surv
     ) %>%
-    dplyr::relocate(.data$id, .before = time)
+    dplyr::relocate(.data$id, .before = time) %>%
+    dplyr::select(-.data$lp)
 
   return(surv)
 }
