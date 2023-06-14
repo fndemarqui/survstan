@@ -41,8 +41,8 @@ tidy.survstan <- function(object, conf.level = 0.95, ...){
 
   ztab <- stats::qnorm(alpha/2, lower.tail = FALSE)
   tbl <- tibble::tibble(
-    parameter = parameter,
     type = c(rep("coefficient", p), rep("baseline", k-p)),
+    parameter = parameter,
     estimate = estimate,
     se = se,
     lwr = estimate - ztab*se,
@@ -84,8 +84,8 @@ tidy.ypreg <- function(object, conf.level = 0.95, ...){
 
   ztab <- stats::qnorm(alpha/2, lower.tail = FALSE)
   tbl <- tibble::tibble(
-    parameter = parameter,
     type = c(rep("coefficient", p), rep("baseline", k-p)),
+    parameter = parameter,
     estimate = estimate,
     se = se,
     lwr = estimate - ztab*se,
