@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +29,12 @@
 </li>
 <li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
+</li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/LRT.html">Likelihood ratio tests with the survstan package</a>
+  </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -96,12 +102,12 @@
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="aftreg.html">aftreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span>, data <span class="op">=</span> <span class="va">ovarian</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="tidy.html">tidy</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   type        parameter estimate       se    `2.5%`  `97.5%`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> coefficient ecog.ps     -<span style="color: #BB0000;">0.385</span>    0.527    -<span style="color: #BB0000;">1.42</span>     0.648</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> coefficient rx           0.529    0.529    -<span style="color: #BB0000;">0.508</span>    1.57 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> baseline    alpha        1.13     0.252     0.637    1.63 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> baseline    gamma      989.    <span style="text-decoration: underline;">1</span>445.    -<span style="color: #BB0000; text-decoration: underline;">1</span><span style="color: #BB0000;">843.</span>    <span style="text-decoration: underline;">3</span>821.   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   type        parameter   estimate          se       `2.5%`     `97.5%`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> coefficient ecog.ps    -<span style="color: #BB0000;">0.385</span><span style="color: #BB0000; text-decoration: underline;">045</span>    0.526<span style="text-decoration: underline;">982</span>    -<span style="color: #BB0000;">1.417</span><span style="color: #BB0000; text-decoration: underline;">91</span>     0.647<span style="text-decoration: underline;">820</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> coefficient rx          0.528<span style="text-decoration: underline;">758</span>    0.529<span style="text-decoration: underline;">197</span>    -<span style="color: #BB0000;">0.508</span><span style="color: #BB0000; text-decoration: underline;">450</span>    1.565<span style="text-decoration: underline;">97</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> baseline    alpha       1.131<span style="text-decoration: underline;">44</span>     0.252<span style="text-decoration: underline;">207</span>     0.637<span style="text-decoration: underline;">124</span>    1.625<span style="text-decoration: underline;">76</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> baseline    gamma     988.834    <span style="text-decoration: underline;">1</span>444.78     -<span style="color: #BB0000; text-decoration: underline;">1</span><span style="color: #BB0000;">842.87</span>     <span style="text-decoration: underline;">3</span>820.54    </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

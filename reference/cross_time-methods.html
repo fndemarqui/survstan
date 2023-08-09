@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +29,12 @@
 </li>
 <li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
+</li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/LRT.html">Likelihood ratio tests with the survstan package</a>
+  </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -107,7 +113,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ypreg(formula = Surv(time, status) ~ arm, data = ipass, baseline = "weibull")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Yang and Prentice model fit </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Yang &amp; Prentice model fit with weibull baseline distribution </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            Estimate    StdErr  z.value   p.value    </span>
@@ -126,8 +132,8 @@
 <span class="r-in"><span><span class="va">newdata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>arm<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">tcross</span> <span class="op">&lt;-</span> <span class="fu"><a href="cross_time.html">cross_time</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">newdata1</span>, <span class="va">newdata2</span>, nboot <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">tcross</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       Est.     2.5%    97.5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 5.867165 4.984597 6.180408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Est.    2.5%    97.5%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 5.867165 5.13358 6.169776</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

@@ -10,6 +10,9 @@
     <loc>https://fndemarqui.github.io/survstan/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://fndemarqui.github.io/survstan/articles/LRT.html</loc>
+  </url>
+  <url>
     <loc>https://fndemarqui.github.io/survstan/articles/index.html</loc>
   </url>
   <url>
@@ -83,6 +86,9 @@
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/print.summary.survstan.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/rank_models.html</loc>
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/summary.survstan.html</loc>

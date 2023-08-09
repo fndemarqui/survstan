@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +29,12 @@
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
+</li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/LRT.html">Likelihood ratio tests with the survstan package</a>
+  </div>
 </li>
 <li class="active nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -68,6 +74,12 @@
 <li>Addition of logLik.survstan method to extract the log-likelihood value of a fitted model.</li>
 <li>AIC.survstan method now returns a data.frame with the aic values along with the corresponding number of model parameters when more than one fit is passed to the method.</li>
 <li>Addition of gastric and ipass datasets.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.0.3" id="survstan-003">survstan 0.0.3<a class="anchor" aria-label="anchor" href="#survstan-003"></a></h2>
+<ul><li>The Weibull distribution is now the default baseline distribution (replacing the exponential distribution in previous versions).</li>
+<li>Implementation of Birnbaum-Saunders (fatigue) distribution.</li>
+<li>Implementation of the function rank_models to rank survstan models according to their AICs.</li>
 </ul></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
