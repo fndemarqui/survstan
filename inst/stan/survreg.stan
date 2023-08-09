@@ -42,6 +42,9 @@ transformed data{
   }else if(baseline == 4){ // loglogistic
     is_alpha = 1;
     is_gamma = 1;
+  }else if(baseline == 5){ // Birnbaum–Saunders (fatigue)
+    is_alpha = 1;
+    is_gamma = 1;
   }
 
   if(survreg == 5){
@@ -103,10 +106,15 @@ model{
       lpdf[i] = lognormal_lpdf(y[i]|mu, sigma);
       lsurv[i] = lognormal_lccdf(y[i]|mu, sigma);
     }
-  }else{
+  }else if(baseline == 4){
     for(i in 1:n){
       lpdf[i] = loglogistic_lpdf(y[i]|alpha[1], gamma[1]);
       lsurv[i] = loglogistic_lccdf(y[i]|alpha[1], gamma[1]);
+    }
+  }else if(baseline == 5){
+    for(i in 1:n){
+      lpdf[i] = fatigue_lpdf(y[i]|alpha[1], gamma[1]);
+      lsurv[i] = fatigue_lccdf(y[i]|alpha[1], gamma[1]);
     }
   }
 

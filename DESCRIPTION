@@ -1,6 +1,6 @@
 Package: survstan
 Title: Fitting Survival Regression Models via 'Stan' 
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: 
     person(given = "Fabio",
            family = "Demarqui",
@@ -19,17 +19,20 @@ Depends:
 Imports: 
     actuar (>= 3.0.0),
     dplyr,
+    extraDistr,
     ggplot2,
     gridExtra,
     MASS,
     methods,
+    purrr,
     Rcpp (>= 0.12.0),
     RcppParallel (>= 5.0.1),
     Rdpack,
     rlang,
     rstan (>= 2.18.1),
     rstantools (>= 2.3.1),
-    tibble
+    tibble,
+    tidyr
 RdMacros: Rdpack
 LinkingTo: 
     BH (>= 1.66.0),
@@ -43,6 +46,7 @@ URL: https://github.com/fndemarqui/survstan,
     https://fndemarqui.github.io/survstan/
 BugReports: https://github.com/fndemarqui/survstan/issues
 Suggests: 
+    GGally,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)

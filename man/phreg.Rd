@@ -4,21 +4,14 @@
 \alias{phreg}
 \title{Fitting Proportional Hazards Models}
 \usage{
-phreg(
-  formula,
-  data,
-  baseline = c("exponential", "weibull", "lognormal", "loglogistic"),
-  dist = NULL,
-  init = 0,
-  ...
-)
+phreg(formula, data, baseline = "weibull", dist = NULL, init = 0, ...)
 }
 \arguments{
 \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
 
 \item{data}{data an optional data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model. If not found in data, the variables are taken from environment(formula), typically the environment from which function is called.}
 
-\item{baseline}{the chosen baseline distribution; options currently available are: exponential, weibull, lognormal and loglogistic distributions.}
+\item{baseline}{the chosen baseline distribution; options currently available are: exponential, weibull, lognormal, loglogistic and Birnbaum-Saunders (fatigue) distributions.}
 
 \item{dist}{alternative way to specify the baseline distribution (for compability with the \code{\link[survival]{survreg}} function); default is NULL.}
 
@@ -35,7 +28,7 @@ Function to fit proportional hazards (PH) models.
 \examples{
 \donttest{
 library(survstan)
-fit <- phreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+fit <- phreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull")
 summary(fit)
 }
 

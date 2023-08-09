@@ -74,6 +74,7 @@ in the R package survstan. Such distributions include:
 - Weibull
 - Lognormal
 - Loglogistic
+- Birnbaum-Saunders (fatigue)
 
 The parametrizations adopted in the package survstan are presented next.
 

@@ -28,7 +28,13 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
       labels <- c(labels, "mu", "sigma")
       estimates[p+1] <- estimates[p+1] + log(tau)
       v <- diag(p+2)
-    }else{ # loglogistic
+    }else if(baseline == "loglogistic"){ # loglogistic
+      labels <- c(labels, "alpha", "gamma")
+      estimates[p+2] <- estimates[p+2]*tau
+      v <- diag(p+2)
+      v[p+2, p+2] <- 1/tau
+      V <- v%*%V%*%v
+    }else if(baseline == "fatigue"){ # fatigue
       labels <- c(labels, "alpha", "gamma")
       estimates[p+2] <- estimates[p+2]*tau
       v <- diag(p+2)
@@ -118,3 +124,6 @@ logLik.survstan <- function(object, ...){
   }
   return(loglik)
 }
+
+
+survstan_distributions <- c("exponential", "weibull", "lognormal", "loglogistic", "fatigue")

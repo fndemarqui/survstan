@@ -40,6 +40,7 @@ print.summary.survstan <- function(x, ...){
 summary.survstan <- function(object, conf.level = 0.95, ...){
 
   labels <- object$labels
+  baseline <- object$baseline
   if(object$survreg == "yp"){
     p <- 2*object$p
     labels <- c(paste0("short-", labels), paste0("long-", labels))
@@ -95,11 +96,11 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
   colnames(tbl) <- c(colnames(tbl)[1:2], conf_labels)
 
   message <- switch(survreg,
-    "aft" = "Accelerated failure time model fit \n",
-    "ph" = "Proportional hazards model fit \n",
-    "po" = "Proportional odds model fit \n",
-    "ah" = "Accelerated hazard model fit \n",
-    "yp" = "Yang and Prentice model fit \n"
+    "aft" = paste0("Accelerated failure time model fit with ", baseline , " baseline distribution \n"),
+    "ph" = paste0("Proportional hazards model fit with ", baseline , " baseline distribution \n"),
+    "po" = paste0("Proportional odds model fit with ", baseline , " baseline distribution \n"),
+    "ah" = paste0("Accelerated hazard model fit with ", baseline , " baseline distribution \n"),
+    "yp" = paste0("Yang & Prentice model fit with ", baseline , " baseline distribution \n")
   )
 
   if(p>0){

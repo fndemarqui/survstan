@@ -1,6 +1,5 @@
-## R CMD check results for survstan 0.0.2
-
-Duration: 12m 18.7s
+── R CMD check results ─────────────────────────────────── survstan 0.0.3 ────
+Duration: 3m 45.4s
 
 ❯ checking compiled code ... OK
    WARNING
@@ -23,4 +22,4 @@ Duration: 12m 18.7s
 
 * Package also checked using GHA workflow.
 
-* This is an update from version 0.0.1 to 0.0.2.
+* This is an update from version 0.0.2 to 0.0.3.

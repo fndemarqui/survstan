@@ -71,6 +71,7 @@ Some of the most popular baseline survival distributions are implemented in the 
 - Weibull
 - Lognormal
 - Loglogistic
+- Birnbaum-Saunders (fatigue)
 
 The parametrizations adopted in the package survstan are presented next.
 

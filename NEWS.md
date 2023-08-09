@@ -14,3 +14,11 @@
 - AIC.survstan method now returns a data.frame with the aic values along with the corresponding number of model parameters when more than one fit is passed to the method.
 - Addition of gastric and ipass datasets.
 
+# survstan 0.0.3
+
+- The Weibull distribution is now the default baseline distribution (replacing the exponential distribution in previous versions).
+- Implementation of Birnbaum-Saunders (fatigue) distribution.
+- Implementation of the function rank_models to rank survstan models according to their AICs.
+
+
+ 
