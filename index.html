@@ -174,6 +174,21 @@ $$</span></p>
     h(t|\alpha, \gamma) = \frac{\frac{\alpha}{\gamma}\left(\frac{t}{\gamma}\right)^{\alpha-1}}{1 + \left(\frac{t}{\gamma}\right)^{\alpha}}.
 $$</span></p>
 </div>
+<div class="section level3">
+<h3 id="birnbaum-saunders-fatigue-distribution">Birnbaum-Saunders (fatigue) Distribution<a class="anchor" aria-label="anchor" href="#birnbaum-saunders-fatigue-distribution"></a>
+</h3>
+<p>If <span class="math inline"><em>T</em> ∼ fatigue(<em>α</em>,<em>γ</em>)</span>, then</p>
+<p><span class="math display">$$
+    f(t|\alpha, \gamma) = \frac{\sqrt{\frac{t}{\gamma}}+\sqrt{\frac{\gamma}{t}}}{2 \alpha t}\phi\left(\sqrt{\frac{t}{\gamma}}+\sqrt{\frac{\gamma}{t}}\right)(t), ~ \alpha&gt;0, \gamma&gt;0,
+$$</span></p>
+<p>where <span class="math inline"><em>ϕ</em>(⋅)</span> is the probability density function of a standard normal distribution, <span class="math inline"><em>α</em> &gt; 0</span> and <span class="math inline"><em>γ</em> &gt; 0</span> are the shape and scale parameters, respectively.</p>
+<p>The survival function in this case is given by:</p>
+<p><span class="math display">$$
+    S(t|\alpha, \gamma) =\Phi\left(\sqrt{\frac{t}{\gamma}}-\sqrt{\frac{\gamma}{t}}\right)(t)
+$$</span>,</p>
+<p>where <span class="math inline"><em>Φ</em>(⋅)</span> is the cumulative distribution function of a standard normal distribution. The hazard function is given by <span class="math display">$$h(t|\mu, \sigma) = \frac{f(t|\alpha, \gamma)}{S(t|\alpha, \gamma)}.
+$$</span></p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="regression-models">Regression models<a class="anchor" aria-label="anchor" href="#regression-models"></a>
