@@ -145,6 +145,29 @@ and $$
     h(t|\alpha, \gamma) = \frac{\frac{\alpha}{\gamma}\left(\frac{t}{\gamma}\right)^{\alpha-1}}{1 + \left(\frac{t}{\gamma}\right)^{\alpha}}.
 $$
 
+### Birnbaum-Saunders (fatigue) Distribution
+
+If $T \sim \mbox{fatigue}(\alpha, \gamma)$, then
+
+$$
+    f(t|\alpha, \gamma) = \frac{\sqrt{\frac{t}{\gamma}}+\sqrt{\frac{\gamma}{t}}}{2 \alpha t}\phi\left(\sqrt{\frac{t}{\gamma}}+\sqrt{\frac{\gamma}{t}}\right)(t), ~ \alpha>0, \gamma>0,
+$$
+
+where $\phi(\cdot)$ is the probability density function of a standard
+normal distribution, $\alpha>0$ and $\gamma>0$ are the shape and scale
+parameters, respectively.
+
+The survival function in this case is given by:
+
+$$
+    S(t|\alpha, \gamma) =\Phi\left(\sqrt{\frac{t}{\gamma}}-\sqrt{\frac{\gamma}{t}}\right)(t)
+$$,
+
+where $\Phi(\cdot)$ is the cumulative distribution function of a
+standard normal distribution. The hazard function is given by
+$$h(t|\mu, \sigma) = \frac{f(t|\alpha, \gamma)}{S(t|\alpha, \gamma)}.
+$$
+
 ## Regression models
 
 When covariates are available, it is possible to fit four different
