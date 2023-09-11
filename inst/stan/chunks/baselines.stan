@@ -3,7 +3,7 @@
 // Loglogistic distribution:
 
 
-real loglogistic_lpdf(real x, real alpha, real gamma){
+real loglogistic2_lpdf(real x, real alpha, real gamma){
   real aux = log1p(pow(x/gamma, alpha));
   real lpdf = log(alpha) - log(gamma) + lmultiply(alpha-1, x) -
   lmultiply(alpha-1, gamma) - 2*aux;
@@ -16,7 +16,7 @@ real loglogistic_lccdf(real x, real alpha, real gamma){
 }
 
 
-// real loglogistic_lpdf(real y, real mu, real sigma){
+// real loglogistic2_lpdf(real y, real mu, real sigma){
 //     return logistic_lpdf(log(y)|mu, sigma) - log(y);
 // }
 //
