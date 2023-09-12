@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,26 +96,21 @@
 
     
     
+<p>In this vignette we demonstrate how likelihood ratio tests (LRT)
+involving nested models can be performed using the
+<code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">survstan::anova()</a></code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/fndemarqui/survstan" class="external-link">survstan</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: survival</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/" class="external-link">GGally</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span></span>
-<span><span class="co">#&gt;   method from   </span></span>
-<span><span class="co">#&gt;   +.gg   ggplot2</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/" class="external-link">GGally</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="ipass-data">Ipass data<a class="anchor" aria-label="anchor" href="#ipass-data"></a>
 </h2>
+<p>The <code><a href="../reference/ipass.html">survstan::ipass</a></code> data illustrates a real situation in
+which we have the presence of crossing survival curves. In this case,
+both the PH and PO models are inadequate, and the YP model should be
+considered for the data analysis.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ipass</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ipass</span><span class="op">)</span></span>
@@ -132,13 +127,14 @@
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">km</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html" class="external-link">survfit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">arm</span>, data <span class="op">=</span> <span class="va">ipass</span><span class="op">)</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggsurv.html" class="external-link">ggsurv</a></span><span class="op">(</span><span class="va">km</span><span class="op">)</span> </span>
-<span><span class="va">p</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggsurv.html" class="external-link">ggsurv</a></span><span class="op">(</span><span class="va">km</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="LRT_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p>Since the YP models includes both the PH and PO models as particular
+cases, we can perform LRT as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phreg.html">phreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
-<span><span class="va">po</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/poreg.html">poreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
-<span><span class="va">yp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ypreg.html">ypreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phreg.html">phreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
+<span><span class="va">po</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/poreg.html">poreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
+<span><span class="va">yp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ypreg.html">ypreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ph</span>, <span class="va">yp</span><span class="op">)</span></span>
@@ -160,98 +156,39 @@
 <span><span class="co">#&gt; weibull(po) 1: -2851.32   157.89  1 &lt; 2.2e-16 ***</span></span>
 <span><span class="co">#&gt; weibull(yp) 2: -2772.38        -  -         -    </span></span>
 <span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">ph</span>, <span class="va">po</span>, <span class="va">yp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   fit      aic npars</span></span>
-<span><span class="co">#&gt; 1  yp 5552.751     4</span></span>
-<span><span class="co">#&gt; 2  ph 5684.475     3</span></span>
-<span><span class="co">#&gt; 3  po 5708.640     3</span></span></code></pre></div>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
+<!-- ## Veteran data -->
+<!-- The `survival::veteran` data has been widely used in the literature as a real data application of PO models. -->
+<!-- ```{r} -->
+<!-- glimpse(veteran) -->
+<!-- veteran <- veteran %>% -->
+<!--   mutate(across(c(trt, celltype), as.factor)) -->
+<!-- dist <- "loglogistic" -->
+<!-- formula <- Surv(time, status) ~ celltype + trt + karno -->
+<!-- cox <- coxph( -->
+<!--   formula = formula, -->
+<!--   data=veteran -->
+<!-- ) -->
+<!-- cox.zph(cox) -->
+<!-- yp <- ypreg( -->
+<!--   formula = formula, -->
+<!--   data = veteran, dist = dist -->
+<!-- ) -->
+<!-- ph <- phreg( -->
+<!--   formula = formula, -->
+<!--   data = veteran, dist = dist -->
+<!-- ) -->
+<!-- po <- poreg( -->
+<!--   formula = formula, -->
+<!--   data = veteran, dist = dist -->
+<!-- ) -->
+<!-- anova(ph, yp) -->
+<!-- anova(po, yp) -->
+<!-- logLik(ph, po, yp) -->
+<!-- AIC(ph, po, yp) -->
+<!-- ``` -->
 </div>
-<div class="section level2">
-<h2 id="veteran-data">Veteran data<a class="anchor" aria-label="anchor" href="#veteran-data"></a>
-</h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">veteran</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 137</span></span>
-<span><span class="co">#&gt; Columns: 8</span></span>
-<span><span class="co">#&gt; $ trt      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span>
-<span><span class="co">#&gt; $ celltype <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> squamous, squamous, squamous, squamous, squamous, squamous, s…</span></span>
-<span><span class="co">#&gt; $ time     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 72, 411, 228, 126, 118, 10, 82, 110, 314, 100, 42, 8, 144, 25…</span></span>
-<span><span class="co">#&gt; $ status   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0…</span></span>
-<span><span class="co">#&gt; $ karno    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 60, 70, 60, 60, 70, 20, 40, 80, 50, 70, 60, 40, 30, 80, 70, 6…</span></span>
-<span><span class="co">#&gt; $ diagtime <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7, 5, 3, 9, 11, 5, 10, 29, 18, 6, 4, 58, 4, 9, 11, 3, 9, 2, 4…</span></span>
-<span><span class="co">#&gt; $ age      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 69, 64, 38, 63, 65, 49, 69, 68, 43, 70, 81, 63, 63, 52, 48, 6…</span></span>
-<span><span class="co">#&gt; $ prior    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0, 10, 0, 10, 10, 0, 10, 0, 0, 0, 0, 10, 0, 10, 10, 0, 0, 0, …</span></span>
-<span></span>
-<span><span class="va">veteran</span> <span class="op">&lt;-</span> <span class="va">veteran</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">trt</span>, <span class="va">celltype</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">dist</span> <span class="op">&lt;-</span> <span class="st">"loglogistic"</span></span>
-<span><span class="va">formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">celltype</span> <span class="op">+</span> <span class="va">trt</span> <span class="op">+</span> <span class="va">karno</span></span>
-<span></span>
-<span><span class="va">cox</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span></span>
-<span>  formula <span class="op">=</span> <span class="va">formula</span>,</span>
-<span>  data<span class="op">=</span><span class="va">veteran</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/cox.zph.html" class="external-link">cox.zph</a></span><span class="op">(</span><span class="va">cox</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           chisq df       p</span></span>
-<span><span class="co">#&gt; celltype 14.532  3 0.00226</span></span>
-<span><span class="co">#&gt; trt       0.206  1 0.64968</span></span>
-<span><span class="co">#&gt; karno    12.813  1 0.00034</span></span>
-<span><span class="co">#&gt; GLOBAL   22.860  5 0.00036</span></span>
-<span></span>
-<span><span class="va">yp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ypreg.html">ypreg</a></span><span class="op">(</span></span>
-<span>  formula <span class="op">=</span> <span class="va">formula</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">veteran</span>, dist <span class="op">=</span> <span class="va">dist</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phreg.html">phreg</a></span><span class="op">(</span></span>
-<span>  formula <span class="op">=</span> <span class="va">formula</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">veteran</span>, dist <span class="op">=</span> <span class="va">dist</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">po</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/poreg.html">poreg</a></span><span class="op">(</span></span>
-<span>  formula <span class="op">=</span> <span class="va">formula</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">veteran</span>, dist <span class="op">=</span> <span class="va">dist</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ph</span>, <span class="va">yp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; loglogistic(ph) 1: Surv(time, status) ~ celltype + trt + karno </span></span>
-<span><span class="co">#&gt; loglogistic(yp) 2: Surv(time, status) ~ celltype + trt + karno </span></span>
-<span><span class="co">#&gt; --- </span></span>
-<span><span class="co">#&gt;                      loglik       LR df Pr(&gt;Chi)    </span></span>
-<span><span class="co">#&gt; loglogistic(ph) 1: -730.403   45.045  5 1.42e-08 ***</span></span>
-<span><span class="co">#&gt; loglogistic(yp) 2: -707.880        -  -        -    </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">po</span>, <span class="va">yp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; loglogistic(po) 1: Surv(time, status) ~ celltype + trt + karno </span></span>
-<span><span class="co">#&gt; loglogistic(yp) 2: Surv(time, status) ~ celltype + trt + karno </span></span>
-<span><span class="co">#&gt; --- </span></span>
-<span><span class="co">#&gt;                       loglik        LR df Pr(&gt;Chi)  </span></span>
-<span><span class="co">#&gt; loglogistic(po) 1: -712.5483    9.3361  5  0.09639 .</span></span>
-<span><span class="co">#&gt; loglogistic(yp) 2: -707.8803         -  -        -  </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">ph</span>, <span class="va">po</span>, <span class="va">yp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   fit    loglik npars</span></span>
-<span><span class="co">#&gt; 1  yp -707.8803    12</span></span>
-<span><span class="co">#&gt; 2  po -712.5483     7</span></span>
-<span><span class="co">#&gt; 3  ph -730.4029     7</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">ph</span>, <span class="va">po</span>, <span class="va">yp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   fit      aic npars</span></span>
-<span><span class="co">#&gt; 1  po 1439.097     7</span></span>
-<span><span class="co">#&gt; 2  yp 1439.761    12</span></span>
-<span><span class="co">#&gt; 3  ph 1474.806     7</span></span></code></pre></div>
-</div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside>
+  </main>
 </div>
 
 

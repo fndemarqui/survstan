@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,108 +96,128 @@
 
     
     
+<p>To fit a survival model in the <strong>survstan</strong> package, the
+user must choose among one of the available fitting functions
+<code>*reg()</code>, where * stands for the type of regression model,
+that is, <code>aft</code> for accelerated failure time (AFT) models,
+<code>ah</code> for accelerates hazards (AH) models, <code>ph</code> for
+proportional hazards (PO) models, <code>po</code> for proportional (PO)
+models, or <code>yp</code> for Yang &amp; Prentice (YP) models).</p>
+<p>The specification of the survival formula passed to the chosen
+<code>*reg()</code> function follows the same syntax adopted in the
+<strong>survival</strong> package, so that transition to the
+<strong>survstan</strong> package can be smoothly as possible for those
+familiar with the <code>survival</code> package.</p>
+<p>The code below shows the model fitting of a AFT model with Weibull
+baseline distribution using the <code><a href="../reference/aftreg.html">survstan::aftreg()</a></code>
+function. For comparison purposes, we also fit to the same data the
+Weibull regression model using <code><a href="https://rdrr.io/pkg/survival/man/survreg.html" class="external-link">survival::survreg()</a></code>
+function:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/fndemarqui/survstan" class="external-link">survstan</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: survival</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span></span>
 <span><span class="va">ovarian</span> <span class="op">&lt;-</span> <span class="va">ovarian</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    rx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">rx</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rx"</span>, <span class="st">"resid.ds"</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="co"># fitting the model:</span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aftreg.html">aftreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">rx</span> <span class="op">+</span> <span class="va">age</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span>, data <span class="op">=</span> <span class="va">ovarian</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">survreg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/survreg.html" class="external-link">survreg</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span>, </span>
+<span>  dist <span class="op">=</span> <span class="st">"weibull"</span>, data <span class="op">=</span> <span class="va">ovarian</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># investigating the fitted model:</span></span>
-<span><span class="fu"><a href="../reference/estimates.html">estimates</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt;           rx2           age         alpha         gamma </span></span>
-<span><span class="co">#&gt;  5.674487e-01 -7.909102e-02  1.816064e+00  6.166990e+04</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         rx2         age </span></span>
-<span><span class="co">#&gt;  0.56744871 -0.07909102</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                2.5%         97.5%</span></span>
-<span><span class="co">#&gt; rx2   -9.942215e-02  1.234320e+00</span></span>
-<span><span class="co">#&gt; age   -1.180869e-01 -4.009511e-02</span></span>
-<span><span class="co">#&gt; alpha  1.351074e+00  2.281055e+00</span></span>
-<span><span class="co">#&gt; gamma  5.855536e+04  6.478443e+04</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+<span><span class="va">survstan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aftreg.html">aftreg</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span>, </span>
+<span>  dist <span class="op">=</span> <span class="st">"weibull"</span>, data <span class="op">=</span> <span class="va">ovarian</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Although the model specification is quite similar, there are some
+important differences that the user should be aware of. While the model
+fitted using the <code><a href="https://rdrr.io/pkg/survival/man/survreg.html" class="external-link">survival::survreg()</a></code> function uses the log
+scale representation of the AFT model with the presence of an intercept
+term in the linear predictor, the <code><a href="../reference/aftreg.html">survstan::aftreg()</a></code>
+considers the original time scale for model fitting without the presence
+of the intercept term in the linear predictor.</p>
+<p>To see that, let us summarize the fitted models:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">survreg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; aftreg(formula = Surv(futime, fustat) ~ rx + age, data = ovarian, </span></span>
-<span><span class="co">#&gt;     baseline = "weibull", init = 0)</span></span>
+<span><span class="co">#&gt; survreg(formula = Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, </span></span>
+<span><span class="co">#&gt;     dist = "weibull")</span></span>
+<span><span class="co">#&gt;              Value Std. Error     z       p</span></span>
+<span><span class="co">#&gt; (Intercept)  7.425      0.929  7.99 1.3e-15</span></span>
+<span><span class="co">#&gt; ecog.ps     -0.385      0.527 -0.73    0.47</span></span>
+<span><span class="co">#&gt; rx2          0.529      0.529  1.00    0.32</span></span>
+<span><span class="co">#&gt; Log(scale)  -0.123      0.252 -0.49    0.62</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Scale= 0.884 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Weibull distribution</span></span>
+<span><span class="co">#&gt; Loglik(model)= -97.1   Loglik(intercept only)= -98</span></span>
+<span><span class="co">#&gt;  Chisq= 1.74 on 2 degrees of freedom, p= 0.42 </span></span>
+<span><span class="co">#&gt; Number of Newton-Raphson Iterations: 5 </span></span>
+<span><span class="co">#&gt; n= 26</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">survstan</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; aftreg(formula = Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, </span></span>
+<span><span class="co">#&gt;     dist = "weibull")</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Accelerated failure time model fit with weibull baseline distribution </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Regression coefficients:</span></span>
-<span><span class="co">#&gt;      Estimate    StdErr z.value   p.value    </span></span>
-<span><span class="co">#&gt; rx2  0.567449  0.340246  1.6678   0.09536 .  </span></span>
-<span><span class="co">#&gt; age -0.079091  0.019896 -3.9752 7.033e-05 ***</span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt;         Estimate  StdErr z.value p.value</span></span>
+<span><span class="co">#&gt; ecog.ps  -0.3851  0.5270 -0.7307  0.4649</span></span>
+<span><span class="co">#&gt; rx2       0.5287  0.5292  0.9991  0.3178</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Baseline parameters:</span></span>
-<span><span class="co">#&gt;         estimate         se       2.5%      97.5%</span></span>
-<span><span class="co">#&gt; alpha 1.8161e+00 2.3724e-01 1.3511e+00     2.2811</span></span>
-<span><span class="co">#&gt; gamma 6.1670e+04 1.5891e+03 5.8555e+04 64784.4280</span></span>
+<span><span class="co">#&gt;         estimate         se       2.5%     97.5%</span></span>
+<span><span class="co">#&gt; alpha    1.13141    0.25221    0.63709    1.6257</span></span>
+<span><span class="co">#&gt; gamma 1678.06655 1139.62654 -555.56042 3911.6935</span></span>
 <span><span class="co">#&gt; --- </span></span>
-<span><span class="co">#&gt; loglik = -88.76171   AIC = 185.5234</span></span>
-<span><span class="fu"><a href="../reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 6</span></span></span>
-<span><span class="co">#&gt;   type        parameter   estimate        se     `2.5%`    `97.5%`</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> coefficient rx2           0.567     0.340     -<span style="color: #BB0000;">0.099</span><span style="color: #BB0000; text-decoration: underline;">4</span>     1.23  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> coefficient age          -<span style="color: #BB0000;">0.079</span><span style="color: #BB0000; text-decoration: underline;">1</span>    0.019<span style="text-decoration: underline;">9</span>    -<span style="color: #BB0000;">0.118</span>     -<span style="color: #BB0000;">0.040</span><span style="color: #BB0000; text-decoration: underline;">1</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> baseline    alpha         1.82      0.237      1.35       2.28  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> baseline    gamma     <span style="text-decoration: underline;">61</span>670.     <span style="text-decoration: underline;">1</span>589.     <span style="text-decoration: underline;">58</span>555.     <span style="text-decoration: underline;">64</span>784.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             rx2          age</span></span>
-<span><span class="co">#&gt; rx2 0.115767673 0.0017578433</span></span>
-<span><span class="co">#&gt; age 0.001757843 0.0003958601</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># residual plots:</span></span>
-<span><span class="fu"><a href="../reference/ggresiduals.html">ggresiduals</a></span><span class="op">(</span><span class="va">fit</span>, type <span class="op">=</span> <span class="st">"coxsnell"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="survstan_files/figure-html/setup-1.png" width="700"></p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggresiduals.html">ggresiduals</a></span><span class="op">(</span><span class="va">fit</span>, type <span class="op">=</span> <span class="st">"martingale"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code></pre></div>
-<p><img src="survstan_files/figure-html/setup-2.png" width="700"></p>
+<span><span class="co">#&gt; loglik = -97.08449   AIC = 202.169</span></span></code></pre></div>
+<p>Next, we show how to fit a PH model using the
+<code><a href="../reference/phreg.html">survstan::phreg()</a></code> function. For comparison purposes, the
+semiparametric Cox model is also fitted to the same data using the
+function <code><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">survival::coxph()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/ggresiduals.html">ggresiduals</a></span><span class="op">(</span><span class="va">fit</span>, type <span class="op">=</span> <span class="st">"deviance"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="survstan_files/figure-html/setup-3.png" width="700"></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span></span>
-<span><span class="co"># Deviance analysis:</span></span>
-<span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aftreg.html">aftreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span>, data <span class="op">=</span> <span class="va">ovarian</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aftreg.html">aftreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">rx</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span>, data <span class="op">=</span> <span class="va">ovarian</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="va">fit3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aftreg.html">aftreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">rx</span> <span class="op">+</span> <span class="va">ecog.ps</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span>, data <span class="op">=</span> <span class="va">ovarian</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span>, <span class="va">fit3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; weibull(aft) 1: Surv(futime, fustat) ~ 1 </span></span>
-<span><span class="co">#&gt; weibull(aft) 2: Surv(futime, fustat) ~ rx </span></span>
-<span><span class="co">#&gt; weibull(aft) 3: Surv(futime, fustat) ~ rx + ecog.ps </span></span>
-<span><span class="co">#&gt; --- </span></span>
-<span><span class="co">#&gt;                    loglik        LR df Pr(&gt;Chi)</span></span>
-<span><span class="co">#&gt; weibull(aft) 1: -97.95390   1.73882  2   0.4192</span></span>
-<span><span class="co">#&gt; weibull(aft) 2: -97.36415   0.55932  1   0.4545</span></span>
-<span><span class="co">#&gt; weibull(aft) 3: -97.08449         -  -        -</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span>, <span class="va">fit3</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    fit      aic npars</span></span>
-<span><span class="co">#&gt; 1 fit1 199.9078     2</span></span>
-<span><span class="co">#&gt; 2 fit2 200.7283     3</span></span>
-<span><span class="co">#&gt; 3 fit3 202.1690     4</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">survstan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phreg.html">phreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span>, data <span class="op">=</span> <span class="va">ovarian</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
+<span><span class="va">cox</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span>, data <span class="op">=</span> <span class="va">ovarian</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">survstan</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    ecog.ps        rx2 </span></span>
+<span><span class="co">#&gt;  0.4355449 -0.5981575</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">cox</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    ecog.ps        rx2 </span></span>
+<span><span class="co">#&gt;  0.3697972 -0.5782271</span></span></code></pre></div>
+<!-- Now we  and the semiparametric proportional hazards model using the `survival::coxph()` -->
+<!-- The usege of other functions implemented in the __survstan__ package are illustrated in the code presented below: -->
+<!-- ```{r} -->
+<!-- # fitting the model: -->
+<!-- fit <- aftreg( -->
+<!--   Surv(futime, fustat) ~ .,  -->
+<!--   dist = "weibull", data = ovarian -->
+<!-- ) -->
+<!-- # investigating the fitted model: -->
+<!-- estimates(fit) -->
+<!-- coef(fit) -->
+<!-- confint(fit) -->
+<!-- summary(fit) -->
+<!-- tidy(fit) -->
+<!-- vcov(fit) -->
+<!-- # residual plots: -->
+<!-- ggresiduals(fit, type = "coxsnell") -->
+<!-- ggresiduals(fit, type = "martingale") -->
+<!-- ggresiduals(fit, type = "deviance") -->
+<!-- # Deviance analysis: -->
+<!-- fit1 <- aftreg(Surv(futime, fustat) ~ 1, baseline = "weibull", data = ovarian, init = 0) -->
+<!-- fit2 <- aftreg(Surv(futime, fustat) ~ rx, baseline = "weibull", data = ovarian, init = 0) -->
+<!-- fit3 <- aftreg(Surv(futime, fustat) ~ rx + ecog.ps, baseline = "weibull", data = ovarian, init = 0) -->
+<!-- anova(fit1, fit2, fit3) -->
+<!-- # Model comparison using AIC: -->
+<!-- AIC(fit1, fit2, fit3) -->
+<!-- ``` -->
   </main>
 </div>
 
