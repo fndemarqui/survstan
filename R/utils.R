@@ -7,7 +7,9 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
 
   if(survreg == "yp"){
     p <- 2*p
-    labels <- c(paste0("short-", labels), paste0("long-", labels))
+    if(p>0){
+      labels <- c(paste0("short-", labels), paste0("long-", labels))
+    }
   }
 
   if(baseline == "exponential"){

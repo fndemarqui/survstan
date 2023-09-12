@@ -21,4 +21,6 @@
 - Implementation of the function rank_models to rank survstan models according to their AICs.
 
 
- 
+# survstan 0.0.4
+
+- The survstan package now requires rstan version 2.26.

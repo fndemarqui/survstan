@@ -1,7 +1,7 @@
 
 functions{
-#include /inst/stan/chunks/baselines.stan
-#include /inst/stan/chunks/loglikelihoods.stan
+#include /chunks/baselines.stan
+#include /chunks/loglikelihoods.stan
 }
 
 data{
@@ -57,11 +57,11 @@ transformed data{
 parameters{
   vector[p == 0 ? 0 : p] beta;
   vector[is_phi == 0 ? 0 : p] phi;
-  real<lower=0> alpha[is_alpha == 0 ? 0 : 1];
-  real<lower=0> gamma[is_gamma == 0 ? 0 : 1];
-  real<lower=0> lambda[is_lambda == 0 ? 0 : 1];
-  real mu[is_mu == 0 ? 0 : 1];
-  real<lower=0> sigma[is_sigma ==  0 ? 0 : 1];
+  array[is_alpha == 0 ? 0 : 1] real<lower=0> alpha;
+  array[is_gamma == 0 ? 0 : 1] real<lower=0> gamma;
+  array[is_lambda == 0 ? 0 : 1] real<lower=0> lambda;
+  array[is_mu == 0 ? 0 : 1] real mu;
+  array[is_sigma ==  0 ? 0 : 1] real<lower=0> sigma;
 }
 
 
@@ -108,8 +108,8 @@ model{
     }
   }else if(baseline == 4){
     for(i in 1:n){
-      lpdf[i] = loglogistic_lpdf(y[i]|alpha[1], gamma[1]);
-      lsurv[i] = loglogistic_lccdf(y[i]|alpha[1], gamma[1]);
+      lpdf[i] = loglogistic2_lpdf(y[i]|alpha[1], gamma[1]);
+      lsurv[i] = loglogistic2_lccdf(y[i]|alpha[1], gamma[1]);
     }
   }else if(baseline == 5){
     for(i in 1:n){
@@ -129,10 +129,11 @@ model{
   }else{
       if(p>0){
         lp_long = X*phi;
+        ratio =  exp(X*(beta-phi));
       }else{
         lp_long = zeros;
+        ratio = exp(zeros);
       }
-    ratio =  exp(X*(beta-phi));
     loglik = loglik_yp(event, lpdf, lsurv, lp, lp_long, ratio, tau);
   }
 

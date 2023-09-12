@@ -65,7 +65,8 @@ ypreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
 
   pars <- output$estimates
   if(p==0){
-    lp <- 0
+    lp_short <- 0
+    lp_long <- 0
   }else{
     lp_short <- as.numeric(X%*%pars[1:p])
     lp_long <- as.numeric(X%*%pars[(p+1):(2*p)])

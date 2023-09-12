@@ -14,40 +14,91 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+To fit a survival model in the __survstan__ package, the user must choose among one of the available fitting functions `*reg()`, where * stands for the type of regression model, that is, `aft` for accelerated failure time (AFT) models, `ah` for accelerates hazards (AH) models, `ph` for proportional hazards (PO) models, `po` for proportional (PO) models, or `yp` for Yang \& Prentice (YP) models).
+
+The specification of the survival formula passed to the chosen `*reg()` function follows the same syntax adopted in the __survival__ package, so that transition to the __survstan__ package can be smoothly as possible for those familiar with the `survival` package.
+
+The code below shows the model fitting of a AFT model with Weibull baseline distribution using the `survstan::aftreg()` function. For comparison purposes, we also fit to the same data the Weibull regression model using `survival::survreg()` function:
+
+```{r setup, message=FALSE}
 library(survstan)
 library(dplyr)
 
 ovarian <- ovarian %>%
   mutate(
-    rx = as.factor(rx)
+    across(c("rx", "resid.ds"), as.factor)
   )
 
-# fitting the model:
-fit <- aftreg(Surv(futime, fustat) ~ rx + age, baseline = "weibull", data = ovarian, init = 0)
+survreg <- survreg(
+  Surv(futime, fustat) ~ ecog.ps + rx, 
+  dist = "weibull", data = ovarian
+)
 
-# investigating the fitted model:
-estimates(fit)
-coef(fit)
-confint(fit)
-summary(fit)
-tidy(fit)
-vcov(fit)
-
-
-# residual plots:
-ggresiduals(fit, type = "coxsnell")
-ggresiduals(fit, type = "martingale")
-ggresiduals(fit, type = "deviance")
-
-
-# Deviance analysis:
-fit1 <- aftreg(Surv(futime, fustat) ~ 1, baseline = "weibull", data = ovarian, init = 0)
-fit2 <- aftreg(Surv(futime, fustat) ~ rx, baseline = "weibull", data = ovarian, init = 0)
-fit3 <- aftreg(Surv(futime, fustat) ~ rx + ecog.ps, baseline = "weibull", data = ovarian, init = 0)
-
-anova(fit1, fit2, fit3)
-
-AIC(fit1, fit2, fit3)
+survstan <- aftreg(
+  Surv(futime, fustat) ~ ecog.ps + rx, 
+  dist = "weibull", data = ovarian
+)
 
 ```
+
+Although the model specification is quite similar, there are some important differences that the user should be aware of. While the model fitted using the `survival::survreg()` function uses the log scale representation of the AFT model with the presence of an intercept term in the linear predictor, the `survstan::aftreg()` considers the original time scale for model fitting without the presence of the intercept term in the linear predictor.
+
+To see that, let us summarize the fitted models:
+
+```{r}
+summary(survreg)
+summary(survstan)
+```
+
+Next, we show how to fit a PH model using the `survstan::phreg()` function. For comparison purposes, the semiparametric Cox model is also fitted to the same data using the function `survival::coxph()`.
+
+```{r}
+survstan <- phreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, dist = "weibull")
+cox <- coxph(
+  Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian
+)
+coef(survstan)
+coef(cox)
+```
+
+
+<!-- Now we  and the semiparametric proportional hazards model using the `survival::coxph()` -->
+
+<!-- The usege of other functions implemented in the __survstan__ package are illustrated in the code presented below: -->
+
+<!-- ```{r} -->
+
+<!-- # fitting the model: -->
+<!-- fit <- aftreg( -->
+<!--   Surv(futime, fustat) ~ .,  -->
+<!--   dist = "weibull", data = ovarian -->
+<!-- ) -->
+
+<!-- # investigating the fitted model: -->
+<!-- estimates(fit) -->
+<!-- coef(fit) -->
+<!-- confint(fit) -->
+<!-- summary(fit) -->
+<!-- tidy(fit) -->
+<!-- vcov(fit) -->
+
+
+<!-- # residual plots: -->
+<!-- ggresiduals(fit, type = "coxsnell") -->
+<!-- ggresiduals(fit, type = "martingale") -->
+<!-- ggresiduals(fit, type = "deviance") -->
+
+
+<!-- # Deviance analysis: -->
+<!-- fit1 <- aftreg(Surv(futime, fustat) ~ 1, baseline = "weibull", data = ovarian, init = 0) -->
+<!-- fit2 <- aftreg(Surv(futime, fustat) ~ rx, baseline = "weibull", data = ovarian, init = 0) -->
+<!-- fit3 <- aftreg(Surv(futime, fustat) ~ rx + ecog.ps, baseline = "weibull", data = ovarian, init = 0) -->
+
+<!-- anova(fit1, fit2, fit3) -->
+
+
+<!-- # Model comparison using AIC: -->
+<!-- AIC(fit1, fit2, fit3) -->
+
+<!-- ``` -->
+

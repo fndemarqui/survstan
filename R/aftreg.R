@@ -39,6 +39,9 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
   n <- length(time)
   p <- ncol(X)
   tau <- max(time)
+  # if(baseline == "fatigue"){
+  #   tau <- 1
+  # }
   y <- time/tau
 
 

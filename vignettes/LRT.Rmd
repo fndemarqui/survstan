@@ -14,16 +14,18 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+In this vignette we demonstrate how likelihood ratio tests (LRT) involving nested models can be performed using the `survstan::anova()` function.
+
+```{r setup, message=FALSE}
 library(survstan)
 library(ggplot2)
 library(dplyr)
 library(GGally)
 ```
 
-
-
 ## Ipass data
+
+The `survstan::ipass` data illustrates a real situation in which we have the presence of crossing survival curves. In this case, both the PH and PO models are inadequate, and the YP model should be considered for the data analysis. 
 
 ```{r}
 data(ipass)
@@ -36,65 +38,65 @@ ipass <- ipass %>%
   )
 
 km <- survfit(Surv(time, status) ~ arm, data = ipass)
-p <- ggsurv(km) 
-p
+ggsurv(km) 
 ```
 
+Since the YP models includes both the PH and PO models as particular cases, we  can perform LRT as follows:
 
 ```{r}
-ph <- phreg(Surv(time, status)~arm, data=ipass, baseline = "weibull")
-po <- poreg(Surv(time, status)~arm, data=ipass, baseline = "weibull")
-yp <- ypreg(Surv(time, status)~arm, data=ipass, baseline = "weibull")
+ph <- phreg(Surv(time, status)~arm, data=ipass, dist = "weibull")
+po <- poreg(Surv(time, status)~arm, data=ipass, dist = "weibull")
+yp <- ypreg(Surv(time, status)~arm, data=ipass, dist = "weibull")
 
 
 anova(ph, yp)
 anova(po, yp)
 
-AIC(ph, po, yp)
 ```
 
 
-## Veteran data
+<!-- ## Veteran data -->
+
+<!-- The `survival::veteran` data has been widely used in the literature as a real data application of PO models. -->
+
+<!-- ```{r} -->
+<!-- glimpse(veteran) -->
+
+<!-- veteran <- veteran %>% -->
+<!--   mutate(across(c(trt, celltype), as.factor)) -->
+
+<!-- dist <- "loglogistic" -->
+<!-- formula <- Surv(time, status) ~ celltype + trt + karno -->
+
+<!-- cox <- coxph( -->
+<!--   formula = formula, -->
+<!--   data=veteran -->
+<!-- ) -->
+
+<!-- cox.zph(cox) -->
+
+<!-- yp <- ypreg( -->
+<!--   formula = formula, -->
+<!--   data = veteran, dist = dist -->
+<!-- ) -->
+
+<!-- ph <- phreg( -->
+<!--   formula = formula, -->
+<!--   data = veteran, dist = dist -->
+<!-- ) -->
+
+<!-- po <- poreg( -->
+<!--   formula = formula, -->
+<!--   data = veteran, dist = dist -->
+<!-- ) -->
+
+<!-- anova(ph, yp) -->
+<!-- anova(po, yp) -->
 
 
-```{r}
-glimpse(veteran)
-
-veteran <- veteran %>%
-  mutate(across(c(trt, celltype), as.factor))
-
-dist <- "loglogistic"
-formula <- Surv(time, status) ~ celltype + trt + karno
-
-cox <- coxph(
-  formula = formula,
-  data=veteran
-)
-
-cox.zph(cox)
-
-yp <- ypreg(
-  formula = formula,
-  data = veteran, dist = dist
-)
-
-ph <- phreg(
-  formula = formula,
-  data = veteran, dist = dist
-)
-
-po <- poreg(
-  formula = formula,
-  data = veteran, dist = dist
-)
-
-anova(ph, yp)
-anova(po, yp)
+<!-- logLik(ph, po, yp) -->
+<!-- AIC(ph, po, yp) -->
 
 
-logLik(ph, po, yp)
-AIC(ph, po, yp)
-
-
-```
+<!-- ``` -->
 
