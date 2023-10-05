@@ -24,3 +24,8 @@
 # survstan 0.0.4
 
 - The survstan package now requires rstan version 2.26.
+
+
+# survstan 0.0.5
+
+- Inclusion of emmeans method for survstan models.

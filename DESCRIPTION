@@ -1,6 +1,6 @@
 Package: survstan
 Title: Fitting Survival Regression Models via 'Stan' 
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: 
     person(given = "Fabio",
            family = "Demarqui",
@@ -46,6 +46,8 @@ URL: https://github.com/fndemarqui/survstan,
     https://fndemarqui.github.io/survstan/
 BugReports: https://github.com/fndemarqui/survstan/issues
 Suggests: 
+    emmeans (>= 1.4),
+    estimability,
     GGally,
     knitr,
     rmarkdown,
