@@ -18,32 +18,42 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
     v <- diag(p+1)
     v[p+1, p+1] <- 1/tau
     V <- v%*%V%*%v
-  }else{
-    if(baseline == "weibull"){
+  }else if(baseline == "weibull"){
       labels <- c(labels, "alpha", "gamma")
       estimates[p+2] <- estimates[p+2]*tau
       v <- diag(p+2)
-      #v[p+1, p+1] <- estimates[p+1]
       v[p+2, p+2] <- tau
       V <- v%*%V%*%v
-    }else if(baseline == "lognormal"){
-      labels <- c(labels, "mu", "sigma")
-      estimates[p+1] <- estimates[p+1] + log(tau)
-      v <- diag(p+2)
-    }else if(baseline == "loglogistic"){ # loglogistic
-      labels <- c(labels, "alpha", "gamma")
-      estimates[p+2] <- estimates[p+2]*tau
-      v <- diag(p+2)
-      v[p+2, p+2] <- 1/tau
-      V <- v%*%V%*%v
-    }else if(baseline == "fatigue"){ # fatigue
-      labels <- c(labels, "alpha", "gamma")
-      estimates[p+2] <- estimates[p+2]*tau
-      v <- diag(p+2)
-      v[p+2, p+2] <- 1/tau
-      V <- v%*%V%*%v
-    }
+  }else if(baseline == "lognormal"){
+    labels <- c(labels, "mu", "sigma")
+    estimates[p+1] <- estimates[p+1] + log(tau)
+    v <- diag(p+2)
+  }else if(baseline == "loglogistic"){ # loglogistic
+    labels <- c(labels, "alpha", "gamma")
+    estimates[p+2] <- estimates[p+2]*tau
+    v <- diag(p+2)
+    v[p+2, p+2] <- 1/tau
+    V <- v%*%V%*%v
+  }else if(baseline == "fatigue"){ # fatigue
+    labels <- c(labels, "alpha", "gamma")
+    estimates[p+2] <- estimates[p+2]*tau
+    v <- diag(p+2)
+    v[p+2, p+2] <- 1/tau
+    V <- v%*%V%*%v
+  }else if(baseline == "gamma"){ # gamma
+    labels <- c(labels, "alpha", "gamma")
+    estimates[p+2] <- estimates[p+2]/tau
+    v <- diag(p+2)
+    v[p+2, p+2] <- 1/tau
+    V <- v%*%V%*%v
+  }else if(baseline == "rayleigh"){
+    labels <- c(labels, "sigma")
+    estimates[p+1] <- estimates[p+1]*tau
+    v <- diag(p+1)
+    v[p+1, p+1] <- tau
+    V <- v%*%V%*%v
   }
+
   names(estimates) <- labels
   rownames(V) <- labels
   colnames(V) <- labels
@@ -128,4 +138,4 @@ logLik.survstan <- function(object, ...){
 }
 
 
-survstan_distributions <- c("exponential", "weibull", "lognormal", "loglogistic", "fatigue")
+

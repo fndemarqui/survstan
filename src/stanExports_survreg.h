@@ -75,92 +75,104 @@ using stan::math::pow;
 stan::math::profile_map profiles__;
 static int current_statement__= 0;
 static const std::vector<string> locations_array__ = {" (found before start of program)",
-                                                      " (in 'survreg', line 146, column 2 to column 30)",
-                                                      " (in 'survreg', line 147, column 2 to column 34)",
-                                                      " (in 'survreg', line 148, column 2 to column 51)",
-                                                      " (in 'survreg', line 149, column 2 to column 51)",
-                                                      " (in 'survreg', line 150, column 2 to column 53)",
-                                                      " (in 'survreg', line 151, column 2 to column 36)",
-                                                      " (in 'survreg', line 152, column 2 to column 52)",
-                                                      " (in 'survreg', line 155, column 9 to column 10)",
-                                                      " (in 'survreg', line 155, column 2 to column 15)",
-                                                      " (in 'survreg', line 156, column 9 to column 10)",
-                                                      " (in 'survreg', line 156, column 2 to column 14)",
-                                                      " (in 'survreg', line 157, column 9 to column 10)",
-                                                      " (in 'survreg', line 157, column 2 to column 19)",
-                                                      " (in 'survreg', line 158, column 9 to column 10)",
-                                                      " (in 'survreg', line 158, column 2 to column 17)",
-                                                      " (in 'survreg', line 159, column 9 to column 10)",
-                                                      " (in 'survreg', line 159, column 2 to column 18)",
-                                                      " (in 'survreg', line 160, column 9 to column 29)",
-                                                      " (in 'survreg', line 160, column 2 to column 39)",
-                                                      " (in 'survreg', line 161, column 9 to column 29)",
-                                                      " (in 'survreg', line 161, column 2 to column 37)",
-                                                      " (in 'survreg', line 165, column 4 to column 15)",
-                                                      " (in 'survreg', line 164, column 7 to line 166, column 3)",
-                                                      " (in 'survreg', line 163, column 4 to column 16)",
-                                                      " (in 'survreg', line 162, column 9 to line 164, column 3)",
-                                                      " (in 'survreg', line 162, column 2 to line 166, column 3)",
-                                                      " (in 'survreg', line 172, column 4 to column 13)",
-                                                      " (in 'survreg', line 171, column 7 to line 173, column 3)",
-                                                      " (in 'survreg', line 170, column 4 to column 24)",
-                                                      " (in 'survreg', line 169, column 24 to line 171, column 3)",
-                                                      " (in 'survreg', line 169, column 8 to line 173, column 3)",
-                                                      " (in 'survreg', line 168, column 4 to column 24)",
-                                                      " (in 'survreg', line 167, column 18 to line 169, column 3)",
-                                                      " (in 'survreg', line 167, column 2 to line 173, column 3)",
-                                                      " (in 'survreg', line 196, column 6 to column 54)",
-                                                      " (in 'survreg', line 197, column 6 to column 56)",
-                                                      " (in 'survreg', line 195, column 17 to line 198, column 5)",
-                                                      " (in 'survreg', line 195, column 4 to line 198, column 5)",
-                                                      " (in 'survreg', line 194, column 25 to line 199, column 3)",
-                                                      " (in 'survreg', line 194, column 8 to line 199, column 3)",
-                                                      " (in 'survreg', line 191, column 6 to column 59)",
-                                                      " (in 'survreg', line 192, column 6 to column 61)",
-                                                      " (in 'survreg', line 190, column 17 to line 193, column 5)",
-                                                      " (in 'survreg', line 190, column 4 to line 193, column 5)",
-                                                      " (in 'survreg', line 189, column 25 to line 194, column 3)",
-                                                      " (in 'survreg', line 189, column 8 to line 199, column 3)",
-                                                      " (in 'survreg', line 186, column 6 to column 47)",
-                                                      " (in 'survreg', line 187, column 6 to column 49)",
-                                                      " (in 'survreg', line 185, column 17 to line 188, column 5)",
-                                                      " (in 'survreg', line 185, column 4 to line 188, column 5)",
-                                                      " (in 'survreg', line 184, column 25 to line 189, column 3)",
-                                                      " (in 'survreg', line 184, column 8 to line 199, column 3)",
-                                                      " (in 'survreg', line 181, column 10 to column 52)",
-                                                      " (in 'survreg', line 182, column 10 to column 54)",
-                                                      " (in 'survreg', line 180, column 17 to line 183, column 5)",
-                                                      " (in 'survreg', line 180, column 4 to line 183, column 5)",
-                                                      " (in 'survreg', line 179, column 25 to line 184, column 3)",
-                                                      " (in 'survreg', line 179, column 8 to line 199, column 3)",
-                                                      " (in 'survreg', line 176, column 6 to column 46)",
-                                                      " (in 'survreg', line 177, column 6 to column 48)",
-                                                      " (in 'survreg', line 175, column 17 to line 178, column 5)",
-                                                      " (in 'survreg', line 175, column 4 to line 178, column 5)",
-                                                      " (in 'survreg', line 174, column 19 to line 179, column 3)",
-                                                      " (in 'survreg', line 174, column 2 to line 199, column 3)",
-                                                      " (in 'survreg', line 213, column 8 to column 24)",
-                                                      " (in 'survreg', line 214, column 8 to column 27)",
-                                                      " (in 'survreg', line 212, column 11 to line 215, column 7)",
-                                                      " (in 'survreg', line 210, column 8 to column 24)",
-                                                      " (in 'survreg', line 211, column 8 to column 35)",
-                                                      " (in 'survreg', line 209, column 13 to line 212, column 7)",
-                                                      " (in 'survreg', line 209, column 6 to line 215, column 7)",
-                                                      " (in 'survreg', line 216, column 4 to column 68)",
-                                                      " (in 'survreg', line 208, column 7 to line 217, column 3)",
-                                                      " (in 'survreg', line 207, column 4 to column 52)",
-                                                      " (in 'survreg', line 206, column 24 to line 208, column 3)",
-                                                      " (in 'survreg', line 206, column 8 to line 217, column 3)",
-                                                      " (in 'survreg', line 205, column 4 to column 52)",
-                                                      " (in 'survreg', line 204, column 24 to line 206, column 3)",
-                                                      " (in 'survreg', line 204, column 8 to line 217, column 3)",
-                                                      " (in 'survreg', line 203, column 4 to column 52)",
-                                                      " (in 'survreg', line 202, column 24 to line 204, column 3)",
-                                                      " (in 'survreg', line 202, column 8 to line 217, column 3)",
-                                                      " (in 'survreg', line 201, column 4 to column 53)",
-                                                      " (in 'survreg', line 200, column 19 to line 202, column 3)",
-                                                      " (in 'survreg', line 200, column 2 to line 217, column 3)",
-                                                      " (in 'survreg', line 218, column 2 to column 24)",
+                                                      " (in 'survreg', line 152, column 2 to column 30)",
+                                                      " (in 'survreg', line 153, column 2 to column 34)",
+                                                      " (in 'survreg', line 154, column 2 to column 51)",
+                                                      " (in 'survreg', line 155, column 2 to column 51)",
+                                                      " (in 'survreg', line 156, column 2 to column 53)",
+                                                      " (in 'survreg', line 157, column 2 to column 36)",
+                                                      " (in 'survreg', line 158, column 2 to column 52)",
+                                                      " (in 'survreg', line 161, column 9 to column 10)",
+                                                      " (in 'survreg', line 161, column 2 to column 15)",
+                                                      " (in 'survreg', line 162, column 9 to column 10)",
+                                                      " (in 'survreg', line 162, column 2 to column 14)",
+                                                      " (in 'survreg', line 163, column 9 to column 10)",
+                                                      " (in 'survreg', line 163, column 2 to column 19)",
+                                                      " (in 'survreg', line 164, column 9 to column 10)",
+                                                      " (in 'survreg', line 164, column 2 to column 17)",
+                                                      " (in 'survreg', line 165, column 9 to column 10)",
+                                                      " (in 'survreg', line 165, column 2 to column 18)",
+                                                      " (in 'survreg', line 166, column 9 to column 29)",
+                                                      " (in 'survreg', line 166, column 2 to column 39)",
+                                                      " (in 'survreg', line 167, column 9 to column 29)",
+                                                      " (in 'survreg', line 167, column 2 to column 37)",
+                                                      " (in 'survreg', line 171, column 4 to column 15)",
+                                                      " (in 'survreg', line 170, column 7 to line 172, column 3)",
+                                                      " (in 'survreg', line 169, column 4 to column 16)",
+                                                      " (in 'survreg', line 168, column 9 to line 170, column 3)",
+                                                      " (in 'survreg', line 168, column 2 to line 172, column 3)",
+                                                      " (in 'survreg', line 178, column 4 to column 13)",
+                                                      " (in 'survreg', line 177, column 7 to line 179, column 3)",
+                                                      " (in 'survreg', line 176, column 4 to column 24)",
+                                                      " (in 'survreg', line 175, column 24 to line 177, column 3)",
+                                                      " (in 'survreg', line 175, column 8 to line 179, column 3)",
+                                                      " (in 'survreg', line 174, column 4 to column 24)",
+                                                      " (in 'survreg', line 173, column 18 to line 175, column 3)",
+                                                      " (in 'survreg', line 173, column 2 to line 179, column 3)",
+                                                      " (in 'survreg', line 212, column 10 to column 46)",
+                                                      " (in 'survreg', line 213, column 10 to column 48)",
+                                                      " (in 'survreg', line 211, column 17 to line 214, column 5)",
+                                                      " (in 'survreg', line 211, column 4 to line 214, column 5)",
+                                                      " (in 'survreg', line 210, column 25 to line 215, column 3)",
+                                                      " (in 'survreg', line 210, column 8 to line 215, column 3)",
+                                                      " (in 'survreg', line 207, column 10 to column 50)",
+                                                      " (in 'survreg', line 208, column 10 to column 52)",
+                                                      " (in 'survreg', line 206, column 17 to line 209, column 5)",
+                                                      " (in 'survreg', line 206, column 4 to line 209, column 5)",
+                                                      " (in 'survreg', line 205, column 25 to line 210, column 3)",
+                                                      " (in 'survreg', line 205, column 8 to line 215, column 3)",
+                                                      " (in 'survreg', line 202, column 6 to column 54)",
+                                                      " (in 'survreg', line 203, column 6 to column 56)",
+                                                      " (in 'survreg', line 201, column 17 to line 204, column 5)",
+                                                      " (in 'survreg', line 201, column 4 to line 204, column 5)",
+                                                      " (in 'survreg', line 200, column 25 to line 205, column 3)",
+                                                      " (in 'survreg', line 200, column 8 to line 215, column 3)",
+                                                      " (in 'survreg', line 197, column 6 to column 59)",
+                                                      " (in 'survreg', line 198, column 6 to column 61)",
+                                                      " (in 'survreg', line 196, column 17 to line 199, column 5)",
+                                                      " (in 'survreg', line 196, column 4 to line 199, column 5)",
+                                                      " (in 'survreg', line 195, column 25 to line 200, column 3)",
+                                                      " (in 'survreg', line 195, column 8 to line 215, column 3)",
+                                                      " (in 'survreg', line 192, column 6 to column 47)",
+                                                      " (in 'survreg', line 193, column 6 to column 49)",
+                                                      " (in 'survreg', line 191, column 17 to line 194, column 5)",
+                                                      " (in 'survreg', line 191, column 4 to line 194, column 5)",
+                                                      " (in 'survreg', line 190, column 25 to line 195, column 3)",
+                                                      " (in 'survreg', line 190, column 8 to line 215, column 3)",
+                                                      " (in 'survreg', line 187, column 10 to column 52)",
+                                                      " (in 'survreg', line 188, column 10 to column 54)",
+                                                      " (in 'survreg', line 186, column 17 to line 189, column 5)",
+                                                      " (in 'survreg', line 186, column 4 to line 189, column 5)",
+                                                      " (in 'survreg', line 185, column 25 to line 190, column 3)",
+                                                      " (in 'survreg', line 185, column 8 to line 215, column 3)",
+                                                      " (in 'survreg', line 182, column 6 to column 46)",
+                                                      " (in 'survreg', line 183, column 6 to column 48)",
+                                                      " (in 'survreg', line 181, column 17 to line 184, column 5)",
+                                                      " (in 'survreg', line 181, column 4 to line 184, column 5)",
+                                                      " (in 'survreg', line 180, column 19 to line 185, column 3)",
+                                                      " (in 'survreg', line 180, column 2 to line 215, column 3)",
+                                                      " (in 'survreg', line 229, column 8 to column 24)",
+                                                      " (in 'survreg', line 230, column 8 to column 27)",
+                                                      " (in 'survreg', line 228, column 11 to line 231, column 7)",
+                                                      " (in 'survreg', line 226, column 8 to column 24)",
+                                                      " (in 'survreg', line 227, column 8 to column 35)",
+                                                      " (in 'survreg', line 225, column 13 to line 228, column 7)",
+                                                      " (in 'survreg', line 225, column 6 to line 231, column 7)",
+                                                      " (in 'survreg', line 232, column 4 to column 68)",
+                                                      " (in 'survreg', line 224, column 7 to line 233, column 3)",
+                                                      " (in 'survreg', line 223, column 4 to column 52)",
+                                                      " (in 'survreg', line 222, column 24 to line 224, column 3)",
+                                                      " (in 'survreg', line 222, column 8 to line 233, column 3)",
+                                                      " (in 'survreg', line 221, column 4 to column 52)",
+                                                      " (in 'survreg', line 220, column 24 to line 222, column 3)",
+                                                      " (in 'survreg', line 220, column 8 to line 233, column 3)",
+                                                      " (in 'survreg', line 219, column 4 to column 52)",
+                                                      " (in 'survreg', line 218, column 24 to line 220, column 3)",
+                                                      " (in 'survreg', line 218, column 8 to line 233, column 3)",
+                                                      " (in 'survreg', line 217, column 4 to column 53)",
+                                                      " (in 'survreg', line 216, column 19 to line 218, column 3)",
+                                                      " (in 'survreg', line 216, column 2 to line 233, column 3)",
+                                                      " (in 'survreg', line 234, column 2 to column 24)",
                                                       " (in 'survreg', line 104, column 2 to column 8)",
                                                       " (in 'survreg', line 105, column 2 to column 8)",
                                                       " (in 'survreg', line 106, column 9 to column 10)",
@@ -186,35 +198,42 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'survreg', line 122, column 4 to line 124, column 5)",
                                                       " (in 'survreg', line 121, column 10 to line 125, column 3)",
                                                       " (in 'survreg', line 121, column 2 to line 125, column 3)",
+                                                      " (in 'survreg', line 144, column 4 to column 17)",
+                                                      " (in 'survreg', line 143, column 25 to line 145, column 3)",
+                                                      " (in 'survreg', line 143, column 8 to line 145, column 3)",
+                                                      " (in 'survreg', line 141, column 4 to column 17)",
+                                                      " (in 'survreg', line 142, column 4 to column 17)",
+                                                      " (in 'survreg', line 140, column 25 to line 143, column 3)",
+                                                      " (in 'survreg', line 140, column 8 to line 145, column 3)",
                                                       " (in 'survreg', line 138, column 4 to column 17)",
                                                       " (in 'survreg', line 139, column 4 to column 17)",
                                                       " (in 'survreg', line 137, column 25 to line 140, column 3)",
-                                                      " (in 'survreg', line 137, column 8 to line 140, column 3)",
+                                                      " (in 'survreg', line 137, column 8 to line 145, column 3)",
                                                       " (in 'survreg', line 135, column 4 to column 17)",
                                                       " (in 'survreg', line 136, column 4 to column 17)",
                                                       " (in 'survreg', line 134, column 25 to line 137, column 3)",
-                                                      " (in 'survreg', line 134, column 8 to line 140, column 3)",
+                                                      " (in 'survreg', line 134, column 8 to line 145, column 3)",
                                                       " (in 'survreg', line 132, column 4 to column 14)",
                                                       " (in 'survreg', line 133, column 4 to column 17)",
                                                       " (in 'survreg', line 131, column 25 to line 134, column 3)",
-                                                      " (in 'survreg', line 131, column 8 to line 140, column 3)",
+                                                      " (in 'survreg', line 131, column 8 to line 145, column 3)",
                                                       " (in 'survreg', line 129, column 4 to column 17)",
                                                       " (in 'survreg', line 130, column 4 to column 17)",
                                                       " (in 'survreg', line 128, column 25 to line 131, column 3)",
-                                                      " (in 'survreg', line 128, column 8 to line 140, column 3)",
+                                                      " (in 'survreg', line 128, column 8 to line 145, column 3)",
                                                       " (in 'survreg', line 127, column 4 to column 18)",
                                                       " (in 'survreg', line 126, column 19 to line 128, column 3)",
-                                                      " (in 'survreg', line 126, column 2 to line 140, column 3)",
-                                                      " (in 'survreg', line 142, column 4 to column 15)",
-                                                      " (in 'survreg', line 141, column 18 to line 143, column 3)",
-                                                      " (in 'survreg', line 141, column 2 to line 143, column 3)",
-                                                      " (in 'survreg', line 146, column 9 to column 23)",
-                                                      " (in 'survreg', line 147, column 9 to column 28)",
-                                                      " (in 'survreg', line 148, column 8 to column 29)",
-                                                      " (in 'survreg', line 149, column 8 to column 29)",
-                                                      " (in 'survreg', line 150, column 8 to column 30)",
-                                                      " (in 'survreg', line 151, column 8 to column 26)",
-                                                      " (in 'survreg', line 152, column 8 to column 30)",
+                                                      " (in 'survreg', line 126, column 2 to line 145, column 3)",
+                                                      " (in 'survreg', line 148, column 4 to column 15)",
+                                                      " (in 'survreg', line 147, column 18 to line 149, column 3)",
+                                                      " (in 'survreg', line 147, column 2 to line 149, column 3)",
+                                                      " (in 'survreg', line 152, column 9 to column 23)",
+                                                      " (in 'survreg', line 153, column 9 to column 28)",
+                                                      " (in 'survreg', line 154, column 8 to column 29)",
+                                                      " (in 'survreg', line 155, column 8 to column 29)",
+                                                      " (in 'survreg', line 156, column 8 to column 30)",
+                                                      " (in 'survreg', line 157, column 8 to column 26)",
+                                                      " (in 'survreg', line 158, column 8 to column 30)",
                                                       " (in 'survreg', line 9, column 2 to column 40)",
                                                       " (in 'survreg', line 10, column 2 to line 11, column 36)",
                                                       " (in 'survreg', line 12, column 2 to column 14)",
@@ -302,16 +321,16 @@ loglogistic2_lpdf(const T0__& x, const T1__& alpha, const T2__& gamma,
     local_scalar_t__ aux;
     aux = DUMMY_VAR__;
     
-    current_statement__ = 141;
+    current_statement__ = 160;
     aux = stan::math::log1p(pow((x / gamma), alpha));
     local_scalar_t__ lpdf;
     lpdf = DUMMY_VAR__;
     
-    current_statement__ = 142;
+    current_statement__ = 161;
     lpdf = ((((stan::math::log(alpha) - stan::math::log(gamma)) +
                multiply_log((alpha - 1), x)) -
               multiply_log((alpha - 1), gamma)) - (2 * aux));
-    current_statement__ = 143;
+    current_statement__ = 162;
     return lpdf;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -345,9 +364,9 @@ loglogistic2_lccdf(const T0__& x, const T1__& alpha, const T2__& gamma,
     local_scalar_t__ lsurv;
     lsurv = DUMMY_VAR__;
     
-    current_statement__ = 145;
+    current_statement__ = 164;
     lsurv = -stan::math::log1p(pow((x / gamma), alpha));
-    current_statement__ = 146;
+    current_statement__ = 165;
     return lsurv;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -379,26 +398,26 @@ fatigue_lpdf(const T0__& x, const T1__& alpha, const T2__& gamma,
     local_scalar_t__ xg;
     xg = DUMMY_VAR__;
     
-    current_statement__ = 148;
+    current_statement__ = 167;
     xg = stan::math::sqrt((x / gamma));
     local_scalar_t__ gx;
     gx = DUMMY_VAR__;
     
-    current_statement__ = 149;
+    current_statement__ = 168;
     gx = stan::math::sqrt((gamma / x));
     local_scalar_t__ z;
     z = DUMMY_VAR__;
     
-    current_statement__ = 150;
+    current_statement__ = 169;
     z = ((xg - gx) / alpha);
     local_scalar_t__ lpdf;
     lpdf = DUMMY_VAR__;
     
-    current_statement__ = 151;
+    current_statement__ = 170;
     lpdf = ((((stan::math::log((xg + gx)) - stan::math::log2()) -
                stan::math::log(alpha)) - stan::math::log(x)) +
              normal_lpdf<false>(z, 0, 1));
-    current_statement__ = 152;
+    current_statement__ = 171;
     return lpdf;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -432,19 +451,19 @@ fatigue_lccdf(const T0__& x, const T1__& alpha, const T2__& gamma,
     local_scalar_t__ xg;
     xg = DUMMY_VAR__;
     
-    current_statement__ = 154;
+    current_statement__ = 173;
     xg = stan::math::sqrt((x / gamma));
     local_scalar_t__ gx;
     gx = DUMMY_VAR__;
     
-    current_statement__ = 155;
+    current_statement__ = 174;
     gx = stan::math::sqrt((gamma / x));
     local_scalar_t__ z;
     z = DUMMY_VAR__;
     
-    current_statement__ = 156;
+    current_statement__ = 175;
     z = ((xg - gx) / alpha);
-    current_statement__ = 157;
+    current_statement__ = 176;
     return normal_lcdf(-z, 0, 1);
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -489,21 +508,21 @@ loglik_aft(const T0__& lpdf_arg__, const T1__& lsurv_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 159;
+    current_statement__ = 178;
     n = num_elements(lpdf);
-    current_statement__ = 160;
+    current_statement__ = 179;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 162;
+    current_statement__ = 181;
     assign(loglik, nil_index_list(),
       add(
         elt_multiply(event,
           subtract(subtract(lpdf, lp), stan::math::log(tau))),
         elt_multiply(subtract(1, event), lsurv)), "assigning variable loglik");
-    current_statement__ = 163;
+    current_statement__ = 182;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -550,22 +569,22 @@ loglik_ah(const T0__& lpdf_arg__, const T1__& lsurv_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 165;
+    current_statement__ = 184;
     n = num_elements(lpdf);
-    current_statement__ = 166;
+    current_statement__ = 185;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 168;
+    current_statement__ = 187;
     assign(loglik, nil_index_list(),
       add(
         elt_multiply(event,
           subtract(subtract(lpdf, lsurv), stan::math::log(tau))),
         elt_multiply(stan::math::exp(minus(lp)), lsurv)),
       "assigning variable loglik");
-    current_statement__ = 169;
+    current_statement__ = 188;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -612,29 +631,29 @@ loglik_ph(const T0__& lpdf_arg__, const T1__& lsurv_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 171;
+    current_statement__ = 190;
     n = num_elements(lpdf);
-    current_statement__ = 172;
+    current_statement__ = 191;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 174;
+    current_statement__ = 193;
     validate_non_negative_index("lht", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> lht;
     lht = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(lht, DUMMY_VAR__);
     
-    current_statement__ = 175;
+    current_statement__ = 194;
     assign(lht, nil_index_list(), subtract(lpdf, lsurv),
       "assigning variable lht");
-    current_statement__ = 176;
+    current_statement__ = 195;
     assign(loglik, nil_index_list(),
       add(elt_multiply(event, subtract(add(lht, lp), stan::math::log(tau))),
         elt_multiply(stan::math::exp(lp), lsurv)),
       "assigning variable loglik");
-    current_statement__ = 177;
+    current_statement__ = 196;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -681,49 +700,49 @@ loglik_po(const T0__& lpdf_arg__, const T1__& lsurv_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 179;
+    current_statement__ = 198;
     n = num_elements(lpdf);
-    current_statement__ = 180;
+    current_statement__ = 199;
     validate_non_negative_index("lht", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> lht;
     lht = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(lht, DUMMY_VAR__);
     
-    current_statement__ = 181;
+    current_statement__ = 200;
     assign(lht, nil_index_list(), subtract(lpdf, lsurv),
       "assigning variable lht");
-    current_statement__ = 182;
+    current_statement__ = 201;
     validate_non_negative_index("Ht", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> Ht;
     Ht = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(Ht, DUMMY_VAR__);
     
-    current_statement__ = 183;
+    current_statement__ = 202;
     assign(Ht, nil_index_list(), minus(lsurv), "assigning variable Ht");
-    current_statement__ = 184;
+    current_statement__ = 203;
     validate_non_negative_index("aux", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> aux;
     aux = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(aux, DUMMY_VAR__);
     
-    current_statement__ = 185;
+    current_statement__ = 204;
     assign(aux, nil_index_list(),
       elt_multiply(stan::math::exp(lp), stan::math::expm1(Ht)),
       "assigning variable aux");
-    current_statement__ = 186;
+    current_statement__ = 205;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 187;
+    current_statement__ = 206;
     assign(loglik, nil_index_list(),
       subtract(
         elt_multiply(event,
           subtract(add(add(lht, lp), Ht), stan::math::log(tau))),
         elt_multiply(add(1, event), stan::math::log1p(aux))),
       "assigning variable loglik");
-    current_statement__ = 188;
+    current_statement__ = 207;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -775,83 +794,83 @@ loglik_yp(const T0__& status_arg__, const T1__& lpdf_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 190;
+    current_statement__ = 209;
     n = num_elements(lpdf);
-    current_statement__ = 191;
+    current_statement__ = 210;
     validate_non_negative_index("Rt0", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> Rt0;
     Rt0 = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(Rt0, DUMMY_VAR__);
     
-    current_statement__ = 193;
+    current_statement__ = 212;
     validate_non_negative_index("log_ht", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> log_ht;
     log_ht = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(log_ht, DUMMY_VAR__);
     
-    current_statement__ = 195;
+    current_statement__ = 214;
     validate_non_negative_index("log_St", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> log_St;
     log_St = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(log_St, DUMMY_VAR__);
     
-    current_statement__ = 197;
+    current_statement__ = 216;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 199;
+    current_statement__ = 218;
     validate_non_negative_index("theta", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> theta;
     theta = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(theta, DUMMY_VAR__);
     
-    current_statement__ = 201;
+    current_statement__ = 220;
     validate_non_negative_index("aux", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> aux;
     aux = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(aux, DUMMY_VAR__);
     
-    current_statement__ = 203;
+    current_statement__ = 222;
     validate_non_negative_index("lht0", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> lht0;
     lht0 = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(lht0, DUMMY_VAR__);
     
-    current_statement__ = 204;
+    current_statement__ = 223;
     assign(lht0, nil_index_list(),
       subtract(subtract(lpdf, lsurv), stan::math::log(tau)),
       "assigning variable lht0");
-    current_statement__ = 205;
+    current_statement__ = 224;
     validate_non_negative_index("Ht0", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> Ht0;
     Ht0 = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(Ht0, DUMMY_VAR__);
     
-    current_statement__ = 206;
+    current_statement__ = 225;
     assign(Ht0, nil_index_list(), minus(lsurv), "assigning variable Ht0");
-    current_statement__ = 207;
+    current_statement__ = 226;
     assign(Rt0, nil_index_list(), stan::math::expm1(Ht0),
       "assigning variable Rt0");
-    current_statement__ = 208;
+    current_statement__ = 227;
     assign(theta, nil_index_list(), stan::math::exp(lp_long),
       "assigning variable theta");
-    current_statement__ = 209;
+    current_statement__ = 228;
     assign(aux, nil_index_list(), elt_multiply(ratio, Rt0),
       "assigning variable aux");
-    current_statement__ = 210;
+    current_statement__ = 229;
     assign(log_ht, nil_index_list(),
       add(add(subtract(lp_short, stan::math::log1p(aux)), lht0), Ht0),
       "assigning variable log_ht");
-    current_statement__ = 211;
+    current_statement__ = 230;
     assign(log_St, nil_index_list(),
       elt_multiply(minus(theta), stan::math::log1p(aux)),
       "assigning variable log_St");
-    current_statement__ = 212;
+    current_statement__ = 231;
     assign(loglik, nil_index_list(),
       add(elt_multiply(status, log_ht), log_St), "assigning variable loglik");
-    current_statement__ = 213;
+    current_statement__ = 232;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -927,23 +946,23 @@ public:
       pos__ = std::numeric_limits<int>::min();
       
       pos__ = 1;
-      current_statement__ = 87;
+      current_statement__ = 99;
       context__.validate_dims("data initialization","n","int",
           context__.to_vec());
       n = std::numeric_limits<int>::min();
       
-      current_statement__ = 87;
+      current_statement__ = 99;
       n = context__.vals_i("n")[(1 - 1)];
-      current_statement__ = 88;
+      current_statement__ = 100;
       context__.validate_dims("data initialization","p","int",
           context__.to_vec());
       p = std::numeric_limits<int>::min();
       
-      current_statement__ = 88;
+      current_statement__ = 100;
       p = context__.vals_i("p")[(1 - 1)];
-      current_statement__ = 89;
+      current_statement__ = 101;
       validate_non_negative_index("time", "n", n);
-      current_statement__ = 90;
+      current_statement__ = 102;
       context__.validate_dims("data initialization","time","double",
           context__.to_vec(n));
       time = Eigen::Matrix<double, -1, 1>(n);
@@ -951,22 +970,22 @@ public:
       
       {
         std::vector<local_scalar_t__> time_flat__;
-        current_statement__ = 90;
+        current_statement__ = 102;
         assign(time_flat__, nil_index_list(), context__.vals_r("time"),
           "assigning variable time_flat__");
-        current_statement__ = 90;
+        current_statement__ = 102;
         pos__ = 1;
-        current_statement__ = 90;
+        current_statement__ = 102;
         for (int sym1__ = 1; sym1__ <= n; ++sym1__) {
-          current_statement__ = 90;
+          current_statement__ = 102;
           assign(time, cons_list(index_uni(sym1__), nil_index_list()),
             time_flat__[(pos__ - 1)], "assigning variable time");
-          current_statement__ = 90;
+          current_statement__ = 102;
           pos__ = (pos__ + 1);}
       }
-      current_statement__ = 91;
+      current_statement__ = 103;
       validate_non_negative_index("event", "n", n);
-      current_statement__ = 92;
+      current_statement__ = 104;
       context__.validate_dims("data initialization","event","double",
           context__.to_vec(n));
       event = Eigen::Matrix<double, -1, 1>(n);
@@ -974,25 +993,25 @@ public:
       
       {
         std::vector<local_scalar_t__> event_flat__;
-        current_statement__ = 92;
+        current_statement__ = 104;
         assign(event_flat__, nil_index_list(), context__.vals_r("event"),
           "assigning variable event_flat__");
-        current_statement__ = 92;
+        current_statement__ = 104;
         pos__ = 1;
-        current_statement__ = 92;
+        current_statement__ = 104;
         for (int sym1__ = 1; sym1__ <= n; ++sym1__) {
-          current_statement__ = 92;
+          current_statement__ = 104;
           assign(event, cons_list(index_uni(sym1__), nil_index_list()),
             event_flat__[(pos__ - 1)], "assigning variable event");
-          current_statement__ = 92;
+          current_statement__ = 104;
           pos__ = (pos__ + 1);}
       }
-      current_statement__ = 93;
+      current_statement__ = 105;
       validate_non_negative_index("X", "p == 0 ? 0 : n",
                                   (logical_eq(p, 0) ? 0 : n));
-      current_statement__ = 94;
+      current_statement__ = 106;
       validate_non_negative_index("X", "p", p);
-      current_statement__ = 95;
+      current_statement__ = 107;
       context__.validate_dims("data initialization","X","double",
           context__.to_vec((logical_eq(p, 0) ? 0 : n), p));
       X = Eigen::Matrix<double, -1, -1>((logical_eq(p, 0) ? 0 : n), p);
@@ -1000,182 +1019,196 @@ public:
       
       {
         std::vector<local_scalar_t__> X_flat__;
-        current_statement__ = 95;
+        current_statement__ = 107;
         assign(X_flat__, nil_index_list(), context__.vals_r("X"),
           "assigning variable X_flat__");
-        current_statement__ = 95;
+        current_statement__ = 107;
         pos__ = 1;
-        current_statement__ = 95;
+        current_statement__ = 107;
         for (int sym1__ = 1; sym1__ <= p; ++sym1__) {
-          current_statement__ = 95;
+          current_statement__ = 107;
           for (int sym2__ = 1; sym2__ <= (logical_eq(p, 0) ? 0 : n); ++sym2__) {
-            current_statement__ = 95;
+            current_statement__ = 107;
             assign(X,
               cons_list(index_uni(sym2__),
                 cons_list(index_uni(sym1__), nil_index_list())),
               X_flat__[(pos__ - 1)], "assigning variable X");
-            current_statement__ = 95;
+            current_statement__ = 107;
             pos__ = (pos__ + 1);}}
       }
-      current_statement__ = 96;
+      current_statement__ = 108;
       context__.validate_dims("data initialization","tau","double",
           context__.to_vec());
       tau = std::numeric_limits<double>::quiet_NaN();
       
-      current_statement__ = 96;
+      current_statement__ = 108;
       tau = context__.vals_r("tau")[(1 - 1)];
-      current_statement__ = 97;
+      current_statement__ = 109;
       context__.validate_dims("data initialization","baseline","int",
           context__.to_vec());
       baseline = std::numeric_limits<int>::min();
       
-      current_statement__ = 97;
+      current_statement__ = 109;
       baseline = context__.vals_i("baseline")[(1 - 1)];
-      current_statement__ = 98;
+      current_statement__ = 110;
       context__.validate_dims("data initialization","survreg","int",
           context__.to_vec());
       survreg = std::numeric_limits<int>::min();
       
-      current_statement__ = 98;
+      current_statement__ = 110;
       survreg = context__.vals_i("survreg")[(1 - 1)];
-      current_statement__ = 99;
+      current_statement__ = 111;
       is_alpha = std::numeric_limits<int>::min();
       
-      current_statement__ = 99;
+      current_statement__ = 111;
       is_alpha = 0;
-      current_statement__ = 100;
+      current_statement__ = 112;
       is_gamma = std::numeric_limits<int>::min();
       
-      current_statement__ = 100;
+      current_statement__ = 112;
       is_gamma = 0;
-      current_statement__ = 101;
+      current_statement__ = 113;
       is_lambda = std::numeric_limits<int>::min();
       
-      current_statement__ = 101;
+      current_statement__ = 113;
       is_lambda = 0;
-      current_statement__ = 102;
+      current_statement__ = 114;
       is_mu = std::numeric_limits<int>::min();
       
-      current_statement__ = 102;
+      current_statement__ = 114;
       is_mu = 0;
-      current_statement__ = 103;
+      current_statement__ = 115;
       is_sigma = std::numeric_limits<int>::min();
       
-      current_statement__ = 103;
+      current_statement__ = 115;
       is_sigma = 0;
-      current_statement__ = 104;
+      current_statement__ = 116;
       is_phi = std::numeric_limits<int>::min();
       
-      current_statement__ = 104;
+      current_statement__ = 116;
       is_phi = 0;
-      current_statement__ = 105;
+      current_statement__ = 117;
       validate_non_negative_index("zeros", "p == 0 ? n : 0",
                                   (logical_eq(p, 0) ? n : 0));
-      current_statement__ = 106;
+      current_statement__ = 118;
       zeros = Eigen::Matrix<double, -1, 1>((logical_eq(p, 0) ? n : 0));
       stan::math::fill(zeros, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 111;
+      current_statement__ = 123;
       if (logical_eq(p, 0)) {
-        current_statement__ = 109;
+        current_statement__ = 121;
         for (int i = 1; i <= n; ++i) {
-          current_statement__ = 107;
+          current_statement__ = 119;
           assign(zeros, cons_list(index_uni(i), nil_index_list()), 0,
             "assigning variable zeros");}
       } 
-      current_statement__ = 130;
+      current_statement__ = 149;
       if (logical_eq(baseline, 1)) {
-        current_statement__ = 128;
+        current_statement__ = 147;
         is_lambda = 1;
       } else {
-        current_statement__ = 127;
+        current_statement__ = 146;
         if (logical_eq(baseline, 2)) {
-          current_statement__ = 124;
+          current_statement__ = 143;
           is_alpha = 1;
-          current_statement__ = 125;
+          current_statement__ = 144;
           is_gamma = 1;
         } else {
-          current_statement__ = 123;
+          current_statement__ = 142;
           if (logical_eq(baseline, 3)) {
-            current_statement__ = 120;
+            current_statement__ = 139;
             is_mu = 1;
-            current_statement__ = 121;
+            current_statement__ = 140;
             is_sigma = 1;
           } else {
-            current_statement__ = 119;
+            current_statement__ = 138;
             if (logical_eq(baseline, 4)) {
-              current_statement__ = 116;
+              current_statement__ = 135;
               is_alpha = 1;
-              current_statement__ = 117;
+              current_statement__ = 136;
               is_gamma = 1;
             } else {
-              current_statement__ = 115;
+              current_statement__ = 134;
               if (logical_eq(baseline, 5)) {
-                current_statement__ = 112;
+                current_statement__ = 131;
                 is_alpha = 1;
-                current_statement__ = 113;
+                current_statement__ = 132;
                 is_gamma = 1;
-              } 
+              } else {
+                current_statement__ = 130;
+                if (logical_eq(baseline, 6)) {
+                  current_statement__ = 127;
+                  is_alpha = 1;
+                  current_statement__ = 128;
+                  is_gamma = 1;
+                } else {
+                  current_statement__ = 126;
+                  if (logical_eq(baseline, 7)) {
+                    current_statement__ = 124;
+                    is_sigma = 1;
+                  } 
+                }
+              }
             }
           }
         }
       }
-      current_statement__ = 133;
+      current_statement__ = 152;
       if (logical_eq(survreg, 5)) {
-        current_statement__ = 131;
+        current_statement__ = 150;
         is_phi = 1;
       } 
-      current_statement__ = 134;
+      current_statement__ = 153;
       beta_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 134;
+      current_statement__ = 153;
       beta_1dim__ = (logical_eq(p, 0) ? 0 : p);
-      current_statement__ = 134;
+      current_statement__ = 153;
       validate_non_negative_index("beta", "p == 0 ? 0 : p", beta_1dim__);
-      current_statement__ = 135;
+      current_statement__ = 154;
       phi_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 135;
+      current_statement__ = 154;
       phi_1dim__ = (logical_eq(is_phi, 0) ? 0 : p);
-      current_statement__ = 135;
+      current_statement__ = 154;
       validate_non_negative_index("phi", "is_phi == 0 ? 0 : p", phi_1dim__);
-      current_statement__ = 136;
+      current_statement__ = 155;
       alpha_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 136;
+      current_statement__ = 155;
       alpha_1dim__ = (logical_eq(is_alpha, 0) ? 0 : 1);
-      current_statement__ = 136;
+      current_statement__ = 155;
       validate_non_negative_index("alpha", "is_alpha == 0 ? 0 : 1",
                                   alpha_1dim__);
-      current_statement__ = 137;
+      current_statement__ = 156;
       gamma_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 137;
+      current_statement__ = 156;
       gamma_1dim__ = (logical_eq(is_gamma, 0) ? 0 : 1);
-      current_statement__ = 137;
+      current_statement__ = 156;
       validate_non_negative_index("gamma", "is_gamma == 0 ? 0 : 1",
                                   gamma_1dim__);
-      current_statement__ = 138;
+      current_statement__ = 157;
       lambda_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 138;
+      current_statement__ = 157;
       lambda_1dim__ = (logical_eq(is_lambda, 0) ? 0 : 1);
-      current_statement__ = 138;
+      current_statement__ = 157;
       validate_non_negative_index("lambda", "is_lambda == 0 ? 0 : 1",
                                   lambda_1dim__);
-      current_statement__ = 139;
+      current_statement__ = 158;
       mu_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 139;
+      current_statement__ = 158;
       mu_1dim__ = (logical_eq(is_mu, 0) ? 0 : 1);
-      current_statement__ = 139;
+      current_statement__ = 158;
       validate_non_negative_index("mu", "is_mu == 0 ? 0 : 1", mu_1dim__);
-      current_statement__ = 140;
+      current_statement__ = 159;
       sigma_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 140;
+      current_statement__ = 159;
       sigma_1dim__ = (logical_eq(is_sigma, 0) ? 0 : 1);
-      current_statement__ = 140;
+      current_statement__ = 159;
       validate_non_negative_index("sigma", "is_sigma == 0 ? 0 : 1",
                                   sigma_1dim__);
     } catch (const std::exception& e) {
@@ -1397,123 +1430,154 @@ public:
             assign(y, nil_index_list(), time, "assigning variable y");
           }
         }
-        current_statement__ = 64;
+        current_statement__ = 76;
         if (logical_eq(baseline, 1)) {
-          current_statement__ = 62;
+          current_statement__ = 74;
           for (int i = 1; i <= n; ++i) {
-            current_statement__ = 59;
+            current_statement__ = 71;
             assign(lpdf, cons_list(index_uni(i), nil_index_list()),
               exponential_lpdf<false>(y[(i - 1)], lambda),
               "assigning variable lpdf");
-            current_statement__ = 60;
+            current_statement__ = 72;
             assign(lsurv, cons_list(index_uni(i), nil_index_list()),
               exponential_lccdf(y[(i - 1)], lambda),
               "assigning variable lsurv");}
         } else {
-          current_statement__ = 58;
+          current_statement__ = 70;
           if (logical_eq(baseline, 2)) {
-            current_statement__ = 56;
+            current_statement__ = 68;
             for (int i = 1; i <= n; ++i) {
-              current_statement__ = 53;
+              current_statement__ = 65;
               assign(lpdf, cons_list(index_uni(i), nil_index_list()),
                 weibull_lpdf<false>(y[(i - 1)], alpha, gamma),
                 "assigning variable lpdf");
-              current_statement__ = 54;
+              current_statement__ = 66;
               assign(lsurv, cons_list(index_uni(i), nil_index_list()),
                 weibull_lccdf(y[(i - 1)], alpha, gamma),
                 "assigning variable lsurv");}
           } else {
-            current_statement__ = 52;
+            current_statement__ = 64;
             if (logical_eq(baseline, 3)) {
-              current_statement__ = 50;
+              current_statement__ = 62;
               for (int i = 1; i <= n; ++i) {
-                current_statement__ = 47;
+                current_statement__ = 59;
                 assign(lpdf, cons_list(index_uni(i), nil_index_list()),
                   lognormal_lpdf<false>(y[(i - 1)], mu, sigma),
                   "assigning variable lpdf");
-                current_statement__ = 48;
+                current_statement__ = 60;
                 assign(lsurv, cons_list(index_uni(i), nil_index_list()),
                   lognormal_lccdf(y[(i - 1)], mu, sigma),
                   "assigning variable lsurv");}
             } else {
-              current_statement__ = 46;
+              current_statement__ = 58;
               if (logical_eq(baseline, 4)) {
-                current_statement__ = 44;
+                current_statement__ = 56;
                 for (int i = 1; i <= n; ++i) {
-                  current_statement__ = 41;
+                  current_statement__ = 53;
                   assign(lpdf, cons_list(index_uni(i), nil_index_list()),
                     loglogistic2_lpdf<false>(y[(i - 1)], alpha[(1 - 1)],
                       gamma[(1 - 1)], pstream__), "assigning variable lpdf");
-                  current_statement__ = 42;
+                  current_statement__ = 54;
                   assign(lsurv, cons_list(index_uni(i), nil_index_list()),
                     loglogistic2_lccdf(y[(i - 1)], alpha[(1 - 1)],
                       gamma[(1 - 1)], pstream__), "assigning variable lsurv");
                 }
               } else {
-                current_statement__ = 40;
+                current_statement__ = 52;
                 if (logical_eq(baseline, 5)) {
-                  current_statement__ = 38;
+                  current_statement__ = 50;
                   for (int i = 1; i <= n; ++i) {
-                    current_statement__ = 35;
+                    current_statement__ = 47;
                     assign(lpdf, cons_list(index_uni(i), nil_index_list()),
                       fatigue_lpdf<false>(y[(i - 1)], alpha[(1 - 1)],
                         gamma[(1 - 1)], pstream__), "assigning variable lpdf");
-                    current_statement__ = 36;
+                    current_statement__ = 48;
                     assign(lsurv, cons_list(index_uni(i), nil_index_list()),
                       fatigue_lccdf(y[(i - 1)], alpha[(1 - 1)],
                         gamma[(1 - 1)], pstream__),
                       "assigning variable lsurv");}
-                } 
+                } else {
+                  current_statement__ = 46;
+                  if (logical_eq(baseline, 6)) {
+                    current_statement__ = 44;
+                    for (int i = 1; i <= n; ++i) {
+                      current_statement__ = 41;
+                      assign(lpdf, cons_list(index_uni(i), nil_index_list()),
+                        gamma_lpdf<false>(y[(i - 1)], alpha, gamma),
+                        "assigning variable lpdf");
+                      current_statement__ = 42;
+                      assign(lsurv,
+                        cons_list(index_uni(i), nil_index_list()),
+                        gamma_lccdf(y[(i - 1)], alpha, gamma),
+                        "assigning variable lsurv");}
+                  } else {
+                    current_statement__ = 40;
+                    if (logical_eq(baseline, 7)) {
+                      current_statement__ = 38;
+                      for (int i = 1; i <= n; ++i) {
+                        current_statement__ = 35;
+                        assign(lpdf,
+                          cons_list(index_uni(i), nil_index_list()),
+                          rayleigh_lpdf<false>(y[(i - 1)], sigma),
+                          "assigning variable lpdf");
+                        current_statement__ = 36;
+                        assign(lsurv,
+                          cons_list(index_uni(i), nil_index_list()),
+                          rayleigh_lccdf(y[(i - 1)], sigma),
+                          "assigning variable lsurv");}
+                    } 
+                  }
+                }
               }
             }
           }
         }
-        current_statement__ = 85;
+        current_statement__ = 97;
         if (logical_eq(survreg, 1)) {
-          current_statement__ = 83;
+          current_statement__ = 95;
           assign(loglik, nil_index_list(),
             loglik_aft(lpdf, lsurv, event, lp, tau, pstream__),
             "assigning variable loglik");
         } else {
-          current_statement__ = 82;
+          current_statement__ = 94;
           if (logical_eq(survreg, 2)) {
-            current_statement__ = 80;
+            current_statement__ = 92;
             assign(loglik, nil_index_list(),
               loglik_ph(lpdf, lsurv, event, lp, tau, pstream__),
               "assigning variable loglik");
           } else {
-            current_statement__ = 79;
+            current_statement__ = 91;
             if (logical_eq(survreg, 3)) {
-              current_statement__ = 77;
+              current_statement__ = 89;
               assign(loglik, nil_index_list(),
                 loglik_po(lpdf, lsurv, event, lp, tau, pstream__),
                 "assigning variable loglik");
             } else {
-              current_statement__ = 76;
+              current_statement__ = 88;
               if (logical_eq(survreg, 4)) {
-                current_statement__ = 74;
+                current_statement__ = 86;
                 assign(loglik, nil_index_list(),
                   loglik_ah(lpdf, lsurv, event, lp, tau, pstream__),
                   "assigning variable loglik");
               } else {
-                current_statement__ = 71;
+                current_statement__ = 83;
                 if (logical_gt(p, 0)) {
-                  current_statement__ = 68;
+                  current_statement__ = 80;
                   assign(lp_long, nil_index_list(), multiply(X, phi),
                     "assigning variable lp_long");
-                  current_statement__ = 69;
+                  current_statement__ = 81;
                   assign(ratio, nil_index_list(),
                     stan::math::exp(multiply(X, subtract(beta, phi))),
                     "assigning variable ratio");
                 } else {
-                  current_statement__ = 65;
+                  current_statement__ = 77;
                   assign(lp_long, nil_index_list(), zeros,
                     "assigning variable lp_long");
-                  current_statement__ = 66;
+                  current_statement__ = 78;
                   assign(ratio, nil_index_list(), stan::math::exp(zeros),
                     "assigning variable ratio");
                 }
-                current_statement__ = 72;
+                current_statement__ = 84;
                 assign(loglik, nil_index_list(),
                   loglik_yp(event, lpdf, lsurv, lp, lp_long, ratio,
                     tau, pstream__), "assigning variable loglik");
@@ -1521,7 +1585,7 @@ public:
             }
           }
         }
-        current_statement__ = 86;
+        current_statement__ = 98;
         lp_accum__.add(sum(loglik));
       }
     } catch (const std::exception& e) {

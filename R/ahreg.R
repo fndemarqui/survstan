@@ -52,7 +52,9 @@ ahreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
                      "weibull" = 2,
                      "lognormal" = 3,
                      "loglogistic" = 4,
-                     "fatigue" = 5
+                     "fatigue" = 5,
+                     "gamma" = 6,
+                     "rayleigh" = 7
   )
 
   stan_data <- list(time=y, event=event, X=X, n=n, p=p,
@@ -78,7 +80,9 @@ ahreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
                              weibull = -stats::pweibull(nu, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
                              lognormal = -stats::plnorm(nu, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
                              loglogistic = -actuar::pllogis(nu, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-                             fatigue = -extraDistr::pfatigue(nu, alpha = pars[p+1], beta = pars[p+2], mu = 0, lower.tail = FALSE, log.p = TRUE)
+                             fatigue = -extraDistr::pfatigue(nu, alpha = pars[p+1], beta = pars[p+2], mu = 0, lower.tail = FALSE, log.p = TRUE),
+                             gamma = -pgamma(nu, shape = pars[p+1], rate = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+                             rayleigh = -extraDistr::prayleigh(nu, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE)
   )
   output$residuals <- H0*exp(-lp)
   output$event <- event

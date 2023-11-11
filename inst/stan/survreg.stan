@@ -45,8 +45,15 @@ transformed data{
   }else if(baseline == 5){ // Birnbaum–Saunders (fatigue)
     is_alpha = 1;
     is_gamma = 1;
+  }else if(baseline == 6){ // gamma
+    is_alpha = 1;
+    is_gamma = 1;
+  }else if(baseline == 7){ // Rayleigh
+    is_sigma = 1;
   }
 
+
+  //------------------------------------------------------------
   if(survreg == 5){
     is_phi = 1;
   }
@@ -115,6 +122,16 @@ model{
     for(i in 1:n){
       lpdf[i] = fatigue_lpdf(y[i]|alpha[1], gamma[1]);
       lsurv[i] = fatigue_lccdf(y[i]|alpha[1], gamma[1]);
+    }
+  }else if(baseline == 6){ // Gamma
+    for(i in 1:n){
+          lpdf[i] = gamma_lpdf(y[i]|alpha, gamma);
+          lsurv[i] = gamma_lccdf(y[i]|alpha, gamma);
+    }
+  }else if(baseline == 7){ // Rayleigh
+    for(i in 1:n){
+          lpdf[i] = rayleigh_lpdf(y[i]|sigma);
+          lsurv[i] = rayleigh_lccdf(y[i]|sigma);
     }
   }
 
