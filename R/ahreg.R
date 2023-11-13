@@ -81,7 +81,7 @@ ahreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
                              lognormal = -stats::plnorm(nu, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
                              loglogistic = -actuar::pllogis(nu, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
                              fatigue = -extraDistr::pfatigue(nu, alpha = pars[p+1], beta = pars[p+2], mu = 0, lower.tail = FALSE, log.p = TRUE),
-                             gamma = -pgamma(nu, shape = pars[p+1], rate = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+                             gamma = -stats::pgamma(nu, shape = pars[p+1], rate = pars[p+2], lower.tail = FALSE, log.p = TRUE),
                              rayleigh = -extraDistr::prayleigh(nu, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE)
   )
   output$residuals <- H0*exp(-lp)

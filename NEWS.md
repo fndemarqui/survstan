@@ -29,4 +29,4 @@
 # survstan 0.0.5
 
 - Inclusion of emmeans method for survstan models.
-- Implementation of gamma and Rayleigh distributions
+- Implementation of gamma and Rayleigh distributions.
