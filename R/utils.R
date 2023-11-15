@@ -1,5 +1,19 @@
 
 
+# add here new baseline distributions
+set_baseline <- function(baseline){
+  baseline <- switch(baseline,
+                     "exponential" = 1,
+                     "weibull" = 2,
+                     "lognormal" = 3,
+                     "loglogistic" = 4,
+                     "fatigue" = 5,
+                     "gamma" = 6,
+                     "rayleigh" = 7
+  )
+  return(baseline)
+}
+
 
 reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
   estimates <- object$par

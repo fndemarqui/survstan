@@ -47,7 +47,7 @@ URL: https://github.com/fndemarqui/survstan,
     https://fndemarqui.github.io/survstan/
 BugReports: https://github.com/fndemarqui/survstan/issues
 Suggests: 
-    emmeans (>= 1.4),
+    emmeans (>= 1.4.2),
     estimability,
     GGally,
     knitr,

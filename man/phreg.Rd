@@ -13,7 +13,7 @@ phreg(formula, data, baseline = "weibull", dist = NULL, init = 0, ...)
 
 \item{baseline}{the chosen baseline distribution; options currently available are: exponential, weibull, lognormal, loglogistic and Birnbaum-Saunders (fatigue) distributions.}
 
-\item{dist}{alternative way to specify the baseline distribution (for compability with the \code{\link[survival]{survreg}} function); default is NULL.}
+\item{dist}{alternative way to specify the baseline distribution (for compatibility with the \code{\link[survival]{survreg}} function); default is NULL.}
 
 \item{init}{initial values specification (default value is 0); see the detailed documentation for \code{init} in \code{\link[rstan]{optimizing}}.}
 
