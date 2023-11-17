@@ -1,5 +1,42 @@
 
 
+rdev <- function(rcs, event){
+  martingale <- event - rcs
+  deviance = sign(martingale)*sqrt((-2*(martingale + event*log(event - martingale))))
+}
+
+
+#' residuals method for survstan models
+#' @aliases residuals.survstan
+#' @export
+#' @param object a fitted model object of the class survstan.
+#' @details This function extracts the residuals, martingale residuals and deviance residuals of a survstan object.
+#' @param type type of residuals desired: coxsnell (default), martingale and deviance.
+#' @param ... further arguments passed to or from other methods.
+#' @return a vector containing the desired residuals.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' ovarian$rx <- as.factor(ovarian$rx)
+#' fit <- aftreg(Surv(futime, fustat) ~ age + rx, data = ovarian, baseline = "weibull", init = 0)
+#' residuals(fit, type = "coxsnell")
+#' residuals(fit, type = "martingale")
+#' residuals(fit, type = "deviance")
+#' }
+residuals.survstan <- function(object, type = c("coxsnell", "martingale", "deviance"), ...){
+  type <- tolower(type)
+  type <- match.arg(type)
+  rcs <- object$residuals
+  event <- object$event
+
+  r <- switch(type,
+    "coxsnell" = rcs,
+    "martingale" = event - rcs,
+    "deviance" = rdev(rcs, event),
+  )
+  return(r)
+}
+
 
 #---------------------------------------------
 #' Generic S3 method ggresiduals

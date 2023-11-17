@@ -74,6 +74,8 @@ in the R package survstan. Such distributions include:
 - Weibull
 - Lognormal
 - Loglogistic
+- Gamma
+- Rayleigh
 - Birnbaum-Saunders (fatigue)
 
 The parametrizations adopted in the package survstan are presented next.
@@ -144,6 +146,35 @@ $$S(t|\alpha, \gamma) = \frac{1}{1+ \left(\frac{t}{\gamma}\right)^{\alpha}}$$
 and $$
     h(t|\alpha, \gamma) = \frac{\frac{\alpha}{\gamma}\left(\frac{t}{\gamma}\right)^{\alpha-1}}{1 + \left(\frac{t}{\gamma}\right)^{\alpha}}.
 $$
+
+### Gamma Distribution
+
+If $T \sim \mbox{Gamma}(\alpha, \gamma)$, then
+
+$$f(t|\alpha, \lambda) = \frac{\lambda^{\alpha}}{\Gamma(\alpha)}t^{\alpha-1}\exp\left\{-\lambda t\right\}I_{[0, \infty)}(t),$$
+
+where $\Gamma(\alpha) = \int_{0}^{\infty}u^{\alpha-1}\exp\{-u\}du$ is
+the gamma function.
+
+The survival function is given by
+
+$$S(t|\alpha, \lambda) = 1 - \frac{\gamma^{*}(\alpha, \gamma t)}{\Gamma(\alpha)},$$
+where $\gamma^{*}(\alpha, \gamma t)$ is the lower incomplete gamma
+function, which is available only numerically. Finally, the hazard
+function is expressed as:
+
+$$h(t|\alpha, \lambda) = \frac{f(t|\alpha, \gamma)}{S(t|\alpha, \gamma)}.$$
+
+### Rayleigh Distribution
+
+Let $T \sim \mbox{rayleigh}(\sigma)$, where $\sigma>0$ is a scale
+parameter. Then, the density, survival and hazard functions are
+respectively given by:
+
+$$f(t|\sigma) = \frac{x}{\sigma^2}\exp\left\{-\frac{x^2}{2\sigma^2}\right\},$$
+$$S(t|\sigma) = \exp\left\{-\frac{x^2}{2\sigma^2}\right\}$$ and
+
+$$h(t|\sigma) = \frac{x}{\sigma^2}.$$
 
 ### Birnbaum-Saunders (fatigue) Distribution
 
