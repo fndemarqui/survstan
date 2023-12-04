@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-To fit a survival model in the __survstan__ package, the user must choose among one of the available fitting functions `*reg()`, where * stands for the type of regression model, that is, `aft` for accelerated failure time (AFT) models, `ah` for accelerates hazards (AH) models, `ph` for proportional hazards (PO) models, `po` for proportional (PO) models, or `yp` for Yang \& Prentice (YP) models).
+To fit a survival model with the __survstan__ package, the user must choose among one of the available fitting functions `*reg()`, where * stands for the type of regression model, that is, `aft` for accelerated failure time (AFT) models, `ah` for accelerates hazards (AH) models, `ph` for proportional hazards (PO) models, `po` for proportional (PO) models, or `yp` for Yang \& Prentice (YP) models).
 
 The specification of the survival formula passed to the chosen `*reg()` function follows the same syntax adopted in the __survival__ package, so that transition to the __survstan__ package can be smoothly as possible for those familiar with the `survival` package.
 

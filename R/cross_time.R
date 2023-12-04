@@ -1,19 +1,19 @@
 
-
-surv_yp <- function(time, pars, lp_short, lp_long, baseline, p){
-  p <- 2*p
-  H0 <- switch(baseline,
-               exponential = -stats::pexp(time, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
-               weibull = -stats::pweibull(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-               lognormal = -stats::plnorm(time, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-               loglogistic = -actuar::pllogis(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE)
-  )
-  ratio <- exp(lp_short - lp_long)
-  Rt = expm1(H0)*ratio
-  theta <- exp(lp_long)
-  surv <- exp(-theta*log1p(Rt))
-  return(surv)
-}
+#
+# surv_yp <- function(time, pars, lp_short, lp_long, baseline, p){
+#   p <- 2*p
+#   H0 <- switch(baseline,
+#                exponential = -stats::pexp(time, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
+#                weibull = -stats::pweibull(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+#                lognormal = -stats::plnorm(time, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+#                loglogistic = -actuar::pllogis(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE)
+#   )
+#   ratio <- exp(lp_short - lp_long)
+#   Rt = expm1(H0)*ratio
+#   theta <- exp(lp_long)
+#   surv <- exp(-theta*log1p(Rt))
+#   return(surv)
+# }
 
 
 diffSurv <- function(time, X1, X2, pars, baseline, p){
