@@ -135,24 +135,29 @@ model{
     }
   }
 
-  if(survreg ==  1){ //AFT model
-    loglik = loglik_aft(lpdf, lsurv, event, lp, tau);
-  }else if(survreg == 2){ //PH model
-    loglik = loglik_ph(lpdf, lsurv, event, lp, tau);
-  }else if(survreg == 3){ //PO model
-    loglik = loglik_po(lpdf, lsurv, event, lp, tau);
-  }else if(survreg == 4){ //AH model
-    loglik = loglik_ah(lpdf, lsurv, event, lp, tau);
+  if(p == 0){
+    loglik = event .* lpdf + (1-event) .* lsurv;
   }else{
-      if(p>0){
-        lp_long = X*phi;
-        ratio =  exp(X*(beta-phi));
-      }else{
-        lp_long = zeros;
-        ratio = exp(zeros);
-      }
-    loglik = loglik_yp(event, lpdf, lsurv, lp, lp_long, ratio, tau);
+    if(survreg ==  1){ //AFT model
+      loglik = loglik_aft(lpdf, lsurv, event, lp, tau);
+    }else if(survreg == 2){ //PH model
+      loglik = loglik_ph(lpdf, lsurv, event, lp, tau);
+    }else if(survreg == 3){ //PO model
+      loglik = loglik_po(lpdf, lsurv, event, lp, tau);
+    }else if(survreg == 4){ //AH model
+      loglik = loglik_ah(lpdf, lsurv, event, lp, tau);
+    }else{
+        if(p>0){
+          lp_long = X*phi;
+          ratio =  exp(X*(beta-phi));
+        }else{
+          lp_long = zeros;
+          ratio = exp(zeros);
+        }
+      loglik = loglik_yp(event, lpdf, lsurv, lp, lp_long, ratio, tau);
+    }
   }
+
 
   target += sum(loglik);
 

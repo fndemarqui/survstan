@@ -83,14 +83,20 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
 
 
   # baseline parameters:
-  se <- sqrt(diag(vcov))
-  alpha <- 1-conf.level
-  ztab <- stats::qnorm(alpha/2, lower.tail=FALSE)
-  d <- ztab*se
-  lwr <- estimate - d
-  upr <- estimate + d
+  # se <- sqrt(diag(vcov))
+  # alpha <- 1-conf.level
+  # ztab <- stats::qnorm(alpha/2, lower.tail=FALSE)
+  # d <- ztab*se
+  # lwr <- estimate - d
+  # upr <- estimate + d
+  # tbl <- cbind(estimate, se, lwr, upr)
+
+  CI <- confint(object, parm = names(estimate), level = conf.level)
+  lwr <- CI[, 1]
+  upr <- CI[, 2]
   tbl <- cbind(estimate, se, lwr, upr)
 
+  alpha <- 1-conf.level
   conf_labels <- round(100*(c(alpha/2, 1-alpha/2)),1)
   conf_labels <- paste0(conf_labels, "%")
   colnames(tbl) <- c(colnames(tbl)[1:2], conf_labels)

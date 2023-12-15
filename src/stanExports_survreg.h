@@ -151,28 +151,32 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'survreg', line 181, column 4 to line 184, column 5)",
                                                       " (in 'survreg', line 180, column 19 to line 185, column 3)",
                                                       " (in 'survreg', line 180, column 2 to line 215, column 3)",
-                                                      " (in 'survreg', line 229, column 8 to column 24)",
-                                                      " (in 'survreg', line 230, column 8 to column 27)",
-                                                      " (in 'survreg', line 228, column 11 to line 231, column 7)",
-                                                      " (in 'survreg', line 226, column 8 to column 24)",
-                                                      " (in 'survreg', line 227, column 8 to column 35)",
-                                                      " (in 'survreg', line 225, column 13 to line 228, column 7)",
-                                                      " (in 'survreg', line 225, column 6 to line 231, column 7)",
-                                                      " (in 'survreg', line 232, column 4 to column 68)",
-                                                      " (in 'survreg', line 224, column 7 to line 233, column 3)",
-                                                      " (in 'survreg', line 223, column 4 to column 52)",
-                                                      " (in 'survreg', line 222, column 24 to line 224, column 3)",
-                                                      " (in 'survreg', line 222, column 8 to line 233, column 3)",
-                                                      " (in 'survreg', line 221, column 4 to column 52)",
-                                                      " (in 'survreg', line 220, column 24 to line 222, column 3)",
-                                                      " (in 'survreg', line 220, column 8 to line 233, column 3)",
-                                                      " (in 'survreg', line 219, column 4 to column 52)",
-                                                      " (in 'survreg', line 218, column 24 to line 220, column 3)",
-                                                      " (in 'survreg', line 218, column 8 to line 233, column 3)",
-                                                      " (in 'survreg', line 217, column 4 to column 53)",
-                                                      " (in 'survreg', line 216, column 19 to line 218, column 3)",
-                                                      " (in 'survreg', line 216, column 2 to line 233, column 3)",
-                                                      " (in 'survreg', line 234, column 2 to column 24)",
+                                                      " (in 'survreg', line 232, column 10 to column 26)",
+                                                      " (in 'survreg', line 233, column 10 to column 29)",
+                                                      " (in 'survreg', line 231, column 13 to line 234, column 9)",
+                                                      " (in 'survreg', line 229, column 10 to column 26)",
+                                                      " (in 'survreg', line 230, column 10 to column 37)",
+                                                      " (in 'survreg', line 228, column 15 to line 231, column 9)",
+                                                      " (in 'survreg', line 228, column 8 to line 234, column 9)",
+                                                      " (in 'survreg', line 235, column 6 to column 70)",
+                                                      " (in 'survreg', line 227, column 9 to line 236, column 5)",
+                                                      " (in 'survreg', line 226, column 6 to column 54)",
+                                                      " (in 'survreg', line 225, column 26 to line 227, column 5)",
+                                                      " (in 'survreg', line 225, column 10 to line 236, column 5)",
+                                                      " (in 'survreg', line 224, column 6 to column 54)",
+                                                      " (in 'survreg', line 223, column 26 to line 225, column 5)",
+                                                      " (in 'survreg', line 223, column 10 to line 236, column 5)",
+                                                      " (in 'survreg', line 222, column 6 to column 54)",
+                                                      " (in 'survreg', line 221, column 26 to line 223, column 5)",
+                                                      " (in 'survreg', line 221, column 10 to line 236, column 5)",
+                                                      " (in 'survreg', line 220, column 6 to column 55)",
+                                                      " (in 'survreg', line 219, column 21 to line 221, column 5)",
+                                                      " (in 'survreg', line 219, column 4 to line 236, column 5)",
+                                                      " (in 'survreg', line 218, column 7 to line 237, column 3)",
+                                                      " (in 'survreg', line 217, column 4 to column 48)",
+                                                      " (in 'survreg', line 216, column 12 to line 218, column 3)",
+                                                      " (in 'survreg', line 216, column 2 to line 237, column 3)",
+                                                      " (in 'survreg', line 238, column 2 to column 24)",
                                                       " (in 'survreg', line 104, column 2 to column 8)",
                                                       " (in 'survreg', line 105, column 2 to column 8)",
                                                       " (in 'survreg', line 106, column 9 to column 10)",
@@ -321,16 +325,16 @@ loglogistic2_lpdf(const T0__& x, const T1__& alpha, const T2__& gamma,
     local_scalar_t__ aux;
     aux = DUMMY_VAR__;
     
-    current_statement__ = 160;
+    current_statement__ = 164;
     aux = stan::math::log1p(pow((x / gamma), alpha));
     local_scalar_t__ lpdf;
     lpdf = DUMMY_VAR__;
     
-    current_statement__ = 161;
+    current_statement__ = 165;
     lpdf = ((((stan::math::log(alpha) - stan::math::log(gamma)) +
                multiply_log((alpha - 1), x)) -
               multiply_log((alpha - 1), gamma)) - (2 * aux));
-    current_statement__ = 162;
+    current_statement__ = 166;
     return lpdf;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -364,9 +368,9 @@ loglogistic2_lccdf(const T0__& x, const T1__& alpha, const T2__& gamma,
     local_scalar_t__ lsurv;
     lsurv = DUMMY_VAR__;
     
-    current_statement__ = 164;
+    current_statement__ = 168;
     lsurv = -stan::math::log1p(pow((x / gamma), alpha));
-    current_statement__ = 165;
+    current_statement__ = 169;
     return lsurv;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -398,26 +402,26 @@ fatigue_lpdf(const T0__& x, const T1__& alpha, const T2__& gamma,
     local_scalar_t__ xg;
     xg = DUMMY_VAR__;
     
-    current_statement__ = 167;
+    current_statement__ = 171;
     xg = stan::math::sqrt((x / gamma));
     local_scalar_t__ gx;
     gx = DUMMY_VAR__;
     
-    current_statement__ = 168;
+    current_statement__ = 172;
     gx = stan::math::sqrt((gamma / x));
     local_scalar_t__ z;
     z = DUMMY_VAR__;
     
-    current_statement__ = 169;
+    current_statement__ = 173;
     z = ((xg - gx) / alpha);
     local_scalar_t__ lpdf;
     lpdf = DUMMY_VAR__;
     
-    current_statement__ = 170;
+    current_statement__ = 174;
     lpdf = ((((stan::math::log((xg + gx)) - stan::math::log2()) -
                stan::math::log(alpha)) - stan::math::log(x)) +
              normal_lpdf<false>(z, 0, 1));
-    current_statement__ = 171;
+    current_statement__ = 175;
     return lpdf;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -451,19 +455,19 @@ fatigue_lccdf(const T0__& x, const T1__& alpha, const T2__& gamma,
     local_scalar_t__ xg;
     xg = DUMMY_VAR__;
     
-    current_statement__ = 173;
+    current_statement__ = 177;
     xg = stan::math::sqrt((x / gamma));
     local_scalar_t__ gx;
     gx = DUMMY_VAR__;
     
-    current_statement__ = 174;
+    current_statement__ = 178;
     gx = stan::math::sqrt((gamma / x));
     local_scalar_t__ z;
     z = DUMMY_VAR__;
     
-    current_statement__ = 175;
+    current_statement__ = 179;
     z = ((xg - gx) / alpha);
-    current_statement__ = 176;
+    current_statement__ = 180;
     return normal_lcdf(-z, 0, 1);
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -508,21 +512,21 @@ loglik_aft(const T0__& lpdf_arg__, const T1__& lsurv_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 178;
+    current_statement__ = 182;
     n = num_elements(lpdf);
-    current_statement__ = 179;
+    current_statement__ = 183;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 181;
+    current_statement__ = 185;
     assign(loglik, nil_index_list(),
       add(
         elt_multiply(event,
           subtract(subtract(lpdf, lp), stan::math::log(tau))),
         elt_multiply(subtract(1, event), lsurv)), "assigning variable loglik");
-    current_statement__ = 182;
+    current_statement__ = 186;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -569,22 +573,22 @@ loglik_ah(const T0__& lpdf_arg__, const T1__& lsurv_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 184;
+    current_statement__ = 188;
     n = num_elements(lpdf);
-    current_statement__ = 185;
+    current_statement__ = 189;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 187;
+    current_statement__ = 191;
     assign(loglik, nil_index_list(),
       add(
         elt_multiply(event,
           subtract(subtract(lpdf, lsurv), stan::math::log(tau))),
         elt_multiply(stan::math::exp(minus(lp)), lsurv)),
       "assigning variable loglik");
-    current_statement__ = 188;
+    current_statement__ = 192;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -631,29 +635,29 @@ loglik_ph(const T0__& lpdf_arg__, const T1__& lsurv_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 190;
+    current_statement__ = 194;
     n = num_elements(lpdf);
-    current_statement__ = 191;
+    current_statement__ = 195;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 193;
+    current_statement__ = 197;
     validate_non_negative_index("lht", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> lht;
     lht = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(lht, DUMMY_VAR__);
     
-    current_statement__ = 194;
+    current_statement__ = 198;
     assign(lht, nil_index_list(), subtract(lpdf, lsurv),
       "assigning variable lht");
-    current_statement__ = 195;
+    current_statement__ = 199;
     assign(loglik, nil_index_list(),
       add(elt_multiply(event, subtract(add(lht, lp), stan::math::log(tau))),
         elt_multiply(stan::math::exp(lp), lsurv)),
       "assigning variable loglik");
-    current_statement__ = 196;
+    current_statement__ = 200;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -700,49 +704,49 @@ loglik_po(const T0__& lpdf_arg__, const T1__& lsurv_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 198;
+    current_statement__ = 202;
     n = num_elements(lpdf);
-    current_statement__ = 199;
+    current_statement__ = 203;
     validate_non_negative_index("lht", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> lht;
     lht = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(lht, DUMMY_VAR__);
     
-    current_statement__ = 200;
+    current_statement__ = 204;
     assign(lht, nil_index_list(), subtract(lpdf, lsurv),
       "assigning variable lht");
-    current_statement__ = 201;
+    current_statement__ = 205;
     validate_non_negative_index("Ht", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> Ht;
     Ht = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(Ht, DUMMY_VAR__);
     
-    current_statement__ = 202;
+    current_statement__ = 206;
     assign(Ht, nil_index_list(), minus(lsurv), "assigning variable Ht");
-    current_statement__ = 203;
+    current_statement__ = 207;
     validate_non_negative_index("aux", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> aux;
     aux = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(aux, DUMMY_VAR__);
     
-    current_statement__ = 204;
+    current_statement__ = 208;
     assign(aux, nil_index_list(),
       elt_multiply(stan::math::exp(lp), stan::math::expm1(Ht)),
       "assigning variable aux");
-    current_statement__ = 205;
+    current_statement__ = 209;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 206;
+    current_statement__ = 210;
     assign(loglik, nil_index_list(),
       subtract(
         elt_multiply(event,
           subtract(add(add(lht, lp), Ht), stan::math::log(tau))),
         elt_multiply(add(1, event), stan::math::log1p(aux))),
       "assigning variable loglik");
-    current_statement__ = 207;
+    current_statement__ = 211;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -794,83 +798,83 @@ loglik_yp(const T0__& status_arg__, const T1__& lpdf_arg__,
     int n;
     n = std::numeric_limits<int>::min();
     
-    current_statement__ = 209;
+    current_statement__ = 213;
     n = num_elements(lpdf);
-    current_statement__ = 210;
+    current_statement__ = 214;
     validate_non_negative_index("Rt0", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> Rt0;
     Rt0 = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(Rt0, DUMMY_VAR__);
     
-    current_statement__ = 212;
+    current_statement__ = 216;
     validate_non_negative_index("log_ht", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> log_ht;
     log_ht = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(log_ht, DUMMY_VAR__);
     
-    current_statement__ = 214;
+    current_statement__ = 218;
     validate_non_negative_index("log_St", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> log_St;
     log_St = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(log_St, DUMMY_VAR__);
     
-    current_statement__ = 216;
+    current_statement__ = 220;
     validate_non_negative_index("loglik", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> loglik;
     loglik = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(loglik, DUMMY_VAR__);
     
-    current_statement__ = 218;
+    current_statement__ = 222;
     validate_non_negative_index("theta", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> theta;
     theta = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(theta, DUMMY_VAR__);
     
-    current_statement__ = 220;
+    current_statement__ = 224;
     validate_non_negative_index("aux", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> aux;
     aux = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(aux, DUMMY_VAR__);
     
-    current_statement__ = 222;
+    current_statement__ = 226;
     validate_non_negative_index("lht0", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> lht0;
     lht0 = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(lht0, DUMMY_VAR__);
     
-    current_statement__ = 223;
+    current_statement__ = 227;
     assign(lht0, nil_index_list(),
       subtract(subtract(lpdf, lsurv), stan::math::log(tau)),
       "assigning variable lht0");
-    current_statement__ = 224;
+    current_statement__ = 228;
     validate_non_negative_index("Ht0", "n", n);
     Eigen::Matrix<local_scalar_t__, -1, 1> Ht0;
     Ht0 = Eigen::Matrix<local_scalar_t__, -1, 1>(n);
     stan::math::fill(Ht0, DUMMY_VAR__);
     
-    current_statement__ = 225;
+    current_statement__ = 229;
     assign(Ht0, nil_index_list(), minus(lsurv), "assigning variable Ht0");
-    current_statement__ = 226;
+    current_statement__ = 230;
     assign(Rt0, nil_index_list(), stan::math::expm1(Ht0),
       "assigning variable Rt0");
-    current_statement__ = 227;
+    current_statement__ = 231;
     assign(theta, nil_index_list(), stan::math::exp(lp_long),
       "assigning variable theta");
-    current_statement__ = 228;
+    current_statement__ = 232;
     assign(aux, nil_index_list(), elt_multiply(ratio, Rt0),
       "assigning variable aux");
-    current_statement__ = 229;
+    current_statement__ = 233;
     assign(log_ht, nil_index_list(),
       add(add(subtract(lp_short, stan::math::log1p(aux)), lht0), Ht0),
       "assigning variable log_ht");
-    current_statement__ = 230;
+    current_statement__ = 234;
     assign(log_St, nil_index_list(),
       elt_multiply(minus(theta), stan::math::log1p(aux)),
       "assigning variable log_St");
-    current_statement__ = 231;
+    current_statement__ = 235;
     assign(loglik, nil_index_list(),
       add(elt_multiply(status, log_ht), log_St), "assigning variable loglik");
-    current_statement__ = 232;
+    current_statement__ = 236;
     return loglik;
   } catch (const std::exception& e) {
     stan::lang::rethrow_located(e, locations_array__[current_statement__]);
@@ -946,23 +950,23 @@ public:
       pos__ = std::numeric_limits<int>::min();
       
       pos__ = 1;
-      current_statement__ = 99;
+      current_statement__ = 103;
       context__.validate_dims("data initialization","n","int",
           context__.to_vec());
       n = std::numeric_limits<int>::min();
       
-      current_statement__ = 99;
+      current_statement__ = 103;
       n = context__.vals_i("n")[(1 - 1)];
-      current_statement__ = 100;
+      current_statement__ = 104;
       context__.validate_dims("data initialization","p","int",
           context__.to_vec());
       p = std::numeric_limits<int>::min();
       
-      current_statement__ = 100;
+      current_statement__ = 104;
       p = context__.vals_i("p")[(1 - 1)];
-      current_statement__ = 101;
+      current_statement__ = 105;
       validate_non_negative_index("time", "n", n);
-      current_statement__ = 102;
+      current_statement__ = 106;
       context__.validate_dims("data initialization","time","double",
           context__.to_vec(n));
       time = Eigen::Matrix<double, -1, 1>(n);
@@ -970,22 +974,22 @@ public:
       
       {
         std::vector<local_scalar_t__> time_flat__;
-        current_statement__ = 102;
+        current_statement__ = 106;
         assign(time_flat__, nil_index_list(), context__.vals_r("time"),
           "assigning variable time_flat__");
-        current_statement__ = 102;
+        current_statement__ = 106;
         pos__ = 1;
-        current_statement__ = 102;
+        current_statement__ = 106;
         for (int sym1__ = 1; sym1__ <= n; ++sym1__) {
-          current_statement__ = 102;
+          current_statement__ = 106;
           assign(time, cons_list(index_uni(sym1__), nil_index_list()),
             time_flat__[(pos__ - 1)], "assigning variable time");
-          current_statement__ = 102;
+          current_statement__ = 106;
           pos__ = (pos__ + 1);}
       }
-      current_statement__ = 103;
+      current_statement__ = 107;
       validate_non_negative_index("event", "n", n);
-      current_statement__ = 104;
+      current_statement__ = 108;
       context__.validate_dims("data initialization","event","double",
           context__.to_vec(n));
       event = Eigen::Matrix<double, -1, 1>(n);
@@ -993,25 +997,25 @@ public:
       
       {
         std::vector<local_scalar_t__> event_flat__;
-        current_statement__ = 104;
+        current_statement__ = 108;
         assign(event_flat__, nil_index_list(), context__.vals_r("event"),
           "assigning variable event_flat__");
-        current_statement__ = 104;
+        current_statement__ = 108;
         pos__ = 1;
-        current_statement__ = 104;
+        current_statement__ = 108;
         for (int sym1__ = 1; sym1__ <= n; ++sym1__) {
-          current_statement__ = 104;
+          current_statement__ = 108;
           assign(event, cons_list(index_uni(sym1__), nil_index_list()),
             event_flat__[(pos__ - 1)], "assigning variable event");
-          current_statement__ = 104;
+          current_statement__ = 108;
           pos__ = (pos__ + 1);}
       }
-      current_statement__ = 105;
+      current_statement__ = 109;
       validate_non_negative_index("X", "p == 0 ? 0 : n",
                                   (logical_eq(p, 0) ? 0 : n));
-      current_statement__ = 106;
+      current_statement__ = 110;
       validate_non_negative_index("X", "p", p);
-      current_statement__ = 107;
+      current_statement__ = 111;
       context__.validate_dims("data initialization","X","double",
           context__.to_vec((logical_eq(p, 0) ? 0 : n), p));
       X = Eigen::Matrix<double, -1, -1>((logical_eq(p, 0) ? 0 : n), p);
@@ -1019,132 +1023,132 @@ public:
       
       {
         std::vector<local_scalar_t__> X_flat__;
-        current_statement__ = 107;
+        current_statement__ = 111;
         assign(X_flat__, nil_index_list(), context__.vals_r("X"),
           "assigning variable X_flat__");
-        current_statement__ = 107;
+        current_statement__ = 111;
         pos__ = 1;
-        current_statement__ = 107;
+        current_statement__ = 111;
         for (int sym1__ = 1; sym1__ <= p; ++sym1__) {
-          current_statement__ = 107;
+          current_statement__ = 111;
           for (int sym2__ = 1; sym2__ <= (logical_eq(p, 0) ? 0 : n); ++sym2__) {
-            current_statement__ = 107;
+            current_statement__ = 111;
             assign(X,
               cons_list(index_uni(sym2__),
                 cons_list(index_uni(sym1__), nil_index_list())),
               X_flat__[(pos__ - 1)], "assigning variable X");
-            current_statement__ = 107;
+            current_statement__ = 111;
             pos__ = (pos__ + 1);}}
       }
-      current_statement__ = 108;
+      current_statement__ = 112;
       context__.validate_dims("data initialization","tau","double",
           context__.to_vec());
       tau = std::numeric_limits<double>::quiet_NaN();
       
-      current_statement__ = 108;
+      current_statement__ = 112;
       tau = context__.vals_r("tau")[(1 - 1)];
-      current_statement__ = 109;
+      current_statement__ = 113;
       context__.validate_dims("data initialization","baseline","int",
           context__.to_vec());
       baseline = std::numeric_limits<int>::min();
       
-      current_statement__ = 109;
+      current_statement__ = 113;
       baseline = context__.vals_i("baseline")[(1 - 1)];
-      current_statement__ = 110;
+      current_statement__ = 114;
       context__.validate_dims("data initialization","survreg","int",
           context__.to_vec());
       survreg = std::numeric_limits<int>::min();
       
-      current_statement__ = 110;
+      current_statement__ = 114;
       survreg = context__.vals_i("survreg")[(1 - 1)];
-      current_statement__ = 111;
+      current_statement__ = 115;
       is_alpha = std::numeric_limits<int>::min();
       
-      current_statement__ = 111;
+      current_statement__ = 115;
       is_alpha = 0;
-      current_statement__ = 112;
+      current_statement__ = 116;
       is_gamma = std::numeric_limits<int>::min();
       
-      current_statement__ = 112;
+      current_statement__ = 116;
       is_gamma = 0;
-      current_statement__ = 113;
+      current_statement__ = 117;
       is_lambda = std::numeric_limits<int>::min();
       
-      current_statement__ = 113;
+      current_statement__ = 117;
       is_lambda = 0;
-      current_statement__ = 114;
+      current_statement__ = 118;
       is_mu = std::numeric_limits<int>::min();
       
-      current_statement__ = 114;
+      current_statement__ = 118;
       is_mu = 0;
-      current_statement__ = 115;
+      current_statement__ = 119;
       is_sigma = std::numeric_limits<int>::min();
       
-      current_statement__ = 115;
+      current_statement__ = 119;
       is_sigma = 0;
-      current_statement__ = 116;
+      current_statement__ = 120;
       is_phi = std::numeric_limits<int>::min();
       
-      current_statement__ = 116;
+      current_statement__ = 120;
       is_phi = 0;
-      current_statement__ = 117;
+      current_statement__ = 121;
       validate_non_negative_index("zeros", "p == 0 ? n : 0",
                                   (logical_eq(p, 0) ? n : 0));
-      current_statement__ = 118;
+      current_statement__ = 122;
       zeros = Eigen::Matrix<double, -1, 1>((logical_eq(p, 0) ? n : 0));
       stan::math::fill(zeros, std::numeric_limits<double>::quiet_NaN());
       
-      current_statement__ = 123;
+      current_statement__ = 127;
       if (logical_eq(p, 0)) {
-        current_statement__ = 121;
+        current_statement__ = 125;
         for (int i = 1; i <= n; ++i) {
-          current_statement__ = 119;
+          current_statement__ = 123;
           assign(zeros, cons_list(index_uni(i), nil_index_list()), 0,
             "assigning variable zeros");}
       } 
-      current_statement__ = 149;
+      current_statement__ = 153;
       if (logical_eq(baseline, 1)) {
-        current_statement__ = 147;
+        current_statement__ = 151;
         is_lambda = 1;
       } else {
-        current_statement__ = 146;
+        current_statement__ = 150;
         if (logical_eq(baseline, 2)) {
-          current_statement__ = 143;
+          current_statement__ = 147;
           is_alpha = 1;
-          current_statement__ = 144;
+          current_statement__ = 148;
           is_gamma = 1;
         } else {
-          current_statement__ = 142;
+          current_statement__ = 146;
           if (logical_eq(baseline, 3)) {
-            current_statement__ = 139;
+            current_statement__ = 143;
             is_mu = 1;
-            current_statement__ = 140;
+            current_statement__ = 144;
             is_sigma = 1;
           } else {
-            current_statement__ = 138;
+            current_statement__ = 142;
             if (logical_eq(baseline, 4)) {
-              current_statement__ = 135;
+              current_statement__ = 139;
               is_alpha = 1;
-              current_statement__ = 136;
+              current_statement__ = 140;
               is_gamma = 1;
             } else {
-              current_statement__ = 134;
+              current_statement__ = 138;
               if (logical_eq(baseline, 5)) {
-                current_statement__ = 131;
+                current_statement__ = 135;
                 is_alpha = 1;
-                current_statement__ = 132;
+                current_statement__ = 136;
                 is_gamma = 1;
               } else {
-                current_statement__ = 130;
+                current_statement__ = 134;
                 if (logical_eq(baseline, 6)) {
-                  current_statement__ = 127;
+                  current_statement__ = 131;
                   is_alpha = 1;
-                  current_statement__ = 128;
+                  current_statement__ = 132;
                   is_gamma = 1;
                 } else {
-                  current_statement__ = 126;
+                  current_statement__ = 130;
                   if (logical_eq(baseline, 7)) {
-                    current_statement__ = 124;
+                    current_statement__ = 128;
                     is_sigma = 1;
                   } 
                 }
@@ -1153,62 +1157,62 @@ public:
           }
         }
       }
-      current_statement__ = 152;
+      current_statement__ = 156;
       if (logical_eq(survreg, 5)) {
-        current_statement__ = 150;
+        current_statement__ = 154;
         is_phi = 1;
       } 
-      current_statement__ = 153;
+      current_statement__ = 157;
       beta_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 153;
+      current_statement__ = 157;
       beta_1dim__ = (logical_eq(p, 0) ? 0 : p);
-      current_statement__ = 153;
+      current_statement__ = 157;
       validate_non_negative_index("beta", "p == 0 ? 0 : p", beta_1dim__);
-      current_statement__ = 154;
+      current_statement__ = 158;
       phi_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 154;
+      current_statement__ = 158;
       phi_1dim__ = (logical_eq(is_phi, 0) ? 0 : p);
-      current_statement__ = 154;
+      current_statement__ = 158;
       validate_non_negative_index("phi", "is_phi == 0 ? 0 : p", phi_1dim__);
-      current_statement__ = 155;
+      current_statement__ = 159;
       alpha_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 155;
+      current_statement__ = 159;
       alpha_1dim__ = (logical_eq(is_alpha, 0) ? 0 : 1);
-      current_statement__ = 155;
+      current_statement__ = 159;
       validate_non_negative_index("alpha", "is_alpha == 0 ? 0 : 1",
                                   alpha_1dim__);
-      current_statement__ = 156;
+      current_statement__ = 160;
       gamma_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 156;
+      current_statement__ = 160;
       gamma_1dim__ = (logical_eq(is_gamma, 0) ? 0 : 1);
-      current_statement__ = 156;
+      current_statement__ = 160;
       validate_non_negative_index("gamma", "is_gamma == 0 ? 0 : 1",
                                   gamma_1dim__);
-      current_statement__ = 157;
+      current_statement__ = 161;
       lambda_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 157;
+      current_statement__ = 161;
       lambda_1dim__ = (logical_eq(is_lambda, 0) ? 0 : 1);
-      current_statement__ = 157;
+      current_statement__ = 161;
       validate_non_negative_index("lambda", "is_lambda == 0 ? 0 : 1",
                                   lambda_1dim__);
-      current_statement__ = 158;
+      current_statement__ = 162;
       mu_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 158;
+      current_statement__ = 162;
       mu_1dim__ = (logical_eq(is_mu, 0) ? 0 : 1);
-      current_statement__ = 158;
+      current_statement__ = 162;
       validate_non_negative_index("mu", "is_mu == 0 ? 0 : 1", mu_1dim__);
-      current_statement__ = 159;
+      current_statement__ = 163;
       sigma_1dim__ = std::numeric_limits<int>::min();
       
-      current_statement__ = 159;
+      current_statement__ = 163;
       sigma_1dim__ = (logical_eq(is_sigma, 0) ? 0 : 1);
-      current_statement__ = 159;
+      current_statement__ = 163;
       validate_non_negative_index("sigma", "is_sigma == 0 ? 0 : 1",
                                   sigma_1dim__);
     } catch (const std::exception& e) {
@@ -1532,60 +1536,69 @@ public:
             }
           }
         }
-        current_statement__ = 97;
-        if (logical_eq(survreg, 1)) {
-          current_statement__ = 95;
+        current_statement__ = 101;
+        if (logical_eq(p, 0)) {
+          current_statement__ = 99;
           assign(loglik, nil_index_list(),
-            loglik_aft(lpdf, lsurv, event, lp, tau, pstream__),
+            add(elt_multiply(event, lpdf),
+              elt_multiply(subtract(1, event), lsurv)),
             "assigning variable loglik");
         } else {
-          current_statement__ = 94;
-          if (logical_eq(survreg, 2)) {
-            current_statement__ = 92;
+          current_statement__ = 97;
+          if (logical_eq(survreg, 1)) {
+            current_statement__ = 95;
             assign(loglik, nil_index_list(),
-              loglik_ph(lpdf, lsurv, event, lp, tau, pstream__),
+              loglik_aft(lpdf, lsurv, event, lp, tau, pstream__),
               "assigning variable loglik");
           } else {
-            current_statement__ = 91;
-            if (logical_eq(survreg, 3)) {
-              current_statement__ = 89;
+            current_statement__ = 94;
+            if (logical_eq(survreg, 2)) {
+              current_statement__ = 92;
               assign(loglik, nil_index_list(),
-                loglik_po(lpdf, lsurv, event, lp, tau, pstream__),
+                loglik_ph(lpdf, lsurv, event, lp, tau, pstream__),
                 "assigning variable loglik");
             } else {
-              current_statement__ = 88;
-              if (logical_eq(survreg, 4)) {
-                current_statement__ = 86;
+              current_statement__ = 91;
+              if (logical_eq(survreg, 3)) {
+                current_statement__ = 89;
                 assign(loglik, nil_index_list(),
-                  loglik_ah(lpdf, lsurv, event, lp, tau, pstream__),
+                  loglik_po(lpdf, lsurv, event, lp, tau, pstream__),
                   "assigning variable loglik");
               } else {
-                current_statement__ = 83;
-                if (logical_gt(p, 0)) {
-                  current_statement__ = 80;
-                  assign(lp_long, nil_index_list(), multiply(X, phi),
-                    "assigning variable lp_long");
-                  current_statement__ = 81;
-                  assign(ratio, nil_index_list(),
-                    stan::math::exp(multiply(X, subtract(beta, phi))),
-                    "assigning variable ratio");
+                current_statement__ = 88;
+                if (logical_eq(survreg, 4)) {
+                  current_statement__ = 86;
+                  assign(loglik, nil_index_list(),
+                    loglik_ah(lpdf, lsurv, event, lp, tau, pstream__),
+                    "assigning variable loglik");
                 } else {
-                  current_statement__ = 77;
-                  assign(lp_long, nil_index_list(), zeros,
-                    "assigning variable lp_long");
-                  current_statement__ = 78;
-                  assign(ratio, nil_index_list(), stan::math::exp(zeros),
-                    "assigning variable ratio");
+                  current_statement__ = 83;
+                  if (logical_gt(p, 0)) {
+                    current_statement__ = 80;
+                    assign(lp_long, nil_index_list(), multiply(X, phi),
+                      "assigning variable lp_long");
+                    current_statement__ = 81;
+                    assign(ratio, nil_index_list(),
+                      stan::math::exp(multiply(X, subtract(beta, phi))),
+                      "assigning variable ratio");
+                  } else {
+                    current_statement__ = 77;
+                    assign(lp_long, nil_index_list(), zeros,
+                      "assigning variable lp_long");
+                    current_statement__ = 78;
+                    assign(ratio, nil_index_list(), stan::math::exp(zeros),
+                      "assigning variable ratio");
+                  }
+                  current_statement__ = 84;
+                  assign(loglik, nil_index_list(),
+                    loglik_yp(event, lpdf, lsurv, lp, lp_long, ratio,
+                      tau, pstream__), "assigning variable loglik");
                 }
-                current_statement__ = 84;
-                assign(loglik, nil_index_list(),
-                  loglik_yp(event, lpdf, lsurv, lp, lp_long, ratio,
-                    tau, pstream__), "assigning variable loglik");
               }
             }
           }
         }
-        current_statement__ = 98;
+        current_statement__ = 102;
         lp_accum__.add(sum(loglik));
       }
     } catch (const std::exception& e) {

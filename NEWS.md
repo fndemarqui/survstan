@@ -30,3 +30,7 @@
 
 - Inclusion of emmeans method for survstan models.
 - Implementation of gamma and Rayleigh distributions.
+- Implementation of se method for computation of standard errors.
+- Correction of covariance matrix for positive parameters.
+- Application of delta method to avoid negative lower bounds in confidence intervals for positive parameters.
+- Bug correction in the implementation of survival functions.

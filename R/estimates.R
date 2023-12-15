@@ -38,6 +38,39 @@ vcov.survstan <- function(object, all = FALSE, ...){
 
 
 #---------------------------------------------
+#' Generic S3 method se
+#' @export
+#' @param object a fitted model object.
+#' @param ... further arguments passed to or from other methods.
+#' @return the standard errors associated with a set of parameter estimators for a given model.
+#'
+
+se <- function(object, ...) UseMethod("se")
+
+
+#---------------------------------------------
+#' Estimated standard errors
+#'
+#' @aliases se.survstan
+#' @export
+#' @param object an object of the class survstan.
+#' @param ... further arguments passed to or from other methods.
+#' @return  a vector with the standard errors.
+#' @examples
+#' \donttest{
+#' library(survstan)
+#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' se(fit)
+#' }
+#'
+se.survstan <- function(object, ...){
+  sqrt(diag(vcov(object, ...)))
+}
+
+
+
+
+#---------------------------------------------
 #' Parameters estimates of a survstan model
 #'
 #' @aliases estimates
@@ -116,12 +149,22 @@ confint.survstan <- function(object, parm = NULL, level=0.95, ...){
   estimate = object$estimates
   se = sqrt(diag(object$V))
 
+  #-------------------------------------------------
+  # correction for lower bound
+  pars <- c("alpha", "gamma", "lambda", "sigma")
+  labels <- names(estimate)
+  aux <- labels %in% pars
+  se[aux] <- se[aux]/estimate[aux]
+  estimate[aux] <- log(estimate[aux])
+  #-------------------------------------------------
+
   ztab <- stats::qnorm(alpha/2, lower.tail = FALSE)
   CI <- data.frame(
     lwr = estimate - ztab*se,
     upr = estimate + ztab*se
   )
   names(CI) <-  conf_labels
+  CI[aux, ] <- exp(CI[aux, ])
 
   if(is.null(parm)){
     return(CI)
