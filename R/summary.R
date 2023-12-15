@@ -91,7 +91,7 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
   # upr <- estimate + d
   # tbl <- cbind(estimate, se, lwr, upr)
 
-  CI <- confint(object, parm = names(estimate), level = conf.level)
+  CI <- stats::confint(object, parm = names(estimate), level = conf.level)
   lwr <- CI[, 1]
   upr <- CI[, 2]
   tbl <- cbind(estimate, se, lwr, upr)

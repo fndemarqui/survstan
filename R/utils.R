@@ -26,7 +26,10 @@ delta_method <- function(estimates, V, pars){
 
 reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
   estimates <- object$par
-  V <- chol2inv(chol(-object$hessian))
+  V <- try(chol2inv(chol(-object$hessian)), TRUE)
+  if(class(V)[1] == "try-error"){
+    V <- MASS::ginv(-object$hessian)
+  }
   npar <- length(estimates)
   v <- diag(npar)
 
