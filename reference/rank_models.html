@@ -124,12 +124,11 @@
 <span class="r-in"><span>  survreg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aftreg"</span>, <span class="st">"ahreg"</span>, <span class="st">"phreg"</span>, <span class="st">"poreg"</span>, <span class="st">"ypreg"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  baseline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exponential"</span>, <span class="st">"weibull"</span>, <span class="st">"lognormal"</span>, <span class="st">"loglogistic"</span>, <span class="st">"fatigue"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 2 warnings in `dplyr::mutate()`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `fit = purrr::pmap(...)`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning in `ahreg()`:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The AH model with baseline exponential distribution is non-identifiable! Please, choose another baseline distribution.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dplyr::mutate(., fit = purrr::pmap(list(survreg, baseline), fit,     formula = formula, data = data)):</span> <span style="color: #00BBBB;">ℹ</span> In argument: `fit = purrr::pmap(...)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `purrr::pmap()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In index: 6.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `chol.default()`:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> the leading minor of order 4 is not positive</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>

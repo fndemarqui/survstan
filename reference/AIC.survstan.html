@@ -99,10 +99,10 @@
 <span class="r-in"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="aftreg.html">aftreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">rx</span>, data <span class="op">=</span> <span class="va">ovarian</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit3</span> <span class="op">&lt;-</span> <span class="fu"><a href="aftreg.html">aftreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span>, data <span class="op">=</span> <span class="va">ovarian</span>, baseline <span class="op">=</span> <span class="st">"weibull"</span>, init <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fit1</span>, <span class="va">fit2</span>, <span class="va">fit3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    fit      aic npars</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 fit1 199.9078     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 fit2 200.7283     3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 fit3 202.1690     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    fit       aic npars</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 fit1  29.21194     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 fit2 200.72830     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 fit3 202.16899     4</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
