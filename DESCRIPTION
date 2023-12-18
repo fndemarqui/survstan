@@ -1,7 +1,6 @@
 Package: survstan
 Title: Fitting Survival Regression Models via 'Stan' 
 Version: 0.0.5
-Date: 2023-09-21
 Authors@R: 
     person(given = "Fabio",
            family = "Demarqui",

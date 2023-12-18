@@ -1,6 +1,6 @@
 
-── R CMD check results ─────────────────────────── survstan 0.0.5 ────
-Duration: 9m 47.9s
+── R CMD check results ────────────────────────────── survstan 0.0.5 ────
+Duration: 10m 30.2s
 
 ❯ checking compiled code ... OK
    WARNING
