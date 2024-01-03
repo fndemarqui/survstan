@@ -34,3 +34,8 @@
 - Correction of covariance matrix for positive parameters.
 - Application of delta method to avoid negative lower bounds in confidence intervals for positive parameters.
 - Bug correction in the implementation of survival functions.
+
+
+# survstan 0.0.6
+
+- tidy.survstan method now uses use confint.survstan.

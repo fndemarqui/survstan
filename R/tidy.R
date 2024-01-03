@@ -28,25 +28,25 @@ tidy <- function(object, conf.level = 0.95, ...) UseMethod("tidy")
 #' }
 #'
 tidy.survstan <- function(object, conf.level = 0.95, ...){
-  alpha <- 1 - conf.level
   k <- length(object$estimates)
   p <- object$p
 
+  alpha <- 1 - conf.level
   conf_labels <- round(100*(c(alpha/2, 1-alpha/2)),1)
   conf_labels <- paste0(conf_labels, "%")
 
   parameter = names(object$estimates)
   estimate = object$estimates
   se = sqrt(diag(object$V))
+  CI <- confint(object, level = conf.level)
 
-  ztab <- stats::qnorm(alpha/2, lower.tail = FALSE)
   tbl <- tibble::tibble(
     type = c(rep("coefficient", p), rep("baseline", k-p)),
     parameter = parameter,
     estimate = estimate,
     se = se,
-    lwr = estimate - ztab*se,
-    upr = estimate + ztab*se,
+    lwr = CI[,1],
+    upr = CI[,2]
   )
 
   names(tbl) <- c(names(tbl)[1:4], conf_labels)
