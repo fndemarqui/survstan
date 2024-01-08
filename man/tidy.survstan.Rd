@@ -4,10 +4,12 @@
 \alias{tidy.survstan}
 \title{Tidy a survstan object}
 \usage{
-\method{tidy}{survstan}(object, conf.level = 0.95, ...)
+\method{tidy}{survstan}(x, conf.int = FALSE, conf.level = 0.95, ...)
 }
 \arguments{
-\item{object}{a fitted model object.}
+\item{x}{a fitted model object.}
+
+\item{conf.int}{Logical indicating whether or not to include a confidence interval in the tidied output. Defaults to FALSE.}
 
 \item{conf.level}{the confidence level required.}
 
@@ -25,7 +27,7 @@ Convert a fitted model into a tibble.
 \examples{
 \donttest{
 library(survstan)
-fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull")
 tidy(fit)
 }
 

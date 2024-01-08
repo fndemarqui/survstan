@@ -51,6 +51,7 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
   survreg <- object$survreg
 
   estimates <- object$estimates
+  SE <- se(object)
   V <- object$V
   k <- length(estimates)
   tau <- object$tau
@@ -63,43 +64,27 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
 
   if(p>0){
     coefficients <- estimates[1:p]
-    vcov <- V[1:p, 1:p, drop = FALSE]
-
-    se <- sqrt(diag(vcov))
-    zval <- coefficients / se
+    SE <- SE[1:p]
+    zval <- coefficients / SE
     TAB <- cbind(Estimate = coefficients,
-                 StdErr = se,
-                 z.value = zval,
-                 p.value = 2*stats::pnorm(-abs(zval)))
+                 `Std. Error` = SE,
+                 `z value` = zval,
+                 `Pr(>|z|)` = 2*stats::pnorm(-abs(zval)))
 
     rownames(TAB) <- labels
-
-    estimate <- estimates[-(1:p)]
-    vcov <- V[-(1:p), -(1:p), drop = FALSE]
-  }else{
-    estimate <- estimates
-    vcov <- V
   }
 
-
-  # baseline parameters:
-  # se <- sqrt(diag(vcov))
-  # alpha <- 1-conf.level
-  # ztab <- stats::qnorm(alpha/2, lower.tail=FALSE)
-  # d <- ztab*se
-  # lwr <- estimate - d
-  # upr <- estimate + d
-  # tbl <- cbind(estimate, se, lwr, upr)
-
+  estimate <- estimates[-(1:p)]
+  SE <- SE <- se(object, all = TRUE)[-(1:p)]
   CI <- stats::confint(object, parm = names(estimate), level = conf.level)
   lwr <- CI[, 1]
   upr <- CI[, 2]
-  tbl <- cbind(estimate, se, lwr, upr)
+  tbl <- cbind(estimate, SE, lwr, upr)
 
   alpha <- 1-conf.level
   conf_labels <- round(100*(c(alpha/2, 1-alpha/2)),1)
   conf_labels <- paste0(conf_labels, "%")
-  colnames(tbl) <- c(colnames(tbl)[1:2], conf_labels)
+  colnames(tbl) <- c("Estimate", "Std. Error", conf_labels)
 
   message <- switch(survreg,
     "aft" = paste0("Accelerated failure time model fit with ", baseline , " baseline distribution \n"),

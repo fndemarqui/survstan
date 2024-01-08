@@ -18,8 +18,10 @@ Depends:
     survival
 Imports: 
     actuar (>= 3.0.0),
+    broom,
     dplyr,
     extraDistr,
+    generics,
     ggplot2,
     gridExtra,
     MASS,

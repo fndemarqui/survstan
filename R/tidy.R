@@ -1,21 +1,14 @@
 
-#---------------------------------------------
-#' Generic S3 method tidy
-#' @aliases tidy
+#' @importFrom generics tidy
 #' @export
-#' @param object a fitted model object.
-#' @param conf.level the confidence level required.
-#' @details Convert a fitted model into a tibble.
-#' @param ... further arguments passed to or from other methods.
-#' @return a tibble with a summary of the fit.
-#'
-
-tidy <- function(object, conf.level = 0.95, ...) UseMethod("tidy")
+generics::tidy
 
 #' Tidy a survstan object
 #' @aliases tidy.survstan
+#' @importFrom broom tidy
 #' @export
-#' @param object a fitted model object.
+#' @param x a fitted model object.
+#' @param conf.int Logical indicating whether or not to include a confidence interval in the tidied output. Defaults to FALSE.
 #' @param conf.level the confidence level required.
 #' @details Convert a fitted model into a tibble.
 #' @param ... further arguments passed to or from other methods.
@@ -23,77 +16,23 @@ tidy <- function(object, conf.level = 0.95, ...) UseMethod("tidy")
 #' @examples
 #' \donttest{
 #' library(survstan)
-#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
+#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull")
 #' tidy(fit)
 #' }
 #'
-tidy.survstan <- function(object, conf.level = 0.95, ...){
-  k <- length(object$estimates)
-  p <- object$p
+tidy.survstan <- function(x, conf.int = FALSE, conf.level = 0.95, ...) {
 
-  alpha <- 1 - conf.level
-  conf_labels <- round(100*(c(alpha/2, 1-alpha/2)),1)
-  conf_labels <- paste0(conf_labels, "%")
-
-  parameter = names(object$estimates)
-  estimate = object$estimates
-  se = sqrt(diag(object$V))
-  CI <- confint(object, level = conf.level)
-
-  tbl <- tibble::tibble(
-    type = c(rep("coefficient", p), rep("baseline", k-p)),
-    parameter = parameter,
-    estimate = estimate,
-    se = se,
-    lwr = CI[,1],
-    upr = CI[,2]
-  )
-
-  names(tbl) <- c(names(tbl)[1:4], conf_labels)
-  return(tbl)
-
+  result <- summary(x)$coefficients %>%
+    tibble::as_tibble(rownames = "term")
+  colnames(result) <- c("term", "estimate", "std.error", "statistic", "p.value")
+  if(conf.int){
+    ci <- confint(x, level = conf.level)
+    names(ci) <- c("conf.low", "conf.high")
+    ci <- ci %>%
+      tibble::as_tibble(rownames = "term")
+    result <- dplyr::left_join(result, ci, by = "term")
+  }
+  return(result)
 }
 
-
-#' Tidy a ypreg object
-#' @aliases tidy.ypreg
-#' @export
-#' @param object a fitted model object.
-#' @param conf.level the confidence level required.
-#' @details Convert a fitted model into a tibble.
-#' @param ... further arguments passed to or from other methods.
-#' @return a tibble with a summary of the fit.
-#' @examples
-#' \donttest{
-#' library(survstan)
-#' fit <- aftreg(Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, baseline = "weibull", init = 0)
-#' tidy(fit)
-#' }
-#'
-tidy.ypreg <- function(object, conf.level = 0.95, ...){
-  alpha <- 1 - conf.level
-  k <- length(object$estimates)
-  p <- 2*object$p
-
-  conf_labels <- round(100*(c(alpha/2, 1-alpha/2)),1)
-  conf_labels <- paste0(conf_labels, "%")
-
-  parameter = names(object$estimates)
-  estimate = object$estimates
-  se = sqrt(diag(object$V))
-
-  ztab <- stats::qnorm(alpha/2, lower.tail = FALSE)
-  tbl <- tibble::tibble(
-    type = c(rep("coefficient", p), rep("baseline", k-p)),
-    parameter = parameter,
-    estimate = estimate,
-    se = se,
-    lwr = estimate - ztab*se,
-    upr = estimate + ztab*se,
-  )
-
-  names(tbl) <- c(names(tbl)[1:4], conf_labels)
-  return(tbl)
-
-}
 

@@ -124,6 +124,7 @@ coef.survstan <- function(object, ...){
 #' Confidence intervals for the regression coefficients
 #'
 #' @aliases confint.survstan
+#' @importFrom stats confint
 #' @export
 #' @param object an object of the class survstan.
 #' @param level the confidence level required.
