@@ -94,6 +94,9 @@
     <loc>https://fndemarqui.github.io/survstan/reference/rank_models.html</loc>
   </url>
   <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/reexports.html</loc>
+  </url>
+  <url>
     <loc>https://fndemarqui.github.io/survstan/reference/residuals.survstan.html</loc>
   </url>
   <url>
@@ -112,13 +115,7 @@
     <loc>https://fndemarqui.github.io/survstan/reference/survstan-package.html</loc>
   </url>
   <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/tidy.html</loc>
-  </url>
-  <url>
     <loc>https://fndemarqui.github.io/survstan/reference/tidy.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/tidy.ypreg.html</loc>
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/vcov.survstan.html</loc>
