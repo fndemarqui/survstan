@@ -4,7 +4,15 @@
 \alias{cross_time.ypreg}
 \title{Computes the crossing survival times}
 \usage{
-\method{cross_time}{ypreg}(object, newdata1, newdata2, conf.level = 0.95, nboot = 1000, ...)
+\method{cross_time}{ypreg}(
+  object,
+  newdata1,
+  newdata2,
+  conf.level = 0.95,
+  nboot = 1000,
+  cores = 1,
+  ...
+)
 }
 \arguments{
 \item{object}{an object of class ypreg}
@@ -16,6 +24,8 @@
 \item{conf.level}{level of the confidence/credible intervals}
 
 \item{nboot}{number of bootstrap samples (default nboot=1000).}
+
+\item{cores}{number of cores to be used in the bootstrap sampling; default is 1 core;}
 
 \item{...}{further arguments passed to or from other methods.}
 }

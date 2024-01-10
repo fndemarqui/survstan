@@ -19,8 +19,11 @@ Depends:
 Imports: 
     actuar (>= 3.0.0),
     broom,
+    doFuture,
     dplyr,
     extraDistr,
+    foreach,
+    future,
     generics,
     ggplot2,
     gridExtra,

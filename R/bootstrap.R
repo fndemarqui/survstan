@@ -1,15 +1,29 @@
 
+ypreg_boot <- function(object, nboot, cores, ...){
 
-ypreg_boot <- function(object, nboot, ...){
+  # cl <- parallel::makeCluster(cores)
+  # doParallel::registerDoParallel(cl)
+  if(cores > 1){
+    future::plan(future::multisession, workers = cores)
+  }
+
+
   baseline <- object$baseline
   formula <- object$formula
-  formula <- stats::update(formula, Surv(time, status) ~ .)
+  formula <- stats::update(formula, survival::Surv(time, status) ~ .)
   mf <- object$mf
   resp <- stats::model.response(mf)
   time <- resp[,1]
   status <- resp[,2]
-  data <- data.frame(cbind(time, status, mf[,-1]))
-  names(data) <- c("time", "status", names(mf)[-1])
+
+  mf <- mf %>%
+    dplyr::select(-dplyr::starts_with("Surv("))
+  data <- data.frame(
+    time = time,
+    status = status
+  ) %>%
+    dplyr::bind_cols(mf)
+
   n <- object$n
   p <- object$p
   tau <- object$tau
@@ -21,20 +35,35 @@ ypreg_boot <- function(object, nboot, ...){
   n2 <- length(index2)
   pars_hat <- estimates(object)
   k <- length(estimates(object))
-  pars <- matrix(nrow=nboot, ncol=k)
 
-  for(b in 1:nboot){
-    samp1 <- sample(index1, size=n1, replace=TRUE)
-    samp2 <- sample(index2, size=n2, replace=TRUE)
-    samp <- c(samp1, samp2)
-    suppressWarnings({invisible(utils::capture.output(fit <- ypreg(formula, data=data[samp,], baseline = baseline)))})
-    if(!is(object, "try-error")){
-      pars[b, ] <- estimates(fit)
+  if(cores>1){
+    pars <- foreach::foreach(
+      b = 1:nboot, .combine = rbind,
+      .options.future = list(seed = TRUE)
+    ) %dofuture% {
+      samp1 <- sample(index1, size=n1, replace=TRUE)
+      samp2 <- sample(index2, size=n2, replace=TRUE)
+      samp <- c(samp1, samp2)
+      mydata <- dplyr::slice(data, samp)
+      suppressWarnings({invisible(utils::capture.output(fit <- survstan::ypreg(formula, data=mydata, baseline = baseline)))})
+      if(!is(object, "try-error")){
+        survstan::estimates(fit)
+      }
     }
-
+  }else{
+    pars <- foreach::foreach(
+      b = 1:nboot, .combine = rbind
+    ) %do% {
+      samp1 <- sample(index1, size=n1, replace=TRUE)
+      samp2 <- sample(index2, size=n2, replace=TRUE)
+      samp <- c(samp1, samp2)
+      mydata <- dplyr::slice(data, samp)
+      suppressWarnings({invisible(utils::capture.output(fit <- survstan::ypreg(formula, data=mydata, baseline = baseline)))})
+      if(!is(object, "try-error")){
+        survstan::estimates(fit)
+      }
+    }
   }
-
-  colnames(pars) <- names(pars_hat)
 
   return(pars)
 }

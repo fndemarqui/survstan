@@ -10,6 +10,8 @@
 #' @import Rcpp
 #' @import survival
 #' @importFrom dplyr %>% all_of bind_cols desc select
+#' @importFrom foreach %do%
+#' @importFrom doFuture %dofuture%
 #' @importFrom ggplot2 aes ggplot geom_abline geom_point geom_jitter geom_smooth position_jitter labs xlab xlim ylim
 #' @importFrom Rdpack reprompt
 #' @importFrom rlang .data

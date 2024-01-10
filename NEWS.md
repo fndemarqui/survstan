@@ -39,5 +39,6 @@
 # survstan 0.0.6
 
 - update summary output.
-- tidy.survstan method was reimplemented to follow broom stantards, and survstan::tidy() no long masks broom::tidy();
+- tidy.survstan method was reimplemented to follow broom stantards, and survstan::tidy() no long masks broom::tidy().
+- cross_time() function now allows for parallel computing. 
 

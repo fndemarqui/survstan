@@ -61,6 +61,7 @@ cross_time <- function(object, ...) UseMethod("cross_time")
 #' @param newdata2 a data frame containing the second set of explanatory variables
 #' @param conf.level level of the confidence/credible intervals
 #' @param nboot number of bootstrap samples (default nboot=1000).
+#' @param cores number of cores to be used in the bootstrap sampling; default is 1 core;
 #' @param ... further arguments passed to or from other methods.
 #' @return  the crossing survival time
 #' @examples
@@ -76,7 +77,16 @@ cross_time <- function(object, ...) UseMethod("cross_time")
 #' }
 #'
 cross_time.ypreg <- function(object, newdata1, newdata2,
-                           conf.level=0.95, nboot=1000, ...){
+                           conf.level=0.95, nboot=1000,
+                           cores = 1, ...){
+
+  message("Please, be patient!!!")
+  if(cores == 1){
+    message("Bootstrap samples draw using ", cores, " core")
+  }else{
+    message("Bootstrap samples draw using ", cores, " cores")
+  }
+
   baseline <- object$baseline
   survreg <- object$survreg
   mf <- object$mf
@@ -108,7 +118,7 @@ cross_time.ypreg <- function(object, newdata1, newdata2,
   for(i in 1:nrow(newdata1)){
     t[i] <- ypregCrossSurv(X1=X1[i,], X2=X2[i,], tau0=tau0, tau=tau, pars=pars, baseline, p)
   }
-  pars <- ypreg_boot(object, nboot=nboot)
+  pars <- ypreg_boot(object, nboot=nboot, cores = cores)
 
   ci <- matrix(nrow=nrow(newdata1), ncol=2)
   for(i in 1:nrow(newdata1)){

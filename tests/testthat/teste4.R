@@ -12,9 +12,8 @@ ipass <- ipass %>%
 
 fit <- ypreg(
   Surv(time, status) ~ arm,
-  baseline = "weibull",
+  dist = "weibull",
   data = ipass,
-  init = 0
 )
 
 newdata1 <- data.frame(
