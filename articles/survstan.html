@@ -102,12 +102,12 @@ the user must choose among one of the available fitting functions
 that is, <code>aft</code> for accelerated failure time (AFT) models,
 <code>ah</code> for accelerates hazards (AH) models, <code>ph</code> for
 proportional hazards (PO) models, <code>po</code> for proportional (PO)
-models, or <code>yp</code> for Yang &amp; Prentice (YP) models).</p>
+models, or <code>yp</code> for Yang &amp; Prentice (YP) models.</p>
 <p>The specification of the survival formula passed to the chosen
 <code>*reg()</code> function follows the same syntax adopted in the
 <strong>survival</strong> package, so that transition to the
 <strong>survstan</strong> package can be smoothly as possible for those
-familiar with the <code>survival</code> package.</p>
+familiar with the <strong>survival</strong> package.</p>
 <p>The code below shows the model fitting of a AFT model with Weibull
 baseline distribution using the <code><a href="../reference/aftreg.html">survstan::aftreg()</a></code>
 function. For comparison purposes, we also fit to the same data the
@@ -181,7 +181,10 @@ of the intercept term in the linear predictor.</p>
 semiparametric Cox model is also fitted to the same data using the
 function <code><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">survival::coxph()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">survstan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phreg.html">phreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span>, data <span class="op">=</span> <span class="va">ovarian</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">survstan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phreg.html">phreg</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span>, </span>
+<span>  data <span class="op">=</span> <span class="va">ovarian</span>, dist <span class="op">=</span> <span class="st">"weibull"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">cox</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">ecog.ps</span> <span class="op">+</span> <span class="va">rx</span>, data <span class="op">=</span> <span class="va">ovarian</span></span>
 <span><span class="op">)</span></span>
