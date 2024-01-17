@@ -80,7 +80,7 @@
 
 
 <dt>survreg</dt>
-<dd><p>survival regression models to be fitted (AFT, AH, PH, PO and YP).</p></dd>
+<dd><p>survival regression models to be fitted (AFT, AH, PH, PO, YP and EH).</p></dd>
 
 
 <dt>baseline</dt>
@@ -121,15 +121,15 @@
 <span class="r-in"><span><span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu">rank_models</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">celltype</span><span class="op">+</span><span class="va">karno</span>,</span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">veteran</span>,</span></span>
-<span class="r-in"><span>  survreg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aftreg"</span>, <span class="st">"ahreg"</span>, <span class="st">"phreg"</span>, <span class="st">"poreg"</span>, <span class="st">"ypreg"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  baseline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exponential"</span>, <span class="st">"weibull"</span>, <span class="st">"lognormal"</span>, <span class="st">"loglogistic"</span>, <span class="st">"fatigue"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  survreg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aftreg"</span>, <span class="st">"ahreg"</span>, <span class="st">"phreg"</span>, <span class="st">"poreg"</span>, <span class="st">"ypreg"</span>, <span class="st">"ehreg"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  baseline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exponential"</span>, <span class="st">"weibull"</span>, <span class="st">"lognormal"</span>, <span class="st">"loglogistic"</span>, <span class="st">"fatigue"</span>, <span class="st">"gamma"</span>, <span class="st">"rayleigh"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 2 warnings in `dplyr::mutate()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 8 warnings in `dplyr::mutate()`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> The first warning was:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In argument: `fit = purrr::pmap(...)`.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Caused by warning in `ahreg()`:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The AH model with baseline exponential distribution is non-identifiable! Please, choose another baseline distribution.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 7 remaining warnings.</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>

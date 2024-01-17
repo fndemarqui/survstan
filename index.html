@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Parametric survival regression models under the maximum likelihood approach via Stan. Implemented regression models include accelerated failure time models, proportional hazards models, proportional odds models, accelerated hazard models, and Yang and Prentice models. Available baseline survival distributions include exponential, Weibull, log-normal, log-logistic, gamma, rayleigh and fatigue (Birnbaum-Saunders) distributions. References: Lawless (2002) &lt;ISBN:9780471372158&gt;; Bennett (1982) &lt;doi:10.1002/sim.4780020223&gt;; Chen and Wang(2000) &lt;doi:10.1080/01621459.2000.10474236&gt;; Demarqui and Mayrink (2021) &lt;doi:10.1214/20-BJPS471&gt;.">
+<meta name="description" content="Parametric survival regression models under the maximum likelihood approach via Stan. Implemented regression models include accelerated failure time models, proportional hazards models, proportional odds models, accelerated hazard models, Yang and Prentice models, and extended hazard models. Available baseline survival distributions include exponential, Weibull, log-normal, log-logistic, gamma, rayleigh and fatigue (Birnbaum-Saunders) distributions. References: Lawless (2002) &lt;ISBN:9780471372158&gt;; Bennett (1982) &lt;doi:10.1002/sim.4780020223&gt;; Chen and Wang(2000) &lt;doi:10.1080/01621459.2000.10474236&gt;; Demarqui and Mayrink (2021) &lt;doi:10.1214/20-BJPS471&gt;.">
 <title>Fitting Survival Regression Models via Stan  • survstan</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -18,7 +18,7 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Fitting Survival Regression Models via Stan ">
-<meta property="og:description" content="Parametric survival regression models under the maximum likelihood approach via Stan. Implemented regression models include accelerated failure time models, proportional hazards models, proportional odds models, accelerated hazard models, and Yang and Prentice models. Available baseline survival distributions include exponential, Weibull, log-normal, log-logistic, gamma, rayleigh and fatigue (Birnbaum-Saunders) distributions. References: Lawless (2002) &lt;ISBN:9780471372158&gt;; Bennett (1982) &lt;doi:10.1002/sim.4780020223&gt;; Chen and Wang(2000) &lt;doi:10.1080/01621459.2000.10474236&gt;; Demarqui and Mayrink (2021) &lt;doi:10.1214/20-BJPS471&gt;.">
+<meta property="og:description" content="Parametric survival regression models under the maximum likelihood approach via Stan. Implemented regression models include accelerated failure time models, proportional hazards models, proportional odds models, accelerated hazard models, Yang and Prentice models, and extended hazard models. Available baseline survival distributions include exponential, Weibull, log-normal, log-logistic, gamma, rayleigh and fatigue (Birnbaum-Saunders) distributions. References: Lawless (2002) &lt;ISBN:9780471372158&gt;; Bennett (1982) &lt;doi:10.1002/sim.4780020223&gt;; Chen and Wang(2000) &lt;doi:10.1080/01621459.2000.10474236&gt;; Demarqui and Mayrink (2021) &lt;doi:10.1214/20-BJPS471&gt;.">
 <meta property="og:image" content="https://fndemarqui.github.io/survstan/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -219,45 +219,56 @@ $$</span></p>
 <li>proportional odds (PO) models;</li>
 <li>accelerated hazard (AH) models.</li>
 <li>Yang and Prentice (YP) models.</li>
+<li>extended hazard (EH) models.</li>
 </ul>
-<p>Let <span class="math inline"><strong>x</strong></span> be a <span class="math inline">1 × <em>p</em></span> vector of covariates, <span class="math inline"><strong>β</strong></span> a <span class="math inline"><em>p</em> × 1</span> of regression coefficients, and <span class="math inline"><strong>θ</strong></span> a vector of parameters associated with some baseline survival distribution, and denote by <span class="math inline"><strong>Θ</strong> = (<strong>θ</strong>,<strong>β</strong>)<sup><em>T</em></sup></span> the full vector of parameters. Here, to ensure identifiability, in all regression structures the linear predictor <span class="math inline"><strong>x</strong><strong>β</strong></span> does not include a intercept term.</p>
-<p>The regression survival models implemented in the R package survstan are briefly described in the sequel.</p>
+<p>The regression survival models implemented in the R package survstan are briefly described in the sequel. Denote by <span class="math inline"><strong>x</strong></span> a <span class="math inline">1 × <em>p</em></span> vector of covariates, and let <span class="math inline"><strong>β</strong></span> and <span class="math inline"><strong>ϕ</strong></span> be <span class="math inline"><em>p</em> × 1</span> of regression coefficients, and <span class="math inline"><strong>θ</strong></span> a vector of parameters associated with some baseline survival distribution. To ensure identifiability of the implemented regression models, we shall assume that the linear predictors <span class="math inline"><strong>x</strong><strong>β</strong></span> and <span class="math inline"><strong>x</strong><strong>ϕ</strong></span> do not include a intercept term.</p>
 <div class="section level3">
 <h3 id="accelerate-failure-time-models">Accelerate Failure Time Models<a class="anchor" aria-label="anchor" href="#accelerate-failure-time-models"></a>
 </h3>
 <p>Accelerated failure time (AFT) models are defined as</p>
 <p><span class="math display"><em>T</em> = exp {<strong>x</strong><strong>β</strong>}<em>ν</em>,</span> where <span class="math inline"><em>ν</em></span> follows a baseline distribution with survival function <span class="math inline"><em>S</em><sub>0</sub>(⋅|<strong>θ</strong>)</span> so that</p>
-<p><span class="math display"><em>f</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = <em>e</em><sup>−<strong>x</strong><strong>β</strong></sup><em>f</em><sub>0</sub>(<em>t</em><em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)</span> and</p>
-<p><span class="math display"><em>S</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = <em>S</em><sub>0</sub>(<em>t</em><em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>).</span></p>
+<p><span class="math display"><em>f</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>x</strong>) = <em>e</em><sup>−<strong>x</strong><strong>β</strong></sup><em>f</em><sub>0</sub>(<em>t</em><em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)</span> and</p>
+<p><span class="math display"><em>S</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>x</strong>) = <em>S</em><sub>0</sub>(<em>t</em><em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>).</span></p>
 </div>
 <div class="section level3">
 <h3 id="proportional-hazards-models">Proportional Hazards Models<a class="anchor" aria-label="anchor" href="#proportional-hazards-models"></a>
 </h3>
 <p>Proportional hazards (PH) models are defined as</p>
-<p><span class="math display"><em>h</em>(<em>t</em>|<em>Θ</em>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>},</span> where <span class="math inline"><em>h</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)</span> is a baseline hazard function so that</p>
-<p><span class="math display"><em>f</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>−<em>H</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)<em>e</em><sup><strong>x</strong><strong>β</strong></sup>},</span> and</p>
-<p><span class="math display"><em>S</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = exp {−<em>H</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)<em>e</em><sup><strong>x</strong><strong>β</strong></sup>}.</span></p>
+<p><span class="math display"><em>h</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>},</span> where <span class="math inline"><em>h</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)</span> is a baseline hazard function so that</p>
+<p><span class="math display"><em>f</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>−<em>H</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)<em>e</em><sup><strong>x</strong><strong>β</strong></sup>},</span> and</p>
+<p><span class="math display"><em>S</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>x</strong>) = exp {−<em>H</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)<em>e</em><sup><strong>x</strong><strong>β</strong></sup>}.</span></p>
 </div>
 <div class="section level3">
 <h3 id="proportional-odds-models">Proportional Odds Models<a class="anchor" aria-label="anchor" href="#proportional-odds-models"></a>
 </h3>
 <p>Proportional Odds (PO) models are defined as</p>
-<p><span class="math display"><em>R</em>(<em>t</em>|<em>Θ</em>,<strong>x</strong>) = <em>R</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>},</span> where <span class="math inline">$\displaystyle R_{0}(t|\boldsymbol{\theta}) = \frac{1-S_{0}(t|\boldsymbol{\theta})}{S_{0}(t|\boldsymbol{\theta})} = \exp\{H_{0}(t|\boldsymbol{\theta})\}-1$</span> is a baseline odds function so that</p>
+<p><span class="math display"><em>R</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>x</strong>) = <em>R</em><sub>0</sub>(<em>t</em>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>},</span> where <span class="math inline">$\displaystyle R_{0}(t|\boldsymbol{\theta}) = \frac{1-S_{0}(t|\boldsymbol{\theta})}{S_{0}(t|\boldsymbol{\theta})} = \exp\{H_{0}(t|\boldsymbol{\theta})\}-1$</span> is a baseline odds function so that</p>
 <p><span class="math display">$$
-f(t|\boldsymbol{\Theta}, \mathbf{x}) = \frac{h_{0}(t|\boldsymbol{\theta})\exp\{\mathbf{x} \boldsymbol{\beta} + H_{0}(t|\boldsymbol{\theta})\}}{[1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}]^2}.
+f(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = \frac{h_{0}(t|\boldsymbol{\theta})\exp\{\mathbf{x} \boldsymbol{\beta} + H_{0}(t|\boldsymbol{\theta})\}}{[1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}]^2}.
 $$</span></p>
 <p>and</p>
 <p><span class="math display">$$
-S(t|\boldsymbol{\Theta}, \mathbf{x}) = \frac{1}{1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}}.
+S(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = \frac{1}{1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}}.
 $$</span></p>
 </div>
 <div class="section level3">
 <h3 id="accelerated-hazard-models">Accelerated Hazard Models<a class="anchor" aria-label="anchor" href="#accelerated-hazard-models"></a>
 </h3>
-<p>Accelerated hazard (AH) models are defined as</p>
-<p><span class="math display"><em>h</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em><em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)</span></p>
+<p>Accelerated hazard (AH) models can be defined as</p>
+<p><span class="math display"><em>h</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em>/<em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)</span></p>
 <p>so that</p>
-<p><span class="math display"><em>S</em>(<em>t</em>|<strong>Θ</strong>,<strong>x</strong>) = exp {−<em>H</em><sub>0</sub>(<em>t</em><em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)<em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>}</span> and <span class="math display"><em>f</em>(<em>t</em>|<strong>θ</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em><em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)exp {−<em>H</em><sub>0</sub>(<em>t</em><em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)<em>e</em><sup>−<strong>x</strong><strong>β</strong></sup>}.</span></p>
+<p><span class="math display"><em>S</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>x</strong>) = exp {−<em>H</em><sub>0</sub>(<em>t</em>/<em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)<em>e</em><sup><strong>x</strong><strong>β</strong></sup>}</span> and <span class="math display"><em>f</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>x</strong>) = <em>h</em><sub>0</sub>(<em>t</em>/<em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)exp {−<em>H</em><sub>0</sub>(<em>t</em>/<em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)<em>e</em><sup><strong>x</strong><strong>β</strong></sup>}.</span></p>
+</div>
+<div class="section level3">
+<h3 id="extended-hazard-models">Extended hazard Models<a class="anchor" aria-label="anchor" href="#extended-hazard-models"></a>
+</h3>
+<p>The survival function of the extended hazard (EH) model is given by:</p>
+<p><span class="math display"><em>S</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>ϕ</strong>) = exp {−<em>H</em><sub>0</sub>(<em>t</em>/<em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)exp(<strong>x</strong>(<strong>β</strong>+<strong>ϕ</strong>))}.</span></p>
+<p>The hazard and the probability density functions are then expressed as:</p>
+<p><span class="math display"><em>h</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>ϕ</strong>) = <em>h</em><sub>0</sub>(<em>t</em>/<em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)exp {<strong>x</strong><strong>ϕ</strong>}</span> and</p>
+<p><span class="math display"><em>f</em>(<em>t</em>|<strong>θ</strong>,<strong>β</strong>,<strong>ϕ</strong>) = <em>h</em><sub>0</sub>(<em>t</em>/<em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)exp {<strong>x</strong><strong>β</strong>}exp {−<em>H</em><sub>0</sub>(<em>t</em>/<em>e</em><sup><strong>x</strong><strong>β</strong></sup>|<strong>θ</strong>)exp(<strong>x</strong>(<strong>β</strong>+<strong>ϕ</strong>))},</span></p>
+<p>respectively.</p>
+<p>The EH model includes the AH, AFT and PH models as particular cases when <span class="math inline"><strong>ϕ</strong> = <strong>0</strong></span>, <span class="math inline"><strong>ϕ</strong> =  − <strong>β</strong></span>, and <span class="math inline"><strong>β</strong> = <strong>0</strong></span>, respectively.</p>
 </div>
 <div class="section level3">
 <h3 id="yang-and-prentice-models">Yang and Prentice Models<a class="anchor" aria-label="anchor" href="#yang-and-prentice-models"></a>
@@ -271,6 +282,7 @@ $$</span> and</p>
 <p><span class="math display">$$f(t|\boldsymbol{\theta},\boldsymbol{\beta}, \boldsymbol{\phi}) = \kappa_{S}h_{0}(t|\boldsymbol{\theta})\exp\{H_{0}(t|\boldsymbol{\theta})\}\left[1+\frac{\kappa_{S}}{\kappa_{L}}R_{0}(t|\boldsymbol{\theta})\right]^{-(1+\kappa_{L})},
 $$</span></p>
 <p>respectively, where <span class="math inline"><em>κ</em><sub><em>S</em></sub> = exp {<strong>x</strong><strong>β</strong>}</span> and <span class="math inline"><em>κ</em><sub><em>L</em></sub> = exp {<strong>x</strong><strong>ϕ</strong>}</span>.</p>
+<p>The YO model includes the PH and PO models as particular cases when <span class="math inline"><strong>ϕ</strong> = <strong>β</strong></span> and <span class="math inline"><strong>ϕ</strong> = <strong>0</strong></span>, respectively.</p>
 </div>
 </div>
 </div>
@@ -303,6 +315,7 @@ $$</span></p>
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Fabio Demarqui <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0001-9236-1986" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
