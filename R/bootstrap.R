@@ -1,5 +1,5 @@
 
-ypreg_boot <- function(object, nboot, cores, ...){
+bootstrap <- function(object, nboot, cores, ...){
 
   # cl <- parallel::makeCluster(cores)
   # doParallel::registerDoParallel(cl)
@@ -7,7 +7,7 @@ ypreg_boot <- function(object, nboot, cores, ...){
     future::plan(future::multisession, workers = cores)
   }
 
-
+  survreg <- object$survreg
   baseline <- object$baseline
   formula <- object$formula
   formula <- stats::update(formula, survival::Surv(time, status) ~ .)
@@ -45,7 +45,11 @@ ypreg_boot <- function(object, nboot, cores, ...){
       samp2 <- sample(index2, size=n2, replace=TRUE)
       samp <- c(samp1, samp2)
       mydata <- dplyr::slice(data, samp)
-      suppressWarnings({invisible(utils::capture.output(fit <- survstan::ypreg(formula, data=mydata, baseline = baseline)))})
+      switch(survreg,
+        "yp" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ypreg(formula, data=mydata, baseline = baseline)))}),
+        "eh" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ehreg(formula, data=mydata, baseline = baseline)))}),
+        "ah" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ahreg(formula, data=mydata, baseline = baseline)))})
+      )
       if(!is(object, "try-error")){
         survstan::estimates(fit)
       }
@@ -58,7 +62,11 @@ ypreg_boot <- function(object, nboot, cores, ...){
       samp2 <- sample(index2, size=n2, replace=TRUE)
       samp <- c(samp1, samp2)
       mydata <- dplyr::slice(data, samp)
-      suppressWarnings({invisible(utils::capture.output(fit <- survstan::ypreg(formula, data=mydata, baseline = baseline)))})
+      switch(survreg,
+        "yp" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ypreg(formula, data=mydata, baseline = baseline)))}),
+        "eh" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ehreg(formula, data=mydata, baseline = baseline)))}),
+        "ah" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ahreg(formula, data=mydata, baseline = baseline)))})
+      )
       if(!is(object, "try-error")){
         survstan::estimates(fit)
       }

@@ -39,9 +39,6 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
   n <- length(time)
   p <- ncol(X)
   tau <- max(time)
-  # if(baseline == "fatigue"){
-  #   tau <- 1
-  # }
   y <- time/tau
 
 
@@ -62,22 +59,12 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
 
 
   pars <- output$estimates
-  if(p==0){
-    nu <- time
-  }else{
+  if(p>0){
     lp <- as.numeric(X%*%pars[1:p])
-    nu <- time*exp(-lp)
+    time <- time*exp(-lp)
   }
 
-  output$residuals <- switch(output$baseline,
-                             exponential = -stats::pexp(nu, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
-                             weibull = -stats::pweibull(nu, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-                             lognormal = -stats::plnorm(nu, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-                             loglogistic = -actuar::pllogis(nu, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-                             fatigue = -extraDistr::pfatigue(nu, alpha = pars[p+1], beta = pars[p+2], mu = 0, lower.tail = FALSE, log.p = TRUE),
-                             gamma = -stats::pgamma(nu, shape = pars[p+1], rate = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-                             rayleigh = -extraDistr::prayleigh(nu, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE)
-  )
+  output$residuals <- cumhaz(time, pars, baseline, p)
   output$event <- event
 
   class(output) <- c("aftreg", "survstan")

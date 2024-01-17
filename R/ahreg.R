@@ -60,23 +60,13 @@ ahreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
 
   pars <- output$estimates
   if(p==0){
-    nu <- time
     lp <- 0
   }else{
     lp <- as.numeric(X%*%pars[1:p])
-    nu <- time*exp(lp)
+    time <- time*exp(-lp)
   }
-
-  H0 <- switch(output$baseline,
-                             exponential = -stats::pexp(nu, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
-                             weibull = -stats::pweibull(nu, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-                             lognormal = -stats::plnorm(nu, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-                             loglogistic = -actuar::pllogis(nu, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-                             fatigue = -extraDistr::pfatigue(nu, alpha = pars[p+1], beta = pars[p+2], mu = 0, lower.tail = FALSE, log.p = TRUE),
-                             gamma = -stats::pgamma(nu, shape = pars[p+1], rate = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-                             rayleigh = -extraDistr::prayleigh(nu, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE)
-  )
-  output$residuals <- H0*exp(-lp)
+  H0 <- cumhaz(time, pars, baseline, p)
+  output$residuals <- H0*exp(lp)
   output$event <- event
 
 

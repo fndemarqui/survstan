@@ -77,6 +77,23 @@ surv_yp <- function(time, pars, lp_short, lp_long, baseline, p){
 }
 
 
+surv_eh <- function(time, pars, lp1, lp2, baseline, p){
+  p <- 2*p
+  time <- time*exp(lp2)
+  H0 <- switch(baseline,
+               exponential = -stats::pexp(time, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
+               weibull = -stats::pweibull(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               lognormal = -stats::plnorm(time, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               loglogistic = -actuar::pllogis(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               fatigue = -extraDistr::pfatigue(time, alpha = pars[p+1], beta = pars[p+2], mu = 0, lower.tail = FALSE, log.p = TRUE),
+               gamma = -stats::pgamma(time, shape = pars[p+1], rate = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               rayleigh = -extraDistr::prayleigh(time, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE)
+  )
+
+  surv <- exp(- H0*exp(lp1-lp2))
+  return(surv)
+}
+
 #---------------------------------------------
 #' survfit method for survstan models
 #'
@@ -120,6 +137,10 @@ survfit.survstan <- function(formula, newdata, ...){
     phi <- pars[(p+1):(2*p)]
     lp_short <- lp
     lp_long <- as.numeric(X%*%phi)
+  }else if(survreg == "eh"){
+    phi <- pars[(p+1):(2*p)]
+    lp1 <- lp
+    lp2 <- as.numeric(X%*%phi)
   }
 
   newdata$lp <- lp
@@ -136,7 +157,8 @@ survfit.survstan <- function(formula, newdata, ...){
     "ph" = with(df, surv_ph(time, pars, lp, baseline, p)),
     "po" = with(df, surv_po(time, pars, lp, baseline, p)),
     "ah" = with(df, surv_ah(time, pars, lp, baseline, p)),
-    "yp" = with(df, surv_yp(time, pars, lp_short, lp_long, baseline, p))
+    "yp" = with(df, surv_yp(time, pars, lp_short, lp_long, baseline, p)),
+    "eh" = with(df, surv_eh(time, pars, lp1, lp2, baseline, p))
   )
 
   surv <- df %>%

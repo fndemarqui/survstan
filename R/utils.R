@@ -40,6 +40,13 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
     }
   }
 
+  if(survreg == "eh"){
+    p <- 2*p
+    if(p>0){
+      labels <- c(paste0("AF-", labels), paste0("HR-", labels))
+    }
+  }
+
   if(baseline == "exponential"){
     labels <- c(labels, "lambda")
     names(estimates) <- labels
@@ -183,4 +190,16 @@ logLik.survstan <- function(object, ...){
 }
 
 
-
+# This internal function returns the cumulative baseline hazard function
+cumhaz <- function(time, pars, baseline, p){
+  H0 <- switch(baseline,
+               exponential = -stats::pexp(time, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
+               weibull = -stats::pweibull(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               lognormal = -stats::plnorm(time, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               loglogistic = -actuar::pllogis(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               fatigue = -extraDistr::pfatigue(time, alpha = pars[p+1], beta = pars[p+2], mu = 0, lower.tail = FALSE, log.p = TRUE),
+               gamma = -stats::pgamma(time, shape = pars[p+1], rate = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               rayleigh = -extraDistr::prayleigh(time, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE)
+  )
+  return(H0)
+}

@@ -67,15 +67,7 @@ ypreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
   }
 
   p <- 2*p
-  H0 <- switch(output$baseline,
-               exponential = -stats::pexp(time, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
-               weibull = -stats::pweibull(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-               lognormal = -stats::plnorm(time, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-               loglogistic = -actuar::pllogis(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-               fatigue = -extraDistr::pfatigue(time, alpha = pars[p+1], beta = pars[p+2], mu = 0, lower.tail = FALSE, log.p = TRUE),
-               gamma = -stats::pgamma(time, shape = pars[p+1], rate = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-               rayleigh = -extraDistr::prayleigh(time, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE)
-  )
+  H0 <- cumhaz(time, pars, baseline, p)
   ratio <- exp(lp_short-lp_long)
   Rt <- expm1(H0)*ratio
   output$residuals <- log1p(Rt)*exp(lp_long)

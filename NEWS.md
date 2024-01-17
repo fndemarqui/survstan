@@ -41,4 +41,6 @@
 - update summary output.
 - tidy.survstan method was reimplemented to follow broom stantards, and survstan::tidy() no long masks broom::tidy().
 - cross_time() function now allows for parallel computing. 
+- reparametrization of AH model (see details in https://fndemarqui.github.io/survstan/).
+- implementation of extended hazard (EH) family of survival regression models.
 

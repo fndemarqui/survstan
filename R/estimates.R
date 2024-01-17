@@ -17,7 +17,7 @@
 #' }
 #'
 vcov.survstan <- function(object, all = FALSE, ...){
-  if(object$survreg == "yp"){
+  if(object$survreg == "yp" | object$survreg == "eh"){
     p <- 2*object$p
   }else{
     p <- object$p
@@ -107,7 +107,7 @@ estimates <- function(object, ...){
 #'
 coef.survstan <- function(object, ...){
   p <- object$p
-  if(object$survreg == "yp"){
+  if(object$survreg == "yp" | object$survreg == "eh"){
     p <- 2*p
   }
 

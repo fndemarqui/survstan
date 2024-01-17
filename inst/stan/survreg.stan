@@ -12,7 +12,7 @@ data{
   matrix[p == 0 ? 0 : n, p] X;
   real tau;
   int baseline;
-  int survreg;    // 1 - AFT; 2 - PH; 3 - PO; 4 - AH; 5 - YP
+  int survreg;    // 1 - AFT; 2 - PH; 3 - PO; 4 - AH; 5 - YP; 6 - EH
 }
 
 transformed data{
@@ -54,7 +54,7 @@ transformed data{
 
 
   //------------------------------------------------------------
-  if(survreg == 5){
+  if(survreg > 4 ){
     is_phi = 1;
   }
 
@@ -79,23 +79,33 @@ model{
   vector[n] loglik;
   vector[n] lpdf;
   vector[n] lsurv;
-  vector[survreg == 5 ? n : 0] lp_long;
-  vector[survreg == 5 ? n : 0] ratio;
+  vector[survreg > 4 ? n : 0] lp2;
+  vector[survreg > 4 ? n : 0] K;
 
   if(p>0){
     lp = X*beta;
+    if(survreg > 4){
+      if(survreg == 5){
+        lp2 = X*phi;
+        K =  exp(X*(beta-phi));
+      }else{
+        lp2 = X*phi;
+        K =  exp(lp+lp2);
+      }
+    }
   }else{
     lp = zeros;
+    if(survreg > 4){
+      lp2 = zeros;
+      K = exp(zeros);
+    }
   }
 
-  if(survreg == 1){
-    y = time ./ exp(lp);
-  }else if(survreg == 4){
-    y = time .* exp(lp);
-  }else{
+  if(survreg == 2 || survreg == 3 || survreg == 5){
     y = time;
+  }else{
+    y = time ./ exp(lp);
   }
-
 
 
   if(baseline == 1){ // exponential
@@ -146,18 +156,12 @@ model{
       loglik = loglik_po(lpdf, lsurv, event, lp, tau);
     }else if(survreg == 4){ //AH model
       loglik = loglik_ah(lpdf, lsurv, event, lp, tau);
-    }else{
-        if(p>0){
-          lp_long = X*phi;
-          ratio =  exp(X*(beta-phi));
-        }else{
-          lp_long = zeros;
-          ratio = exp(zeros);
-        }
-      loglik = loglik_yp(event, lpdf, lsurv, lp, lp_long, ratio, tau);
+    }else if(survreg == 5){ // YP model
+      loglik = loglik_yp(event, lpdf, lsurv, lp, lp2, K, tau);
+    }else{ // EH model
+      loglik = loglik_eh(event, lpdf, lsurv, lp2, K, tau);
     }
   }
-
 
   target += sum(loglik);
 

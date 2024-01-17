@@ -11,7 +11,8 @@ vector loglik_aft(vector lpdf, vector lsurv, vector event, vector lp, real tau){
 vector loglik_ah(vector lpdf, vector lsurv, vector event, vector lp, real tau){
   int n = num_elements(lpdf);
   vector[n] loglik;
-  loglik = event  .* (lpdf - lsurv - log(tau)) +  exp(-lp) .* lsurv ;
+  // loglik = event  .* (lpdf - lsurv - log(tau)) +  exp(-lp) .* lsurv ;
+  loglik = event  .* (lpdf - lsurv - log(tau)) +  exp(lp) .* lsurv ;
   return loglik;
 }
 
@@ -35,7 +36,7 @@ vector loglik_po(vector lpdf, vector lsurv, vector event, vector lp, real tau){
 }
 
 
-vector loglik_yp(vector status, vector lpdf, vector lsurv, vector lp_short, vector lp_long, vector ratio, real tau){
+vector loglik_yp(vector status, vector lpdf, vector lsurv, vector lp_short, vector lp_long, vector K, real tau){
 
   int n = num_elements(lpdf);
   vector[n] Rt0;
@@ -50,10 +51,20 @@ vector loglik_yp(vector status, vector lpdf, vector lsurv, vector lp_short, vect
   Rt0 = expm1(Ht0);
   theta = exp(lp_long);
 
-  aux = ratio .* Rt0;
+  aux = K .* Rt0;
   log_ht = lp_short - log1p(aux) + lht0 + Ht0;
   log_St = -theta .* log1p(aux);
   loglik = status .* log_ht + log_St;
+
+  return loglik;
+}
+
+
+vector loglik_eh(vector status, vector lpdf, vector lsurv, vector lp, vector K, real tau){
+
+  int n = num_elements(lpdf);
+  vector[n] loglik;
+  loglik = status .* (lp + lpdf - lsurv - log(tau)) + lsurv .* K;
 
   return loglik;
 }

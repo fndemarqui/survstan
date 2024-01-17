@@ -1,34 +1,30 @@
 
-#
-# surv_yp <- function(time, pars, lp_short, lp_long, baseline, p){
-#   p <- 2*p
-#   H0 <- switch(baseline,
-#                exponential = -stats::pexp(time, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
-#                weibull = -stats::pweibull(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-#                lognormal = -stats::plnorm(time, meanlog = pars[p+1], sdlog = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-#                loglogistic = -actuar::pllogis(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE)
-#   )
-#   ratio <- exp(lp_short - lp_long)
-#   Rt = expm1(H0)*ratio
-#   theta <- exp(lp_long)
-#   surv <- exp(-theta*log1p(Rt))
-#   return(surv)
-# }
-
-
-diffSurv <- function(time, X1, X2, pars, baseline, p){
-    lp_short1 <- as.numeric(X1%*%pars[1:p])
-    lp_short2 <- as.numeric(X2%*%pars[1:p])
-    lp_long1 <- as.numeric(X1%*%pars[(p+1):(2*p)])
-    lp_long2 <- as.numeric(X2%*%pars[(p+1):(2*p)])
-    St1 <- surv_yp(time, pars, lp_short1, lp_long1, baseline, p)
-    St2 <- surv_yp(time, pars, lp_short2, lp_long2, baseline, p)
+diffSurv <- function(time, X1, X2, pars, baseline, survreg, p){
+    lp11 <- as.numeric(X1%*%pars[1:p])
+    lp12 <- as.numeric(X2%*%pars[1:p])
+    if(survreg == "yp" | survreg == "eh"){
+      lp21 <- as.numeric(X1%*%pars[(p+1):(2*p)])
+      lp22 <- as.numeric(X2%*%pars[(p+1):(2*p)])
+    }else{
+      lp11 <- 0
+      lp22 <- 0
+    }
+    if(survreg == "yp"){
+      St1 <- surv_yp(time, pars, lp11, lp21, baseline, p)
+      St2 <- surv_yp(time, pars, lp12, lp22, baseline, p)
+    }else if(survreg == "eh"){
+      St1 <- surv_eh(time, pars, lp11, lp21, baseline, p)
+      St2 <- surv_eh(time, pars, lp12, lp22, baseline, p)
+    }else{
+      St1 <- surv_ah(time, pars, lp11, baseline, p)
+      St2 <- surv_ah(time, pars, lp12, baseline, p)
+    }
   return(St1-St2)
 }
 
-ypregCrossSurv <- function(X1, X2, tau0=tau0, tau=tau, pars, baseline, p){
+crossing_time <- function(X1, X2, tau0=tau0, tau=tau, pars, baseline, survreg, p){
   I <- c(tau0, 1.5*tau)
-  t <- try(stats::uniroot(diffSurv, interval=I, X1=X1, X2=X2, pars=pars, baseline=baseline, p=p)$root, TRUE)
+  t <- try(stats::uniroot(diffSurv, interval=I, X1=X1, X2=X2, pars=pars, baseline=baseline, survreg=survreg, p=p)$root, TRUE)
   if(is(t, "try-error")){
     return(NA)
   }else{
@@ -51,12 +47,12 @@ cross_time <- function(object, ...) UseMethod("cross_time")
 
 #' Computes the crossing survival times
 #'
-#' @aliases cross_time.ypreg
+#' @aliases cross_time.survstan
 #' @rdname cross_time-methods
-#' @method cross_time ypreg
+#' @method cross_time survstan
 #' @export
 #' @export cross_time
-#' @param object an object of class ypreg
+#' @param object an object of class survstan
 #' @param newdata1 a data frame containing the first set of explanatory variables
 #' @param newdata2 a data frame containing the second set of explanatory variables
 #' @param conf.level level of the confidence/credible intervals
@@ -76,7 +72,7 @@ cross_time <- function(object, ...) UseMethod("cross_time")
 #' tcross
 #' }
 #'
-cross_time.ypreg <- function(object, newdata1, newdata2,
+cross_time.survstan <- function(object, newdata1, newdata2,
                            conf.level=0.95, nboot=1000,
                            cores = 1, ...){
 
@@ -116,13 +112,13 @@ cross_time.ypreg <- function(object, newdata1, newdata2,
   t <- c()
 
   for(i in 1:nrow(newdata1)){
-    t[i] <- ypregCrossSurv(X1=X1[i,], X2=X2[i,], tau0=tau0, tau=tau, pars=pars, baseline, p)
+    t[i] <- crossing_time(X1=X1[i,], X2=X2[i,], tau0=tau0, tau=tau, pars=pars, baseline=baseline, survreg=survreg, p)
   }
-  pars <- ypreg_boot(object, nboot=nboot, cores = cores)
+  pars <- bootstrap(object, nboot=nboot, cores = cores)
 
   ci <- matrix(nrow=nrow(newdata1), ncol=2)
   for(i in 1:nrow(newdata1)){
-    aux <- apply(pars, 1, ypregCrossSurv, X1=X1[i,], X2=X2[i,], tau0=tau0, tau=tau, baseline=baseline, p=p)
+    aux <- apply(pars, 1, crossing_time, X1=X1[i,], X2=X2[i,], tau0=tau0, tau=tau, baseline=baseline, p=p)
     ci[i,] <- stats::quantile(aux, probs=prob, na.rm=TRUE)
   }
 

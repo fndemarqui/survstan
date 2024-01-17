@@ -209,18 +209,17 @@ regression models with the R package survstan:
 - proportional odds (PO) models;
 - accelerated hazard (AH) models.
 - Yang and Prentice (YP) models.
-
-Let $\mathbf{x}$ be a $1\times p$ vector of covariates,
-$\boldsymbol{\beta}$ a $p \times 1$ of regression coefficients, and
-$\boldsymbol{\theta}$ a vector of parameters associated with some
-baseline survival distribution, and denote by
-$\boldsymbol{\Theta} = (\boldsymbol{\theta}, \boldsymbol{\beta})^{T}$
-the full vector of parameters. Here, to ensure identifiability, in all
-regression structures the linear predictor
-$\mathbf{x} \boldsymbol{\beta}$ does not include a intercept term.
+- extended hazard (EH) models.
 
 The regression survival models implemented in the R package survstan are
-briefly described in the sequel.
+briefly described in the sequel. Denote by $\mathbf{x}$ a $1\times p$
+vector of covariates, and let $\boldsymbol{\beta}$ and
+$\boldsymbol{\phi}$ be $p \times 1$ of regression coefficients, and
+$\boldsymbol{\theta}$ a vector of parameters associated with some
+baseline survival distribution. To ensure identifiability of the
+implemented regression models, we shall assume that the linear
+predictors $\mathbf{x} \boldsymbol{\beta}$ and
+$\mathbf{x} \boldsymbol{\phi}$ do not include a intercept term.
 
 ### Accelerate Failure Time Models
 
@@ -232,11 +231,11 @@ $$ where $\nu$ follows a baseline distribution with survival function
 $S_{0}(\cdot|\boldsymbol{\theta})$ so that
 
 $$
-f(t|\boldsymbol{\Theta}, \mathbf{x}) = e^{-\mathbf{x} \boldsymbol{\beta}}f_{0}(te^{-\mathbf{x} \boldsymbol{\beta}}|\boldsymbol{\theta})
+f(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = e^{-\mathbf{x} \boldsymbol{\beta}}f_{0}(te^{-\mathbf{x} \boldsymbol{\beta}}|\boldsymbol{\theta})
 $$ and
 
 $$
-S(t|\boldsymbol{\Theta}, \mathbf{x}) = S_{0}(t e^{-\mathbf{x} \boldsymbol{\beta}}|\boldsymbol{\theta}).
+S(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = S_{0}(t e^{-\mathbf{x} \boldsymbol{\beta}}|\boldsymbol{\theta}).
 $$
 
 ### Proportional Hazards Models
@@ -244,16 +243,16 @@ $$
 Proportional hazards (PH) models are defined as
 
 $$
-h(t|\Theta, \mathbf{x}) = h_{0}(t|\boldsymbol{\theta})\exp\{\mathbf{x} \boldsymbol{\beta}\},
+h(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = h_{0}(t|\boldsymbol{\theta})\exp\{\mathbf{x} \boldsymbol{\beta}\},
 $$ where $h_{0}(t|\boldsymbol{\theta})$ is a baseline hazard function so
 that
 
 $$
-f(t|\boldsymbol{\Theta}, \mathbf{x}) = h_{0}(t|\boldsymbol{\theta})\exp\left\{\mathbf{x} \boldsymbol{\beta} - H_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}\right\},
+f(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = h_{0}(t|\boldsymbol{\theta})\exp\left\{\mathbf{x} \boldsymbol{\beta} - H_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}\right\},
 $$ and
 
 $$
-S(t|\boldsymbol{\Theta}, \mathbf{x}) = \exp\left\{ - H_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}\right\}.
+S(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = \exp\left\{ - H_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}\right\}.
 $$
 
 ### Proportional Odds Models
@@ -261,35 +260,57 @@ $$
 Proportional Odds (PO) models are defined as
 
 $$
-R(t|\Theta, \mathbf{x}) = R_{0}(t|\boldsymbol{\theta})\exp\{\mathbf{x} \boldsymbol{\beta}\},
+R(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = R_{0}(t|\boldsymbol{\theta})\exp\{\mathbf{x} \boldsymbol{\beta}\},
 $$ where
 $\displaystyle R_{0}(t|\boldsymbol{\theta}) = \frac{1-S_{0}(t|\boldsymbol{\theta})}{S_{0}(t|\boldsymbol{\theta})} = \exp\{H_{0}(t|\boldsymbol{\theta})\}-1$
 is a baseline odds function so that
 
 $$
-f(t|\boldsymbol{\Theta}, \mathbf{x}) = \frac{h_{0}(t|\boldsymbol{\theta})\exp\{\mathbf{x} \boldsymbol{\beta} + H_{0}(t|\boldsymbol{\theta})\}}{[1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}]^2}.
+f(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = \frac{h_{0}(t|\boldsymbol{\theta})\exp\{\mathbf{x} \boldsymbol{\beta} + H_{0}(t|\boldsymbol{\theta})\}}{[1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}]^2}.
 $$
 
 and
 
 $$
-S(t|\boldsymbol{\Theta}, \mathbf{x}) = \frac{1}{1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}}.
+S(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = \frac{1}{1 + R_{0}(t|\boldsymbol{\theta})e^{\mathbf{x} \boldsymbol{\beta}}}.
 $$
 
 ### Accelerated Hazard Models
 
-Accelerated hazard (AH) models are defined as
+Accelerated hazard (AH) models can be defined as
 
-$$h(t|\boldsymbol{\Theta},\mathbf{x}) = h_{0}\left(te^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)$$
+$$h(t|\boldsymbol{\theta}, \boldsymbol{\beta},\mathbf{x}) = h_{0}\left(t/e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)$$
 
 so that
 
-$$S(t|\boldsymbol{\Theta},\mathbf{x}) = \exp\left\{- H_{0}\left(t e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)e^{-\mathbf{x}\boldsymbol{\beta}}
+$$S(t|\boldsymbol{\theta}, \boldsymbol{\beta},\mathbf{x}) = \exp\left\{- H_{0}\left(t/ e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)e^{\mathbf{x}\boldsymbol{\beta}}
 \right\}
 $$ and
-$$f(t|\boldsymbol{\theta}, \mathbf{x}) = h_{0}\left(te^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)\exp\left\{- H_{0}\left(t e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)e^{-\mathbf{x}\boldsymbol{\beta}}
+$$f(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = h_{0}\left(t/e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)\exp\left\{- H_{0}\left(t/ e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta}\right)e^{\mathbf{x}\boldsymbol{\beta}}
 \right\}.
 $$
+
+### Extended hazard Models
+
+The survival function of the extended hazard (EH) model is given by:
+
+$$S(t|\boldsymbol{\theta},\boldsymbol{\beta}, \boldsymbol{\phi}) = \exp\left\{-H_{0}(t/e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta})\exp(\mathbf{x}(\boldsymbol{\beta} + \boldsymbol{\phi}))\right\}.
+$$
+
+The hazard and the probability density functions are then expressed as:
+
+$$h(t|\boldsymbol{\theta},\boldsymbol{\beta}, \boldsymbol{\phi}) = h_{0}(t/e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta})\exp\{\mathbf{x}\boldsymbol{\phi}\}
+$$ and
+
+$$f(t|\boldsymbol{\theta},\boldsymbol{\beta}, \boldsymbol{\phi}) = h_{0}(t/e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta})\exp\{\mathbf{x}\boldsymbol{\beta}\}\exp\left\{-H_{0}(t/e^{\mathbf{x}\boldsymbol{\beta}}|\boldsymbol{\theta})\exp(\mathbf{x}(\boldsymbol{\beta}+ \boldsymbol{\phi}))\right\},
+$$
+
+respectively.
+
+The EH model includes the AH, AFT and PH models as particular cases when
+$\boldsymbol{\phi} = \mathbf{0}$,
+$\boldsymbol{\phi} = -\boldsymbol{\beta}$, and
+$\boldsymbol{\beta} = \mathbf{0}$, respectively.
 
 ### Yang and Prentice Models
 
@@ -308,3 +329,7 @@ $$
 
 respectively, where $\kappa_{S} = \exp\{\mathbf{x}\boldsymbol{\beta}\}$
 and $\kappa_{L} = \exp\{\mathbf{x}\boldsymbol{\phi}\}$.
+
+The YO model includes the PH and PO models as particular cases when
+$\boldsymbol{\phi} = \boldsymbol{\beta}$ and
+$\boldsymbol{\phi} = \mathbf{0}$, respectively.
