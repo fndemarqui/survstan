@@ -44,3 +44,7 @@
 - reparametrization of AH model (see details in https://fndemarqui.github.io/survstan/).
 - implementation of extended hazard (EH) family of survival regression models.
 
+
+# survstan 0.0.7
+
+- correction of survival functions for AH and EH models after reparametrization.
