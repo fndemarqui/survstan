@@ -43,7 +43,7 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
   if(survreg == "eh"){
     p <- 2*p
     if(p>0){
-      labels <- c(paste0("AF-", labels), paste0("HR-", labels))
+      labels <- c(paste0("AF-", labels), paste0("RH-", labels))
     }
   }
 

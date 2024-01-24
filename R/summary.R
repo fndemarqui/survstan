@@ -46,7 +46,7 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
     labels <- c(paste0("short-", labels), paste0("long-", labels))
   }else if(object$survreg == "eh"){
     p <- 2*object$p
-    labels <- c(paste0("AF-", labels), paste0("HR-", labels))
+    labels <- c(paste0("AF-", labels), paste0("RH-", labels))
   }else{
     p <- object$p
   }
