@@ -45,6 +45,6 @@
 - implementation of extended hazard (EH) family of survival regression models.
 
 
-# survstan 0.0.7
+# survstan 0.0.6.1
 
-- correction of survival functions for AH and EH models after reparametrization.
+- Correcting parametrization of survival functions for AH and EH models.
