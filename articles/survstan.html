@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,13 +102,14 @@ the user must choose among one of the available fitting functions
 that is, <code>aft</code> for accelerated failure time (AFT) models,
 <code>ah</code> for accelerates hazards (AH) models, <code>ph</code> for
 proportional hazards (PO) models, <code>po</code> for proportional (PO)
-models, or <code>yp</code> for Yang &amp; Prentice (YP) models.</p>
+models, <code>yp</code> for Yang &amp; Prentice (YP) models, or
+<code>eh</code> for extended hazard (EH) models.</p>
 <p>The specification of the survival formula passed to the chosen
 <code>*reg()</code> function follows the same syntax adopted in the
 <strong>survival</strong> package, so that transition to the
 <strong>survstan</strong> package can be smoothly as possible for those
 familiar with the <strong>survival</strong> package.</p>
-<p>The code below shows the model fitting of a AFT model with Weibull
+<p>The code below shows the model fitting of an AFT model with Weibull
 baseline distribution using the <code><a href="../reference/aftreg.html">survstan::aftreg()</a></code>
 function. For comparison purposes, we also fit to the same data the
 Weibull regression model using <code><a href="https://rdrr.io/pkg/survival/man/survreg.html" class="external-link">survival::survreg()</a></code>
@@ -163,7 +164,7 @@ of the intercept term in the linear predictor.</p>
 <span><span class="co">#&gt; aftreg(formula = Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian, </span></span>
 <span><span class="co">#&gt;     dist = "weibull")</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Accelerated failure time model fit with weibull baseline distribution </span></span>
+<span><span class="co">#&gt; Accelerated failure time model fit with weibull baseline distribution: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Regression coefficients:</span></span>
 <span><span class="co">#&gt;         Estimate Std. Error z value Pr(&gt;|z|)</span></span>

@@ -31,6 +31,9 @@
     <loc>https://fndemarqui.github.io/survstan/reference/AIC.survstan.html</loc>
   </url>
   <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/Gompertz.html</loc>
+  </url>
+  <url>
     <loc>https://fndemarqui.github.io/survstan/reference/aftreg.html</loc>
   </url>
   <url>
@@ -67,10 +70,16 @@
     <loc>https://fndemarqui.github.io/survstan/reference/gastric.html</loc>
   </url>
   <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/ggprentice.html</loc>
+  </url>
+  <url>
     <loc>https://fndemarqui.github.io/survstan/reference/ggresiduals.html</loc>
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/ggresiduals.survstan.html</loc>
+  </url>
+  <url>
+    <loc>https://fndemarqui.github.io/survstan/reference/ggstacy.html</loc>
   </url>
   <url>
     <loc>https://fndemarqui.github.io/survstan/reference/index.html</loc>

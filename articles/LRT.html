@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">survstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,10 +132,12 @@ considered for the data analysis.</p>
 <p>Since the YP models includes both the PH and PO models as particular
 cases, we can perform LRT as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phreg.html">phreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">aft</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aftreg.html">aftreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
+<span><span class="va">ah</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ahreg.html">ahreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
+<span><span class="va">ph</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/phreg.html">phreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
 <span><span class="va">po</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/poreg.html">poreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
 <span><span class="va">yp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ypreg.html">ypreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
-<span></span>
+<span><span class="va">eh</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ehreg.html">ehreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span><span class="op">~</span><span class="va">arm</span>, data<span class="op">=</span><span class="va">ipass</span>, dist <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ph</span>, <span class="va">yp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -156,7 +158,32 @@ cases, we can perform LRT as follows:</p>
 <span><span class="co">#&gt; weibull(po) 1: -2851.32   157.89  1 &lt; 2.2e-16 ***</span></span>
 <span><span class="co">#&gt; weibull(yp) 2: -2772.38        -  -         -    </span></span>
 <span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">aft</span>, <span class="va">eh</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; weibull(aft) 1: Surv(time, status) ~ arm </span></span>
+<span><span class="co">#&gt; weibull(eh) 2: Surv(time, status) ~ arm </span></span>
+<span><span class="co">#&gt; --- </span></span>
+<span><span class="co">#&gt;                      loglik          LR df Pr(&gt;Chi)</span></span>
+<span><span class="co">#&gt; weibull(aft) 1: -2.8392e+03  1.0821e-06  1   0.9992</span></span>
+<span><span class="co">#&gt; weibull(eh) 2:  -2.8392e+03           -  -        -</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ah</span>, <span class="va">eh</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; weibull(ah) 1: Surv(time, status) ~ arm </span></span>
+<span><span class="co">#&gt; weibull(eh) 2: Surv(time, status) ~ arm </span></span>
+<span><span class="co">#&gt; --- </span></span>
+<span><span class="co">#&gt;                     loglik          LR df Pr(&gt;Chi)</span></span>
+<span><span class="co">#&gt; weibull(ah) 1: -2.8392e+03  2.2575e-07  1   0.9996</span></span>
+<span><span class="co">#&gt; weibull(eh) 2: -2.8392e+03           -  -        -</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ph</span>, <span class="va">eh</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; weibull(ph) 1: Surv(time, status) ~ arm </span></span>
+<span><span class="co">#&gt; weibull(eh) 2: Surv(time, status) ~ arm </span></span>
+<span><span class="co">#&gt; --- </span></span>
+<span><span class="co">#&gt;                     loglik          LR df Pr(&gt;Chi)</span></span>
+<span><span class="co">#&gt; weibull(ph) 1: -2.8392e+03  5.0196e-06  1   0.9982</span></span>
+<span><span class="co">#&gt; weibull(eh) 2: -2.8392e+03           -  -        -</span></span></code></pre></div>
 <!-- ## Veteran data -->
 <!-- The `survival::veteran` data has been widely used in the literature as a real data application of PO models. -->
 <!-- ```{r} -->
