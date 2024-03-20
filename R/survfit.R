@@ -84,15 +84,24 @@ survfit.survstan <- function(formula, newdata, ...){
   pars <- estimates(object)
   p <- object$p
   beta <- pars[1:p]
-  lp <- as.numeric(X%*%beta)
+
+  n <- nrow(newdata)
+  mf <- stats::model.frame(Terms, data = newdata)
+  offset <- stats::model.offset(mf)
+  if(is.null(offset)){
+    offset <- rep(0, n)
+  }
+
+
+  lp <- as.numeric(X%*%beta) + offset
   if(survreg == "yp"){
     phi <- pars[(p+1):(2*p)]
-    lp_short <- lp
+    lp_short <- lp + offset
     lp_long <- as.numeric(X%*%phi)
   }else if(survreg == "eh"){
     phi <- pars[(p+1):(2*p)]
-    lp1 <- lp
-    lp2 <- as.numeric(X%*%phi)
+    lp1 <- lp + offset
+    lp2 <- as.numeric(X%*%phi) + offset
   }
 
   newdata$lp <- lp

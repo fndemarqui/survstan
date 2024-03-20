@@ -9,7 +9,10 @@ set_baseline <- function(baseline){
                      "loglogistic" = 4,
                      "fatigue" = 5,
                      "gamma" = 6,
-                     "rayleigh" = 7
+                     "rayleigh" = 7,
+                     "gompertz" = 8,
+                     "ggstacy" = 9,
+                     "ggprentice" = 10
   )
   return(baseline)
 }
@@ -19,7 +22,11 @@ delta_method <- function(estimates, V, pars){
   labels <- names(estimates)
   is_positive <- labels %in% pars
   estimates[!is_positive] <- 1
-  D <- diag(estimates) # paremeters already transformed!!!
+  if(length(estimates)>1){  # paremeters already transformed!!!
+    D <- diag(estimates)
+  }else{
+    D <- estimates
+  }
   V <- D%*%V%*%D
   return(V)
 }
@@ -91,13 +98,13 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
     diag(v)["gamma"] <- tau
     V <- v%*%V%*%v
   }else if(baseline == "gamma"){ # gamma
-    labels <- c(labels, "alpha", "gamma")
+    labels <- c(labels, "alpha", "lambda")
     names(estimates) <- labels
     colnames(v) = labels
     rownames(v) = labels
-    V <- delta_method(estimates, V, c("alpha", "gamma"))
-    estimates["gamma"] <- estimates["gamma"]/tau
-    diag(v)["gamma"] <- 1/tau
+    V <- delta_method(estimates, V, c("alpha", "lambda"))
+    estimates["lambda"] <- estimates["lambda"]/tau
+    diag(v)["lambda"] <- 1/tau
     V <- v%*%V%*%v
   }else if(baseline == "rayleigh"){
     labels <- c(labels, "sigma")
@@ -108,7 +115,36 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
     estimates["sigma"] <- estimates["sigma"]*tau
     diag(v)["sigma"] <- tau
     V <- v%*%V%*%v
+  }else  if(baseline == "gompertz"){
+    labels <- c(labels, "alpha", "gamma")
+    names(estimates) <- labels
+    colnames(v) = labels
+    rownames(v) = labels
+    V <- delta_method(estimates, V, c("alpha", "gamma"))
+    estimates["gamma"] <- estimates["gamma"]/tau
+    diag(v)["gamma"] <- 1/tau
+    V <- v%*%V%*%v
+  }else if(baseline == "ggstacy"){
+    labels <- c(labels, "alpha", "gamma", "kappa")
+    names(estimates) <- labels
+    colnames(v) = labels
+    rownames(v) = labels
+    V <- delta_method(estimates, V, c("alpha", "gamma", "kappa"))
+    estimates["gamma"] <- estimates["gamma"]*tau
+    diag(v)["gamma"] <- tau
+    V <- v%*%V%*%v
+  }else if(baseline == "ggprentice"){
+    labels <- c(labels, "mu", "sigma", "varphi")
+    names(estimates) <- labels
+    colnames(v) = labels
+    rownames(v) = labels
+    V <- delta_method(estimates, V, c("mu", "sigma", "varphi"))
+    estimates["mu"] <- estimates["mu"] + log(tau)
+    V <- delta_method(estimates, V, "sigma")
+    V <- v%*%V%*%v
   }
+
+
   res <- list(estimates=estimates, V=V)
   return(res)
 }
@@ -199,7 +235,23 @@ cumhaz <- function(time, pars, baseline, p){
                loglogistic = -actuar::pllogis(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
                fatigue = -extraDistr::pfatigue(time, alpha = pars[p+1], beta = pars[p+2], mu = 0, lower.tail = FALSE, log.p = TRUE),
                gamma = -stats::pgamma(time, shape = pars[p+1], rate = pars[p+2], lower.tail = FALSE, log.p = TRUE),
-               rayleigh = -extraDistr::prayleigh(time, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE)
+               rayleigh = -extraDistr::prayleigh(time, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE),
+               gompertz = -pgompertz(time, alpha = pars[p+1], gamma = pars[p+2], lower.tail = FALSE, log.p = TRUE),
+               ggstacy = -pggstacy(time, alpha = pars[p+1], gamma = pars[p+2], kappa = pars[p+3], lower.tail = FALSE, log.p = TRUE),
+               ggprentice = -pggprentice(time, mu = pars[p+1], sigma = pars[p+2], varphi = pars[p+3], lower.tail = FALSE, log.p = TRUE)
   )
   return(H0)
+}
+
+
+# function to generate init values for ggprentice model
+inits <- function(survreg, p){
+  init <- list(mu = array(0), sigma = array(1), varphi = array(1))
+  if(p>1){
+    init$beta = array(rep(0, p))
+    if(survreg == "yp" | survreg == "eh"){
+      init$phi = array(rep(0, p))
+    }
+  }
+  return(init)
 }

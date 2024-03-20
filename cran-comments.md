@@ -1,15 +1,15 @@
 
-── R CMD check results ──────────────── survstan 0.0.6.1 ────
-Duration: 13m 52.8s
+── R CMD check results ───────────────────────────────── survstan 0.0.7 ────
+Duration: 25m 14.4s
 
 ❯ checking compiled code ... OK
    WARNING
   ‘qpdf’ is needed for checks on size reduction of PDFs
 
 ❯ checking installed package size ... NOTE
-    installed size is 67.7Mb
+    installed size is 78.9Mb
     sub-directories of 1Mb or more:
-      libs  67.1Mb
+      libs  78.3Mb
 
 ❯ checking dependencies in R code ... NOTE
   Namespaces in Imports field not imported from:
@@ -21,7 +21,6 @@ Duration: 13m 52.8s
 
 0 errors ✔ | 1 warning ✖ | 3 notes ✖
 
-
 * Package also checked using GHA workflow.
 
-* This is an update from version 0.0.5 to 0.0.6.
+* This is an update from version 0.0.6.1 to 0.0.7.

@@ -41,15 +41,21 @@ poreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
   p <- ncol(X)
   tau <- max(time)
   y <- time/tau
+  offset <- stats::model.offset(mf)
+  if(is.null(offset)){
+    offset <- rep(0, n)
+  }
 
-
-  output <- list(call = Call, formula = stats::formula(mt),
+  output <- list(call = Call, formula = stats::formula(mt), offset = offset,
                  terms = mt, mf = mf, baseline = baseline, survreg = "po",
                  n = n, p = p, tau = tau, labels = labels)
 
+  if(init == 0 & baseline == "ggprentice"){
+    init <- inits("po", p)
+  }
   baseline <- set_baseline(baseline)
 
-  stan_data <- list(time=y, event=event, X=X, n=n, p=p,
+  stan_data <- list(time=y, event=event, X=X, n=n, p=p, offset = offset,
                     baseline=baseline, survreg = 3, tau = tau)
   fit <- rstan::optimizing(stanmodels$survreg, data = stan_data, hessian = TRUE, init = init, ...)
   res <- reparametrization(fit, survreg = "po", output$baseline, labels, tau, p)
@@ -60,9 +66,9 @@ poreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
 
   pars <- output$estimates
   if(p==0){
-    lp <- 0
+    lp <- 0 + offset
   }else{
-    lp <- as.numeric(X%*%pars[1:p])
+    lp <- as.numeric(X%*%pars[1:p]) + offset
   }
 
   H0 <- cumhaz(time, pars, baseline, p)

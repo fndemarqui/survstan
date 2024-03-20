@@ -40,15 +40,21 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
   p <- ncol(X)
   tau <- max(time)
   y <- time/tau
+  offset <- stats::model.offset(mf)
+  if(is.null(offset)){
+    offset <- rep(0, n)
+  }
 
-
-  output <- list(call = Call, formula = stats::formula(mt),
+  output <- list(call = Call, formula = stats::formula(mt), offset = offset,
                  terms = mt, mf = mf, baseline = baseline, survreg = "aft",
                  n = n, p = p, tau = tau, labels = labels)
 
+  if(init == 0 & baseline == "ggprentice"){
+    init <- inits("aft", p)
+  }
   baseline <- set_baseline(baseline)
 
-  stan_data <- list(time=y, event=event, X=X, n=n, p=p,
+  stan_data <- list(time=y, event=event, X=X, n=n, p=p, offset = offset,
                     baseline=baseline, survreg = 1, tau = tau)
   fit <- rstan::optimizing(stanmodels$survreg, data = stan_data, hessian = TRUE, init = init, ...)
   res <- reparametrization(fit, survreg = "aft", output$baseline, labels, tau, p)
@@ -59,10 +65,12 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
 
 
   pars <- output$estimates
-  if(p>0){
-    lp <- as.numeric(X%*%pars[1:p])
-    time <- time*exp(-lp)
+  if(p==0){
+    lp <- 0 + offset
+  }else{
+    lp <- as.numeric(X%*%pars[1:p]) + offset
   }
+  time <- time*exp(-lp)
 
   output$residuals <- cumhaz(time, pars, baseline, p)
   output$event <- event

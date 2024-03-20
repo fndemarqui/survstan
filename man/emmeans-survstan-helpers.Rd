@@ -4,18 +4,21 @@
 \alias{emmeans-survstan-helpers}
 \alias{recover_data.survstan}
 \alias{recover_data.ypreg}
+\alias{recover_data.ehreg}
 \title{Support Functions for \pkg{emmeans}}
 \usage{
 recover_data.survstan(object, ...)
 
 recover_data.ypreg(object, term = c("short", "long"), ...)
+
+recover_data.ehreg(object, term = c("AF", "RH"), ...)
 }
 \arguments{
 \item{object}{An object of the same class as is supported by a new method.}
 
 \item{...}{Additional parameters that may be supported by the method.}
 
-\item{term}{character specifying whether short or long term regression coefficients are to be used.}
+\item{term}{character specifying whether AF or RH term regression coefficients are to be used.}
 }
 \description{
 Functions required for compatibility of \pkg{survstan} with \pkg{emmeans}.

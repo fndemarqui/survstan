@@ -41,15 +41,23 @@ ypreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
   p <- ncol(X)
   tau <- max(time)
   y <- time/tau
+  offset <- stats::model.offset(mf)
+  if(is.null(offset)){
+    offset <- rep(0, n)
+  }
 
-  output <- list(call = Call, formula = stats::formula(mt),
+  output <- list(call = Call, formula = stats::formula(mt), offset = offset,
                  terms = mt, mf = mf, baseline = baseline, survreg = "yp",
                  n = n, p = p, tau = tau, labels = labels)
 
+  if(init == 0 & baseline == "ggprentice"){
+    init <- inits("yp", p)
+  }
   baseline <- set_baseline(baseline)
 
-  stan_data <- list(time=y, event=event, X=X, n=n, p=p,
+  stan_data <- list(time=y, event=event, X=X, n=n, p=p, offset = offset,
                     baseline=baseline, survreg = 5, tau = tau)
+
   fit <- rstan::optimizing(stanmodels$survreg, data = stan_data, hessian = TRUE, init = init, ...)
   res <- reparametrization(fit, survreg = "yp", output$baseline, labels, tau, p)
   output$estimates <- res$estimates
@@ -59,11 +67,11 @@ ypreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
 
   pars <- output$estimates
   if(p==0){
-    lp_short <- 0
-    lp_long <- 0
+    lp_short <- 0 + offset
+    lp_long <- 0 + offset
   }else{
-    lp_short <- as.numeric(X%*%pars[1:p])
-    lp_long <- as.numeric(X%*%pars[(p+1):(2*p)])
+    lp_short <- as.numeric(X%*%pars[1:p]) + offset
+    lp_long <- as.numeric(X%*%pars[(p+1):(2*p)]) + offset
   }
 
   p <- 2*p

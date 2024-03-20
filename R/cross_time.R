@@ -1,10 +1,10 @@
 
-diffSurv <- function(time, X1, X2, pars, baseline, survreg, p){
-    lp11 <- as.numeric(X1%*%pars[1:p])
-    lp12 <- as.numeric(X2%*%pars[1:p])
+diffSurv <- function(time, X1, X2, offset1, offset2, pars, baseline, survreg, p){
+    lp11 <- as.numeric(X1%*%pars[1:p]) + offset1
+    lp12 <- as.numeric(X2%*%pars[1:p]) + offset2
     if(survreg == "yp" | survreg == "eh"){
-      lp21 <- as.numeric(X1%*%pars[(p+1):(2*p)])
-      lp22 <- as.numeric(X2%*%pars[(p+1):(2*p)])
+      lp21 <- as.numeric(X1%*%pars[(p+1):(2*p)]) + offset1
+      lp22 <- as.numeric(X2%*%pars[(p+1):(2*p)]) + offset2
     }else{
       lp11 <- 0
       lp22 <- 0
@@ -22,9 +22,9 @@ diffSurv <- function(time, X1, X2, pars, baseline, survreg, p){
   return(St1-St2)
 }
 
-crossing_time <- function(X1, X2, tau0=tau0, tau=tau, pars, baseline, survreg, p){
+crossing_time <- function(X1, X2, offset1, offset2, tau0=tau0, tau=tau, pars, baseline, survreg, p){
   I <- c(tau0, 1.5*tau)
-  t <- try(stats::uniroot(diffSurv, interval=I, X1=X1, X2=X2, pars=pars, baseline=baseline, survreg=survreg, p=p)$root, TRUE)
+  t <- try(stats::uniroot(diffSurv, interval=I, X1=X1, X2=X2, offset1=offset1, offset2=offset2, pars=pars, baseline=baseline, survreg=survreg, p=p)$root, TRUE)
   if(is(t, "try-error")){
     return(NA)
   }else{
@@ -98,10 +98,15 @@ cross_time.survstan <- function(object, newdata1, newdata2,
   beta <- pars[1:p]
   phi <- pars[(p+1):(2*p)]
 
-  lp_short1 <- as.numeric(X1%*%beta)
-  lp_short2 <- as.numeric(X2%*%beta)
-  lp_long1 <- as.numeric(X1%*%phi)
-  lp_long2 <- as.numeric(X2%*%phi)
+  mf1 <- stats::model.frame(Terms, data = newdata1)
+  mf2 <- stats::model.frame(Terms, data = newdata2)
+  n <- nrow(newdata1)
+  offset1 <- stats::model.offset(mf1)
+  offset2 <- stats::model.offset(mf2)
+  if(is.null(offset1)){
+    offset1 <- rep(0, n)
+    offset2 <- rep(0, n)
+  }
 
   tau0 <- min(time)
   tau <- object$tau
@@ -112,7 +117,7 @@ cross_time.survstan <- function(object, newdata1, newdata2,
   t <- c()
 
   for(i in 1:nrow(newdata1)){
-    t[i] <- crossing_time(X1=X1[i,], X2=X2[i,], tau0=tau0, tau=tau, pars=pars, baseline=baseline, survreg=survreg, p)
+    t[i] <- crossing_time(X1=X1[i,], X2=X2[i,], offset1=offset1, offset2=offset2, tau0=tau0, tau=tau, pars=pars, baseline=baseline, survreg=survreg, p)
   }
   pars <- bootstrap(object, nboot=nboot, cores = cores)
 

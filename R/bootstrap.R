@@ -1,4 +1,13 @@
 
+rename_mf <- function(mf){
+  vars <- names(mf)
+  off <- vars[grep("offset", vars)]
+  substr(off, start = 8, stop=nchar(off)-1)
+  vars[grep("offset", vars)] <- substr(off, start = 8, stop=nchar(off)-1)
+  names(mf) <- vars
+  return(mf)
+}
+
 bootstrap <- function(object, nboot, cores, ...){
 
   # cl <- parallel::makeCluster(cores)
@@ -13,11 +22,18 @@ bootstrap <- function(object, nboot, cores, ...){
   formula <- stats::update(formula, survival::Surv(time, status) ~ .)
   mf <- object$mf
   resp <- stats::model.response(mf)
+
   time <- resp[,1]
   status <- resp[,2]
 
+  offset <- stats::model.offset(mf)
+  if(!is.null(offset)){
+    mf <- rename_mf(mf)
+  }
+
   mf <- mf %>%
     dplyr::select(-dplyr::starts_with("Surv("))
+
   data <- data.frame(
     time = time,
     status = status
@@ -27,6 +43,7 @@ bootstrap <- function(object, nboot, cores, ...){
   n <- object$n
   p <- object$p
   tau <- object$tau
+
 
   index <- 1:n
   index1 <- which(status==1)

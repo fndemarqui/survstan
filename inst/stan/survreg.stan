@@ -10,6 +10,7 @@ data{
   vector[n] time;
   vector[n] event;
   matrix[p == 0 ? 0 : n, p] X;
+  vector[n] offset;
   real tau;
   int baseline;
   int survreg;    // 1 - AFT; 2 - PH; 3 - PO; 4 - AH; 5 - YP; 6 - EH
@@ -18,9 +19,11 @@ data{
 transformed data{
   int is_alpha = 0;
   int is_gamma = 0;
+  int is_kappa = 0;
   int is_lambda = 0;
   int is_mu = 0;
   int is_sigma = 0;
+  int is_varphi = 0;
   int is_phi = 0;
 
   vector[p == 0 ? n : 0] zeros;
@@ -47,9 +50,20 @@ transformed data{
     is_gamma = 1;
   }else if(baseline == 6){ // gamma
     is_alpha = 1;
-    is_gamma = 1;
+    is_lambda = 1;
   }else if(baseline == 7){ // Rayleigh
     is_sigma = 1;
+  }else if(baseline == 8){ // Gompertz
+    is_alpha = 1;
+    is_gamma = 1;
+  }else if(baseline == 9){ // Generalized Gamma (Stacy)
+    is_alpha = 1;
+    is_gamma = 1;
+    is_kappa = 1;
+  }else if(baseline == 10){ // Generalized Gamma (Prentice)
+    is_mu = 1;
+    is_sigma = 1;
+    is_varphi = 1;
   }
 
 
@@ -66,9 +80,11 @@ parameters{
   vector[is_phi == 0 ? 0 : p] phi;
   array[is_alpha == 0 ? 0 : 1] real<lower=0> alpha;
   array[is_gamma == 0 ? 0 : 1] real<lower=0> gamma;
+  array[is_kappa ==  0 ? 0 : 1] real<lower=0> kappa;
   array[is_lambda == 0 ? 0 : 1] real<lower=0> lambda;
   array[is_mu == 0 ? 0 : 1] real mu;
   array[is_sigma ==  0 ? 0 : 1] real<lower=0> sigma;
+  array[is_varphi ==  0 ? 0 : 1] real varphi;
 }
 
 
@@ -83,20 +99,20 @@ model{
   vector[survreg > 4 ? n : 0] K;
 
   if(p>0){
-    lp = X*beta;
+    lp = X*beta + offset;
     if(survreg > 4){
       if(survreg == 5){
-        lp2 = X*phi;
+        lp2 = X*phi + offset;
         K =  exp(X*(beta-phi));
       }else{
-        lp2 = X*phi;
+        lp2 = X*phi + offset;
         K =  exp(lp+lp2);
       }
     }
   }else{
-    lp = zeros;
+    lp = zeros + offset;
     if(survreg > 4){
-      lp2 = zeros;
+      lp2 = zeros + offset;
       K = exp(zeros);
     }
   }
@@ -135,15 +151,31 @@ model{
     }
   }else if(baseline == 6){ // Gamma
     for(i in 1:n){
-          lpdf[i] = gamma_lpdf(y[i]|alpha, gamma);
-          lsurv[i] = gamma_lccdf(y[i]|alpha, gamma);
+          lpdf[i] = gamma_lpdf(y[i]|alpha, lambda);
+          lsurv[i] = gamma_lccdf(y[i]|alpha, lambda);
     }
   }else if(baseline == 7){ // Rayleigh
     for(i in 1:n){
           lpdf[i] = rayleigh_lpdf(y[i]|sigma);
           lsurv[i] = rayleigh_lccdf(y[i]|sigma);
     }
+  }else if(baseline == 8){ // Gompertz
+    for(i in 1:n){
+          lpdf[i] = gompertz_lpdf(y[i]|alpha[1], gamma[1]);
+          lsurv[i] = gompertz_lccdf(y[i]|alpha[1], gamma[1]);
+    }
+  }else if(baseline == 9){ // Generalized Gamma (Stacy)
+    for(i in 1:n){
+          lpdf[i] = ggstacy_lpdf(y[i]|alpha[1], gamma[1], kappa[1]);
+          lsurv[i] = ggstacy_lccdf(y[i]|alpha[1], gamma[1], kappa[1]);
+    }
+  }else if(baseline == 10){ // Generalized Gamma (Prentice)
+    for(i in 1:n){
+          lpdf[i] = ggprentice_lpdf(y[i]|mu[1], sigma[1], varphi[1]);
+          lsurv[i] = ggprentice_lccdf(y[i]|mu[1], sigma[1], varphi[1]);
+    }
   }
+
 
   if(p == 0){
     loglik = event .* lpdf + (1-event) .* lsurv;

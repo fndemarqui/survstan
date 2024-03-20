@@ -74,7 +74,10 @@ in the R package survstan. Such distributions include:
 - Weibull
 - Lognormal
 - Loglogistic
-- Gamma
+- Gamma,
+- Generalized Gamma (original Stacy’s parametrization)
+- Generalized Gamma (alternative Prentice’s parametrization)
+- Gompertz
 - Rayleigh
 - Birnbaum-Saunders (fatigue)
 
@@ -149,7 +152,7 @@ $$
 
 ### Gamma Distribution
 
-If $T \sim \mbox{Gamma}(\alpha, \gamma)$, then
+If $T \sim \mbox{Gamma}(\alpha, \lambda)$, then
 
 $$f(t|\alpha, \lambda) = \frac{\lambda^{\alpha}}{\Gamma(\alpha)}t^{\alpha-1}\exp\left\{-\lambda t\right\}I_{[0, \infty)}(t),$$
 
@@ -158,12 +161,78 @@ the gamma function.
 
 The survival function is given by
 
-$$S(t|\alpha, \lambda) = 1 - \frac{\gamma^{*}(\alpha, \gamma t)}{\Gamma(\alpha)},$$
-where $\gamma^{*}(\alpha, \gamma t)$ is the lower incomplete gamma
+$$S(t|\alpha, \lambda) = 1 - \frac{\gamma^{*}(\alpha, \lambda t)}{\Gamma(\alpha)},$$
+where $\gamma^{*}(\alpha, \lambda t)$ is the lower incomplete gamma
 function, which is available only numerically. Finally, the hazard
 function is expressed as:
 
-$$h(t|\alpha, \lambda) = \frac{f(t|\alpha, \gamma)}{S(t|\alpha, \gamma)}.$$
+$$h(t|\alpha, \lambda) = \frac{f(t|\alpha, \lambda)}{S(t|\alpha, \lambda)}.$$
+
+### Generalized Gamma Distribution (original Stacy’s parametrization)
+
+If $T \sim \mbox{ggstacy}(\alpha, \gamma, \kappa)$, then
+
+$$f(t|\alpha, \gamma, \kappa) = \frac{\kappa}{\gamma^{\alpha}\Gamma(\alpha/\kappa)}t^{\alpha-1}\exp\left\{-\left(\frac{t}{\gamma}\right)^{\kappa}\right\}I_{[0, \infty)}(t),$$
+for $\alpha>0$, $\gamma>0$ and $\kappa>0$.
+
+It can be show that the survival function can be expressed as:
+
+$$S(t|\alpha, \gamma, \kappa) = S_{G}(x|\nu, 1),$$ where
+$x = \displaystyle\left(\frac{t}{\gamma}\right)^\kappa$, and
+$F_{G}(\cdot|\nu, 1)$ corresponds to the distribution function of a
+gamma distribution with shape parameter $\nu = \alpha/\gamma$ and scale
+parameter equals to 1.
+
+Finally, the hazard function is expressed as:
+
+$$h(t|\alpha, \gamma, \kappa) = \frac{f(t|\alpha, \gamma, \kappa)}{S(t|\alpha, \gamma, \kappa)}.$$
+
+### Generalized Gamma Distribution (alternative Prentice’s parametrization)
+
+If $T \sim \mbox{ggprentice}(\mu, \sigma, \varphi)$, then
+
+$$f(t | \mu, \sigma, \varphi) = 
+\begin{cases}
+\frac{|\varphi|(\varphi^{-2})^{\varphi^{-2}}}{\sigma t\Gamma(\varphi^{-2})}\exp\{\varphi^{-2}[\varphi w - \exp(\varphi w)]\}I_{[0, \infty)}(t), & \varphi \neq 0 \\
+\frac{1}{\sqrt{2\pi}t\sigma}\exp\left\{-\frac{1}{2}\left(\frac{log(t)-\mu}{\sigma}\right)^2\right\}I_{[0, \infty)}(t), & \varphi = 0
+\end{cases}
+$$ where $w = \frac{\log(t) - \mu}{\sigma}$, for
+$-\infty < \mu < \infty$, $\sigma>0$ and $-\infty < \varphi < \infty$\$.
+
+<!-- When $\varphi = 0$, $f(t | \mu, \sigma, \varphi)$ reduces to the f.d.p of the lognormal distribution. -->
+
+It can be show that the survival function can be expressed as:
+
+$$
+S(t|\mu, \sigma, \varphi) = 
+  \begin{cases}
+    S_{G}(x|1/\varphi^2, 1), & \varphi > 0 \\
+    1-S_{G}(x|1/\varphi^2, 1), & \varphi < 0 \\
+    S_{LN}(x|\mu, \sigma), & \varphi = 0
+  \end{cases}
+$$ where $x = \frac{1}{\varphi^2}\exp\{\varphi w\}$,
+$S_{G}(\cdot|1/\varphi^2, 1)$ is the distribution function of a gamma
+distribution with shape parameter $1/\varphi^2$ and scale parameter
+equals to 1, and $S_{LN}(x|\mu, \sigma)$ corresponds to the survival
+function of a lognormal distribution with location parameter $\mu$ and
+scale parameter $\sigma$.
+
+Finally, the hazard function is expressed as:
+
+$$h(t|\alpha, \gamma, \kappa) = \frac{f(t|\alpha, \gamma, \kappa)}{S(t|\alpha, \gamma, \kappa)}.$$
+
+### Gompertz Distribution
+
+If $T \sim \mbox{Gamma}(\alpha, \gamma)$, then
+
+$$f(t|\alpha, \lambda) = \alpha\exp\left\{\gamma x-\frac{\alpha}{\gamma}\left(e^{\gamma x} - 1\right)\right\}I_{[0, \infty)}(t).$$
+
+The survival and hazard functions are given, respectively, by
+
+$$S(t|\alpha, \lambda) = \exp\left\{-\frac{\alpha}{\gamma}\left(e^{\gamma x} - 1\right)\right\}.$$
+and
+
+$$h(t|\alpha, \lambda) = \alpha\exp\{\gamma x}.$$
 
 ### Rayleigh Distribution
 
@@ -201,7 +270,7 @@ $$
 
 ## Regression models
 
-When covariates are available, it is possible to fit four different
+When covariates are available, it is possible to fit six different
 regression models with the R package survstan:
 
 - accelerated failure time (AFT) models;
@@ -214,12 +283,12 @@ regression models with the R package survstan:
 The regression survival models implemented in the R package survstan are
 briefly described in the sequel. Denote by $\mathbf{x}$ a $1\times p$
 vector of covariates, and let $\boldsymbol{\beta}$ and
-$\boldsymbol{\phi}$ be $p \times 1$ of regression coefficients, and
-$\boldsymbol{\theta}$ a vector of parameters associated with some
+$\boldsymbol{\phi}$ be $p \times 1$ vectors of regression coefficients,
+and $\boldsymbol{\theta}$ a vector of parameters associated with some
 baseline survival distribution. To ensure identifiability of the
 implemented regression models, we shall assume that the linear
 predictors $\mathbf{x} \boldsymbol{\beta}$ and
-$\mathbf{x} \boldsymbol{\phi}$ do not include a intercept term.
+$\mathbf{x} \boldsymbol{\phi}$ do not include an intercept term.
 
 ### Accelerate Failure Time Models
 

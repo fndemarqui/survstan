@@ -11,15 +11,14 @@ print.summary.survstan <- function(x, ...){
   print(x$call)
   cat("\n")
 
+  cat(x$message)
+  cat("\n")
   if(x$p>0){
-    cat(x$message)
-    cat("\n")
     cat("Regression coefficients:\n")
     stats::printCoefmat(x$coefficients, P.value=TRUE, has.Pvalue=TRUE)
     cat("\n")
+    cat("Baseline parameters:\n")
   }
-
-  cat("Baseline parameters:\n")
   stats::printCoefmat(x$tbl, P.value=FALSE, has.Pvalue=FALSE)
   cat("--- \n")
   cat("loglik =", x$loglik, " ", "AIC =", x$AIC,"\n")
@@ -75,27 +74,35 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
                  `Pr(>|z|)` = 2*stats::pnorm(-abs(zval)))
 
     rownames(TAB) <- labels
+    estimates <- estimates[-(1:p)]
+    SE <- se(object, all = TRUE)[-(1:p)]
   }
 
-  estimate <- estimates[-(1:p)]
-  SE <- SE <- se(object, all = TRUE)[-(1:p)]
-  CI <- stats::confint(object, parm = names(estimate), level = conf.level)
+
+  CI <- stats::confint(object, parm = names(estimates), level = conf.level)
   lwr <- CI[, 1]
   upr <- CI[, 2]
-  tbl <- cbind(estimate, SE, lwr, upr)
+  tbl <- cbind(estimates, SE, lwr, upr)
 
   alpha <- 1-conf.level
   conf_labels <- round(100*(c(alpha/2, 1-alpha/2)),1)
   conf_labels <- paste0(conf_labels, "%")
   colnames(tbl) <- c("Estimate", "Std. Error", conf_labels)
 
+  if(baseline == "ggprentice"){
+    baseline <- "generalized gamma (Prentice)"
+  }else if(baseline == "ggstacy"){
+    baseline <- "generalized gamma (Prentice)"
+  }
+
+
   message <- switch(survreg,
-    "aft" = paste0("Accelerated failure time model fit with ", baseline , " baseline distribution \n"),
-    "ph" = paste0("Proportional hazards model fit with ", baseline , " baseline distribution \n"),
-    "po" = paste0("Proportional odds model fit with ", baseline , " baseline distribution \n"),
-    "ah" = paste0("Accelerated hazard model fit with ", baseline , " baseline distribution \n"),
-    "yp" = paste0("Yang & Prentice model fit with ", baseline , " baseline distribution \n"),
-    "eh" = paste0("Extended hazard model fit with ", baseline , " baseline distribution \n")
+    "aft" = paste0("Accelerated failure time model fit with ", baseline , " baseline distribution: \n"),
+    "ph" = paste0("Proportional hazards model fit with ", baseline , " baseline distribution: \n"),
+    "po" = paste0("Proportional odds model fit with ", baseline , " baseline distribution: \n"),
+    "ah" = paste0("Accelerated hazard model fit with ", baseline , " baseline distribution: \n"),
+    "yp" = paste0("Yang & Prentice model fit with ", baseline , " baseline distribution: \n"),
+    "eh" = paste0("Extended hazard model fit with ", baseline , " baseline distribution: \n")
   )
 
   if(p>0){
@@ -104,6 +111,7 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
                 tbl = tbl,
                 loglik=loglik, AIC=AIC, message=message, p=p)
   }else{
+    message <- paste("Fit of", baseline, "distribution:")
     res <- list(call=object$call,
                 tbl = tbl,
                 loglik=loglik, AIC=AIC, message=message, p=p)

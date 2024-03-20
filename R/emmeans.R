@@ -70,3 +70,40 @@ emm_basis.ypreg = function(object, trms, xlev, grid, term = c("short", "long"), 
 }
 
 
+#' @rdname emmeans-survstan-helpers
+#' @param object An object of the same class as is supported by a new method.
+#' @param term character specifying whether AF or RH term regression coefficients are to be used.
+#' @param ... Additional parameters that may be supported by the method.
+recover_data.ehreg <- function (object, term = c("AF", "RH"), ...){
+  term <- match.arg(term)
+  frame <- object$model
+  fcall = object$call
+  if (term %in% c("AF", "RH"))
+    trms = stats::delete.response(stats::terms(object, model = term))
+  emmeans::recover_data(fcall, trms, object$na.action,
+                        frame = frame, pwts = stats::weights(object), ...)
+}
+
+emm_basis.ehreg = function(object, trms, xlev, grid, term = c("AF", "RH"), ...){
+  term <- match.arg(term)
+  m = stats::model.frame(trms, grid, na.action = stats::na.pass, xlev = xlev)
+  X = stats::model.matrix(trms, m, contrasts.arg = object$contrasts)[, -1, drop = FALSE]
+  bhat = stats::coef(object)
+  p <- length(bhat)/2
+  if(term=="AF"){
+    bhat <- bhat[1:p]
+    V <- vcov(object)[1:p, 1:p]
+  }else{
+    bhat <- bhat[(p+1):(2*p)]
+    V <- vcov(object)[(p+1):(2*p), (p+1):(2*p)]
+  }
+
+  Xmat = stats::model.matrix(trms, data=object$mf)[, -1, drop = FALSE]
+  nbasis = matrix(NA)
+  dfargs = list(df = Inf)
+  dffun = function(k, dfargs) dfargs$df
+  list(X = X, bhat = bhat, nbasis = nbasis, V = V,
+       dffun = dffun, dfargs = dfargs)
+}
+
+
