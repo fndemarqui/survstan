@@ -52,5 +52,5 @@
 
 # survstan 0.0.7
 
-- All implemented models now can accommodate a offset variable in the linear predictors.
-- Implementation of Gompertz, generalized gamma (original Stacy's parametrization and alternative Prentice's parametrization) distributions.
+- All implemented models now can accommodate an offset variable in the linear predictors.
+- Implementation of Gompertz and generalized gamma (original Stacy's parametrization and alternative Prentice's parametrization) distributions.
