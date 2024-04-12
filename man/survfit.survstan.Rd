@@ -4,17 +4,17 @@
 \alias{survfit.survstan}
 \title{survfit method for survstan models}
 \usage{
-\method{survfit}{survstan}(formula, newdata, ...)
+\method{survfit}{survstan}(formula, newdata = NULL, ...)
 }
 \arguments{
 \item{formula}{an object of the class survstan}
 
-\item{newdata}{a data frame containing the set of explanatory variables.}
+\item{newdata}{a data frame containing the set of explanatory variables; if NULL, a data.frame with the observed failure times and their corresponding estimated baseline survivals is returned.}
 
 \item{...}{further arguments passed to or from other methods.}
 }
 \value{
-a list containing the estimated survival probabilities.
+a data.frame containing the estimated survival probabilities.
 }
 \description{
 Computes the predicted survivor function for a phpe model.

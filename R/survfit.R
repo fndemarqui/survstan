@@ -54,9 +54,9 @@ surv_eh <- function(time, pars, lp1, lp2, baseline, p){
 #' @importFrom survival survfit
 #' @export
 #' @param formula an object of the class survstan
-#' @param newdata a data frame containing the set of explanatory variables.
+#' @param newdata a data frame containing the set of explanatory variables; if NULL, a data.frame with the observed failure times and their corresponding estimated baseline survivals is returned.
 #' @param ... further arguments passed to or from other methods.
-#' @return  a list containing the estimated survival probabilities.
+#' @return  a data.frame containing the estimated survival probabilities.
 #' @examples
 #' \donttest{
 #' library(survstan)
@@ -71,7 +71,7 @@ surv_eh <- function(time, pars, lp1, lp2, baseline, p){
 #'   geom_line()
 #' }
 #'
-survfit.survstan <- function(formula, newdata, ...){
+survfit.survstan <- function(formula, newdata = NULL, ...){
   object <- formula
   baseline <- object$baseline
   survreg <- object$survreg
@@ -79,58 +79,67 @@ survfit.survstan <- function(formula, newdata, ...){
   Terms <- stats::delete.response(object$terms)
   labels <- names(mf)[-1]
   time <- c(0,sort( stats::model.response(mf)[,1]))
-  labels <- match.arg(names(newdata), labels, several.ok = TRUE)
-  X <- stats::model.matrix(Terms, data = newdata)[, -1, drop = FALSE]
   pars <- estimates(object)
-  p <- object$p
-  beta <- pars[1:p]
 
-  n <- nrow(newdata)
-  mf <- stats::model.frame(Terms, data = newdata)
-  offset <- stats::model.offset(mf)
-  if(is.null(offset)){
-    offset <- rep(0, n)
-  }
+  if(is.null(newdata)){
+    H0 <- cumhaz(time, pars, baseline, p=0)
+    surv <- data.frame(
+      time = time,
+      surv = exp(-H0)
+    )
+    return(surv)
+  }else{
+    labels <- match.arg(names(newdata), labels, several.ok = TRUE)
+    X <- stats::model.matrix(Terms, data = newdata)[, -1, drop = FALSE]
+    p <- object$p
+    beta <- pars[1:p]
+    n <- nrow(newdata)
+    mf <- stats::model.frame(Terms, data = newdata)
+    offset <- stats::model.offset(mf)
+    if(is.null(offset)){
+      offset <- rep(0, n)
+    }
 
 
-  lp <- as.numeric(X%*%beta) + offset
-  if(survreg == "yp"){
-    phi <- pars[(p+1):(2*p)]
-    lp_short <- lp + offset
-    lp_long <- as.numeric(X%*%phi)
-  }else if(survreg == "eh"){
-    phi <- pars[(p+1):(2*p)]
-    lp1 <- lp + offset
-    lp2 <- as.numeric(X%*%phi) + offset
-  }
+    lp <- as.numeric(X%*%beta) + offset
+    if(survreg == "yp"){
+      phi <- pars[(p+1):(2*p)]
+      lp_short <- lp
+      lp_long <- as.numeric(X%*%phi) + offset
+    }else if(survreg == "eh"){
+      phi <- pars[(p+1):(2*p)]
+      lp1 <- lp
+      lp2 <- as.numeric(X%*%phi) + offset
+    }
 
-  newdata$lp <- lp
-  df <- data.frame(
-    time = time
-  ) %>%
-    dplyr::cross_join(newdata)
-  N <- nrow(df)
-  n <- length(time)
-  J <- N/n
-
-  surv <- switch (survreg,
-    "aft" = with(df, surv_aft(time, pars, lp, baseline, p)),
-    "ph" = with(df, surv_ph(time, pars, lp, baseline, p)),
-    "po" = with(df, surv_po(time, pars, lp, baseline, p)),
-    "ah" = with(df, surv_ah(time, pars, lp, baseline, p)),
-    "yp" = with(df, surv_yp(time, pars, lp_short, lp_long, baseline, p)),
-    "eh" = with(df, surv_eh(time, pars, lp1, lp2, baseline, p))
-  )
-
-  surv <- df %>%
-    dplyr::mutate(
-      id = as.factor(rep(1:J, n)),
-      surv  = surv
+    newdata$lp <- lp
+    df <- data.frame(
+      time = time
     ) %>%
-    dplyr::relocate(.data$id, .before = time) %>%
-    dplyr::select(-.data$lp)
+      dplyr::cross_join(newdata)
+    N <- nrow(df)
+    n <- length(time)
+    J <- N/n
 
-  return(surv)
+    surv <- switch (survreg,
+                    "aft" = with(df, surv_aft(time, pars, lp, baseline, p)),
+                    "ph" = with(df, surv_ph(time, pars, lp, baseline, p)),
+                    "po" = with(df, surv_po(time, pars, lp, baseline, p)),
+                    "ah" = with(df, surv_ah(time, pars, lp, baseline, p)),
+                    "yp" = with(df, surv_yp(time, pars, lp_short, lp_long, baseline, p)),
+                    "eh" = with(df, surv_eh(time, pars, lp1, lp2, baseline, p))
+    )
+
+    surv <- df %>%
+      dplyr::mutate(
+        id = as.factor(rep(1:J, n)),
+        surv  = surv
+      ) %>%
+      dplyr::relocate(.data$id, .before = time) %>%
+      dplyr::select(-.data$lp)
+
+    return(surv)
+  }
 }
 
 

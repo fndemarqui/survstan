@@ -54,3 +54,8 @@
 
 - All implemented models now can accommodate an offset variable in the linear predictors.
 - Implementation of Gompertz and generalized gamma (original Stacy's parametrization and alternative Prentice's parametrization) distributions.
+
+
+# survstan 0.0.7.1
+
+- survfit.survstan method now returns a data.frame with the observed survival times and their corresponding estimated baseline survivals when newdata = NULL.

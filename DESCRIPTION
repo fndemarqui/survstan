@@ -1,6 +1,6 @@
 Package: survstan
 Title: Fitting Survival Regression Models via 'Stan' 
-Version: 0.0.7
+Version: 0.0.7.1
 Authors@R: 
     c(
     person(given = "Fabio", family = "Demarqui", role = c("aut", "cre", "cph"), email = "fndemarqui@est.ufmg.br", comment = c(ORCID = "0000-0001-9236-1986")),
