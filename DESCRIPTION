@@ -1,16 +1,16 @@
 Package: survstan
 Title: Fitting Survival Regression Models via 'Stan' 
-Version: 0.0.7.1
+Version: 0.1.0
 Authors@R: 
     c(
     person(given = "Fabio", family = "Demarqui", role = c("aut", "cre", "cph"), email = "fndemarqui@est.ufmg.br", comment = c(ORCID = "0000-0001-9236-1986")),
     person(given = "Andrew", family = "Johnson", role = "ctb")
     )
-Description: Parametric survival regression models under the maximum likelihood approach via 'Stan'. Implemented regression models include accelerated failure time models, proportional hazards models, proportional odds models, accelerated hazard models, Yang and Prentice models, and extended hazard models. Available baseline survival distributions include exponential, Weibull, log-normal, log-logistic, gamma, generalized gamma, rayleigh, Gompertz and fatigue (Birnbaum-Saunders) distributions. References: Lawless (2002) <ISBN:9780471372158>; Bennett (1982) <doi:10.1002/sim.4780020223>; Chen and Wang(2000) <doi:10.1080/01621459.2000.10474236>; Demarqui and Mayrink (2021) <doi:10.1214/20-BJPS471>.
+Description: Parametric survival regression models under the maximum likelihood approach via 'Stan'. Implemented regression models include accelerated failure time (AFT) models, proportional hazards (PH) models, proportional odds (PO) models, accelerated hazard (AH) models, Yang and Prentice (YP) models, and extended hazard (EH) models. Available baseline survival distributions include exponential, Weibull, log-normal, log-logistic, gamma, generalized gamma, rayleigh, Gompertz and fatigue (Birnbaum-Saunders) distributions. The baseline survival distribution can be further modeled using Bernstein polynomails' approximation of the baseline hazard function. References: Lawless (2002) <ISBN:9780471372158>; Bennett (1982) <doi:10.1002/sim.4780020223>; Chen and Wang(2000) <doi:10.1080/01621459.2000.10474236>; Demarqui and Mayrink (2021) <doi:10.1214/20-BJPS471>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Biarch: true
 Depends: 
     R (>= 3.4.0),
@@ -27,6 +27,7 @@ Imports:
     ggplot2,
     gridExtra,
     MASS,
+    Matrix,
     methods,
     purrr,
     Rcpp (>= 0.12.0),

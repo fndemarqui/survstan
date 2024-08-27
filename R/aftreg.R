@@ -18,11 +18,7 @@
 #' }
 #'
 aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ...){
-  if(!is.null(dist)){
-    baseline <- dist
-  }
-  baseline <- tolower(baseline)
-  baseline <- match.arg(baseline, survstan_distributions)
+
   Call <- match.call()
   mf <- match.call(expand.dots = FALSE)
   m <- match(c("formula", "data"), names(mf), 0L)
@@ -45,19 +41,93 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
     offset <- rep(0, n)
   }
 
+  if(!is.null(dist)){
+    baseline <- dist
+  }
+
+  m <- 0
+
+  if(is.character(baseline)){
+    baseline <- tolower(baseline)
+    baseline <- match.arg(baseline, survstan_distributions)
+    if(baseline == "bernstein"){
+      baseline <- get(baseline, mode = "function", envir = parent.frame())
+    }else if(baseline == "piecewise"){
+      message("Piecewise exponential distribution not available for AFT models. Using Bernstein polynomials instead!")
+      baseline <- "bernstein"
+      baseline <- get(baseline, mode = "function", envir = parent.frame())
+    }
+  }
+
+  if(is.function(baseline)){
+    baseline <- baseline()
+    if(baseline$baseline == "piecewise"){
+      message("Piecewise exponential distribution not available for AFT models. Using Bernstein polynomials instead!")
+      baseline$baseline <- "bernstein"
+    }
+    if(baseline$baseline == "bernstein"){
+      m <- baseline$m
+      if(is.null(m)){
+        m <- min(ceiling(n^0.4), m_max)
+      }
+      baseline <- baseline$baseline
+    }else if(baseline$baseline == "piecewise"){
+      rho <- baseline$rho
+      m <- baseline$m
+      if(is.null(rho)){
+        rho <- time_grid(time, event, m)
+      }
+      m <- length(rho) - 1
+      baseline <- baseline$baseline
+    }
+  }
+
+  if(is.list(baseline)){
+    if(baseline$baseline == "piecewise"){
+      message("Piecewise exponential distribution not available for AFT models. Using Bernstein polynomials instead!")
+      baseline$baseline <- "bernstein"
+    }
+    if(baseline$baseline == "bernstein"){
+      m <- baseline$m
+      if(is.null(m)){
+        m <- min(ceiling(n^0.4), m_max)
+      }
+    }else if(baseline$baseline == "piecewise"){
+      rho <- baseline$rho
+      m <- baseline$m
+      if(is.null(rho)){
+        rho <- time_grid(time, event, m)
+      }
+      m <- length(rho)-1
+    }
+    baseline = baseline$baseline
+  }
+
+
   output <- list(call = Call, formula = stats::formula(mt), offset = offset,
                  terms = mt, mf = mf, baseline = baseline, survreg = "aft",
-                 n = n, p = p, tau = tau, labels = labels)
+                 n = n, p = p, tau = tau, m = m, labels = labels)
+
+  if(baseline == "piecewise"){
+    output$rho <- rho
+  }
+
+
+  if(baseline != "piecewise"){
+    rho <- array(0, dim=0)
+  }
 
   if(init == 0 & baseline == "ggprentice"){
-    init <- inits("aft", p)
+    init <- inits("ph", p)
   }
+
   baseline <- set_baseline(baseline)
 
   stan_data <- list(time=y, event=event, X=X, n=n, p=p, offset = offset,
-                    baseline=baseline, survreg = 1, tau = tau)
+                    baseline=baseline, survreg = 1, tau = tau, m = m, rho = rho/tau)
+
   fit <- rstan::optimizing(stanmodels$survreg, data = stan_data, hessian = TRUE, init = init, ...)
-  res <- reparametrization(fit, survreg = "aft", output$baseline, labels, tau, p)
+  res <- reparametrization(fit, survreg = "aft", output$baseline, labels, tau, p, m)
   output$estimates <- res$estimates
   output$V <- res$V
   output$loglik = fit$value
@@ -70,9 +140,9 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
   }else{
     lp <- as.numeric(X%*%pars[1:p]) + offset
   }
-  time <- time*exp(-lp)
 
-  output$residuals <- cumhaz(time, pars, baseline, p)
+  time <- time*exp(-lp)
+  output$residuals <- cumhaz(time, pars, baseline, p, m)
   output$event <- event
 
   class(output) <- c("aftreg", "survstan")

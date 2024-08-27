@@ -20,7 +20,7 @@
 #'   formula = Surv(time, status) ~ celltype+karno,
 #'   data = veteran,
 #'   survreg = c("aftreg", "ahreg", "phreg", "poreg", "ypreg", "ehreg"),
-#'   baseline = c("exponential", "weibull", "lognormal", "loglogistic", "fatigue", "gamma", "rayleigh")
+#'   baseline = c("exponential", "weibull", "lognormal", "loglogistic")
 #' )
 #' }
 #'
@@ -34,15 +34,36 @@ rank_models <- function(formula, data, survreg, baseline, dist = NULL, ...){
     baseline <- dist
   }
 
-  # fit <- function(survreg, baseline, formula, data) {
-  #   do.call(survreg,
-  #           list(
-  #             formula = formula,
-  #             baseline = baseline,
-  #             data = quote(data)
-  #           )
-  #   )
+  m <- 0
+  n <- nrow(data)
+
+  # if(is.character(baseline)){
+  #   baseline <- tolower(baseline)
+  #   baseline <- match.arg(baseline, survstan_distributions)
+  #   if(baseline == "bernstein"){
+  #     baseline <- get(baseline, mode = "function", envir = parent.frame())
+  #   }
+  # }else{
+  #   if(is.function(baseline)){
+  #     base <- baseline()
+  #     m <- dist$m
+  #     if(base$baseline == "bernstein"){
+  #       m <- base$m
+  #       if(is.null(m)){
+  #         m <- min(ceiling(n^0.4), m_max)
+  #       }
+  #     }
+  #   }
+  #   if(is.list(baseline)){
+  #     if(baseline$baseline == "bernstein"){
+  #       m <- baseline$m
+  #       if(is.null(m)){
+  #         m <- min(ceiling(n^0.4), m_max)
+  #       }
+  #     }
+  #   }
   # }
+
 
   fit <- function(survreg, baseline, formula, data) {
     tryCatch(
@@ -75,5 +96,11 @@ rank_models <- function(formula, data, survreg, baseline, dist = NULL, ...){
       aic = purrr::map_dbl(fit, purrr::possibly( ~ AIC(.x), otherwise = NA, quiet = TRUE))
     ) %>%
     dplyr::arrange(.data$aic)
+
+  models <- models %>%
+    dplyr::mutate(
+      baseline = as.character(unlist(ifelse(baseline == as.character(m), paste0("bernstein(", m, ")"), baseline)))
+    )
+
 }
 

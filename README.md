@@ -285,10 +285,9 @@ briefly described in the sequel. Denote by $\mathbf{x}$ a $1\times p$
 vector of covariates, and let $\boldsymbol{\beta}$ and
 $\boldsymbol{\phi}$ be $p \times 1$ vectors of regression coefficients,
 and $\boldsymbol{\theta}$ a vector of parameters associated with some
-baseline survival distribution. To ensure identifiability of the
-implemented regression models, we shall assume that the linear
-predictors $\mathbf{x} \boldsymbol{\beta}$ and
-$\mathbf{x} \boldsymbol{\phi}$ do not include an intercept term.
+baseline survival distribution. To prevent identifiability issues, it is
+assumed that the linear predictors $\mathbf{x} \boldsymbol{\beta}$ and
+$\mathbf{x}\boldsymbol{\phi}$ do not include an intercept term.
 
 ### Accelerate Failure Time Models
 

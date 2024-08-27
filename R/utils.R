@@ -12,7 +12,9 @@ set_baseline <- function(baseline){
                      "rayleigh" = 7,
                      "gompertz" = 8,
                      "ggstacy" = 9,
-                     "ggprentice" = 10
+                     "ggprentice" = 10,
+                     "bernstein" = 11,
+                     "piecewise" = 12
   )
   return(baseline)
 }
@@ -31,12 +33,14 @@ delta_method <- function(estimates, V, pars){
   return(V)
 }
 
-reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
+reparametrization <- function(object, survreg, baseline, labels, tau, p, m, ...){
   estimates <- object$par
   V <- try(chol2inv(chol(-object$hessian)), TRUE)
   if(class(V)[1] == "try-error"){
     V <- MASS::ginv(-object$hessian)
   }
+  V <- as.matrix(Matrix::nearPD(V)$mat)
+
   npar <- length(estimates)
   v <- diag(npar)
 
@@ -142,8 +146,21 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, ...){
     estimates["mu"] <- estimates["mu"] + log(tau)
     V <- delta_method(estimates, V, "sigma")
     V <- v%*%V%*%v
+  }else if(baseline == "bernstein"){
+    labels <- c(labels, paste0("xi[", 1:m, "]"))
+    names(estimates) <- labels
+    colnames(v) = labels
+    rownames(v) = labels
+    V <- delta_method(estimates, V, "xi")
+  }else if(baseline == "piecewise"){
+    labels <- c(labels, paste0("xi[", 1:m, "]"))
+    names(estimates) <- labels
+    colnames(v) = labels
+    rownames(v) = labels
+    V <- delta_method(estimates, V, "xi")
+    estimates[paste0("xi[", 1:m, "]")] <- estimates[paste0("xi[", 1:m, "]")]/tau
+    diag(v)[paste0("xi[", 1:m, "]")] <- 1/tau
   }
-
 
   res <- list(estimates=estimates, V=V)
   return(res)
@@ -227,7 +244,8 @@ logLik.survstan <- function(object, ...){
 
 
 # This internal function returns the cumulative baseline hazard function
-cumhaz <- function(time, pars, baseline, p){
+cumhaz <- function(time, pars, baseline, p, m = NULL, rho = NULL){
+  tau <- max(time)
   H0 <- switch(baseline,
                exponential = -stats::pexp(time, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
                weibull = -stats::pweibull(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
@@ -238,7 +256,9 @@ cumhaz <- function(time, pars, baseline, p){
                rayleigh = -extraDistr::prayleigh(time, sigma = pars[p+1], lower.tail = FALSE, log.p = TRUE),
                gompertz = -pgompertz(time, alpha = pars[p+1], gamma = pars[p+2], lower.tail = FALSE, log.p = TRUE),
                ggstacy = -pggstacy(time, alpha = pars[p+1], gamma = pars[p+2], kappa = pars[p+3], lower.tail = FALSE, log.p = TRUE),
-               ggprentice = -pggprentice(time, mu = pars[p+1], sigma = pars[p+2], varphi = pars[p+3], lower.tail = FALSE, log.p = TRUE)
+               ggprentice = -pggprentice(time, mu = pars[p+1], sigma = pars[p+2], varphi = pars[p+3], lower.tail = FALSE, log.p = TRUE),
+               bernstein = -pbernstein(time, xi = pars[(p+1):(p+m)], tau=tau, lower.tail = FALSE, log.p = TRUE),
+               piecewise = -ppexp(time, rho = rho, rates = pars[(p+1):(p+m)], lower.tail = FALSE, log.p = TRUE),
   )
   return(H0)
 }

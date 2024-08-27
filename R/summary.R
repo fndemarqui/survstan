@@ -92,7 +92,7 @@ summary.survstan <- function(object, conf.level = 0.95, ...){
   if(baseline == "ggprentice"){
     baseline <- "generalized gamma (Prentice)"
   }else if(baseline == "ggstacy"){
-    baseline <- "generalized gamma (Prentice)"
+    baseline <- "generalized gamma (Stacy)"
   }
 
 

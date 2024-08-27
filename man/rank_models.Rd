@@ -36,7 +36,7 @@ fits <- rank_models(
   formula = Surv(time, status) ~ celltype+karno,
   data = veteran,
   survreg = c("aftreg", "ahreg", "phreg", "poreg", "ypreg", "ehreg"),
-  baseline = c("exponential", "weibull", "lognormal", "loglogistic", "fatigue", "gamma", "rayleigh")
+  baseline = c("exponential", "weibull", "lognormal", "loglogistic")
 )
 }
 

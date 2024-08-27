@@ -2,16 +2,16 @@
 library(survstan)
 
 aft <- aftreg(Surv(futime, fustat) ~ 1, data = ovarian,
-              baseline = "loglogistic", init = 0)
+              baseline = "loglogistic")
 
 ph <- phreg(Surv(futime, fustat) ~ 1, data = ovarian,
-            baseline = "loglogistic", init = 0)
+            baseline = "loglogistic")
 
 ah <- ahreg(Surv(futime, fustat) ~ 1, data = ovarian,
-            baseline = "loglogistic", init = 0)
+            baseline = "loglogistic")
 
 po <- poreg(Surv(futime, fustat) ~ 1, data = ovarian,
-            baseline = "loglogistic", init = 0)
+            baseline = "loglogistic")
 
 tidy(aft)
 tidy(ph)

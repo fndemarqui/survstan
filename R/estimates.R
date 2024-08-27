@@ -153,6 +153,10 @@ confint.survstan <- function(object, parm = NULL, level=0.95, ...){
   #-------------------------------------------------
   # correction for lower bound
   pars <- c("alpha", "gamma", "lambda", "sigma")
+  # if(object$baseline == "bernstein"){
+  #   m <- object$m
+  #   pars <- c(pars, paste0("xi[", 1:m, "]"))
+  # }
   labels <- names(estimate)
   aux <- labels %in% pars
   se[aux] <- se[aux]/estimate[aux]

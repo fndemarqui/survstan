@@ -1,5 +1,5 @@
 
-diffSurv <- function(time, X1, X2, offset1, offset2, pars, baseline, survreg, p){
+diffSurv <- function(time, X1, X2, offset1, offset2, pars, baseline, survreg, p, m){
     lp11 <- as.numeric(X1%*%pars[1:p]) + offset1
     lp12 <- as.numeric(X2%*%pars[1:p]) + offset2
     if(survreg == "yp" | survreg == "eh"){
@@ -10,21 +10,21 @@ diffSurv <- function(time, X1, X2, offset1, offset2, pars, baseline, survreg, p)
       lp22 <- 0
     }
     if(survreg == "yp"){
-      St1 <- surv_yp(time, pars, lp11, lp21, baseline, p)
-      St2 <- surv_yp(time, pars, lp12, lp22, baseline, p)
+      St1 <- surv_yp(time, pars, lp11, lp21, baseline, p, m)
+      St2 <- surv_yp(time, pars, lp12, lp22, baseline, p, m)
     }else if(survreg == "eh"){
-      St1 <- surv_eh(time, pars, lp11, lp21, baseline, p)
-      St2 <- surv_eh(time, pars, lp12, lp22, baseline, p)
+      St1 <- surv_eh(time, pars, lp11, lp21, baseline, p, m)
+      St2 <- surv_eh(time, pars, lp12, lp22, baseline, p, m)
     }else{
-      St1 <- surv_ah(time, pars, lp11, baseline, p)
-      St2 <- surv_ah(time, pars, lp12, baseline, p)
+      St1 <- surv_ah(time, pars, lp11, baseline, p, m)
+      St2 <- surv_ah(time, pars, lp12, baseline, p, m)
     }
   return(St1-St2)
 }
 
-crossing_time <- function(X1, X2, offset1, offset2, tau0=tau0, tau=tau, pars, baseline, survreg, p){
+crossing_time <- function(X1, X2, offset1, offset2, tau0=tau0, tau=tau, pars, baseline, survreg, p, m){
   I <- c(tau0, 1.5*tau)
-  t <- try(stats::uniroot(diffSurv, interval=I, X1=X1, X2=X2, offset1=offset1, offset2=offset2, pars=pars, baseline=baseline, survreg=survreg, p=p)$root, TRUE)
+  t <- try(stats::uniroot(diffSurv, interval=I, X1=X1, X2=X2, offset1=offset1, offset2=offset2, pars=pars, baseline=baseline, survreg=survreg, p=p, m=m)$root, TRUE)
   if(is(t, "try-error")){
     return(NA)
   }else{
@@ -95,6 +95,7 @@ cross_time.survstan <- function(object, newdata1, newdata2,
   X2 <- stats::model.matrix(Terms, data = newdata2)[, -1, drop = FALSE]
   pars <- estimates(object)
   p <- object$p
+  m <- object$m
   beta <- pars[1:p]
   phi <- pars[(p+1):(2*p)]
 
@@ -117,13 +118,13 @@ cross_time.survstan <- function(object, newdata1, newdata2,
   t <- c()
 
   for(i in 1:nrow(newdata1)){
-    t[i] <- crossing_time(X1=X1[i,], X2=X2[i,], offset1=offset1, offset2=offset2, tau0=tau0, tau=tau, pars=pars, baseline=baseline, survreg=survreg, p)
+    t[i] <- crossing_time(X1=X1[i,], X2=X2[i,], offset1=offset1, offset2=offset2, tau0=tau0, tau=tau, pars=pars, baseline=baseline, survreg=survreg, p, m)
   }
   pars <- bootstrap(object, nboot=nboot, cores = cores)
 
   ci <- matrix(nrow=nrow(newdata1), ncol=2)
   for(i in 1:nrow(newdata1)){
-    aux <- apply(pars, 1, crossing_time, X1=X1[i,], X2=X2[i,], tau0=tau0, tau=tau, baseline=baseline, p=p)
+    aux <- apply(pars, 1, crossing_time, X1=X1[i,], X2=X2[i,], tau0=tau0, tau=tau, baseline=baseline, p=p, m=m)
     ci[i,] <- stats::quantile(aux, probs=prob, na.rm=TRUE)
   }
 

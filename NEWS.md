@@ -59,3 +59,9 @@
 # survstan 0.0.7.1
 
 - survfit.survstan method now returns a data.frame with the observed survival times and their corresponding estimated baseline survivals when newdata = NULL.
+
+# survstan 0.1.0
+
+- implementation of baseline hazard function approximated via Bernstein polynomials.
+- inclusion of piecewiese exponential distribution (currently available for PH, PO and YP regression models).
+- use of Matrix::nearPD function to ensure the covariance function is positive definite.

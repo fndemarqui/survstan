@@ -78,12 +78,12 @@ real ggprentice_lpdf(real x, real mu, real sigma, real varphi){
   real abs_q;
   real q2;
   real qw;
-  w = (log(x) - mu) / sigma;
-  abs_q = abs(varphi);
-  q2 = pow(varphi, -2);
-  qw = varphi * w;
   if(varphi != 0){
-    lpdf += - log(sigma) - log(x) + lmultiply(1 - 2 * q2, abs_q) + q2 * (qw - exp(qw)) - lgamma(q2) ;
+    w = (log(x) - mu) / sigma;
+    abs_q = abs(varphi);
+    q2 = pow(varphi, -2);
+    qw = varphi * w;
+    lpdf += - log(sigma*x) + lmultiply(1 - 2 * q2, abs_q) + q2 * (qw - exp(qw)) - lgamma(q2) ;
   }else{
     lpdf += lognormal_lpdf(x|mu, sigma);
   }
@@ -91,22 +91,125 @@ real ggprentice_lpdf(real x, real mu, real sigma, real varphi){
   return(lpdf);
 }
 
+
 real ggprentice_lccdf(real x, real mu, real sigma, real varphi){
   real lccdf;
   real w;
   real q2;
   real aux;
-  if(varphi == 0){
-    lccdf = lognormal_lccdf(x|mu, sigma);
-  }else{
+  if(varphi != 0){
     w = (log(x) - mu)/sigma;
     q2 = pow(varphi, -2);
     aux = q2*exp(varphi*w);
     if(varphi > 0){
-      lccdf = gamma_lccdf(aux|q2, 1);
-    }else if(varphi < 0){
+    lccdf = gamma_lccdf(aux|q2, 1);
+  }else if(varphi < 0){
       lccdf = gamma_lcdf(aux|q2, 1);
     }
+  }else{
+    lccdf = lognormal_lccdf(x|mu, sigma);
   }
   return(lccdf);
 }
+
+
+
+// *****************************************************************
+// Bernstein Polynomials:
+
+// real bernstein_lpdf(real y, vector xi){
+//   int m = num_elements(xi);
+//   real lpdf;
+//   real ht = 0;
+//   real Ht = 0;
+//   for(j in 1:m){
+//     ht += exp(beta_lpdf(y| j, m - j + 1))*xi[j];
+//     Ht += beta_cdf(y| j, m - j + 1)*xi[j];
+//   }
+//   lpdf = log(ht) - Ht;
+//   return(lpdf);
+// }
+//
+//
+// real bernstein_lccdf(real y, vector xi){
+//   int m = num_elements(xi);
+//   real Ht = 0;
+//   for(j in 1:m){
+//     Ht += beta_cdf(y| j, m - j + 1)*xi[j];
+//   }
+//   return(-Ht);
+// }
+
+real bernstein_lpdf(real y, vector xi){
+  int m = num_elements(xi);
+  real lpdf;
+  row_vector[m] g;
+  row_vector[m] G;
+  for(j in 1:m){
+    g[j] = exp( beta_lpdf(y| j, (m - j + 1)) );
+    G[j] = exp( beta_lcdf(y| j, (m - j + 1)) );
+  }
+  lpdf = log(g*xi) - G*xi;
+  return(lpdf);
+}
+
+real bernstein_lccdf(real y, vector xi){
+  int m = num_elements(xi);
+  row_vector[m] G;
+  for(j in 1:m){
+    G[j] = exp( beta_lcdf(y| j, (m - j + 1)) );
+  }
+  return(-G*xi);
+}
+
+vector bernstein_vlpdf(matrix g,matrix G, vector xi){
+  return log(g*xi) - G*xi;
+}
+
+vector bernstein_vlccdf(matrix G, vector xi){
+  return -G*xi;
+}
+
+
+// *****************************************************************
+// Piecewise exponential distribution:
+
+ matrix TTT(vector time, vector rho){
+  int n = num_elements(time);
+  int m = num_elements(rho) - 1;
+  vector[2] aux;
+  matrix[n, m] ttt;
+  for(i in 1:n){
+      for(j in 1:m){
+        aux[1] = time[i];
+        aux[2] = rho[j+1];
+        ttt[i, j] = (min(aux) - rho[j])*(time[i] - rho[j] > 0);
+      }
+  }
+  return(ttt);
+}
+
+
+int[] IDT(vector time, vector rho){
+  int n = num_elements(time);
+  int j;
+  int idt[n];
+    for(i in 1:n){
+      j = 0;
+      while(time[i] > rho[j+1]){
+        j = j + 1;
+      }
+      idt[i] = j;
+  }
+  return(idt);
+}
+
+// version 1:
+vector piecewise_vlpdf(matrix ttt, int[] idt, vector xi){
+  return log(xi[idt]) - ttt*xi;
+}
+
+vector piecewise_vlccdf(matrix ttt, vector xi){
+  return -ttt*xi;
+}
+

@@ -19,11 +19,6 @@
 #'
 #'
 ehreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ...){
-  if(!is.null(dist)){
-    baseline <- dist
-  }
-  baseline <- tolower(baseline)
-  baseline <- match.arg(baseline, survstan_distributions)
   Call <- match.call()
   mf <- match.call(expand.dots = FALSE)
   m <- match(c("formula", "data"), names(mf), 0L)
@@ -46,19 +41,100 @@ ehreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
     offset <- rep(0, n)
   }
 
+  if(!is.null(dist)){
+    baseline <- dist
+  }
+
+  if(!is.null(dist)){
+    baseline <- dist
+  }
+
+  m <- 0
+
+  if(is.character(baseline)){
+    baseline <- tolower(baseline)
+    baseline <- match.arg(baseline, survstan_distributions)
+    if(baseline == "bernstein"){
+      baseline <- get(baseline, mode = "function", envir = parent.frame())
+    }else if(baseline == "piecewise"){
+      message("Piecewise exponential distribution not available for EH models. Using Bernstein polynomials instead!")
+      baseline <- "bernstein"
+      baseline <- get(baseline, mode = "function", envir = parent.frame())
+    }
+  }
+
+  if(is.function(baseline)){
+    baseline <- baseline()
+    if(baseline$baseline == "piecewise"){
+      message("Piecewise exponential distribution not available for EH models. Using Bernstein polynomials instead!")
+      baseline$baseline <- "bernstein"
+    }
+    if(baseline$baseline == "bernstein"){
+      m <- baseline$m
+      if(is.null(m)){
+        m <- min(ceiling(n^0.4), m_max)
+      }
+      baseline <- baseline$baseline
+    }else if(baseline$baseline == "piecewise"){
+      rho <- baseline$rho
+      m <- baseline$m
+      if(is.null(rho)){
+        rho <- time_grid(time, event, m)
+      }
+      m <- length(rho) - 1
+      baseline <- baseline$baseline
+    }
+  }
+
+  if(is.list(baseline)){
+    if(baseline$baseline == "piecewise"){
+      message("Piecewise exponential distribution not available for EH models. Using Bernstein polynomials instead!")
+      baseline$baseline <- "bernstein"
+    }
+    if(baseline$baseline == "bernstein"){
+      m <- baseline$m
+      if(is.null(m)){
+        m <- min(ceiling(n^0.4), m_max)
+      }
+    }else if(baseline$baseline == "piecewise"){
+      rho <- baseline$rho
+      m <- baseline$m
+      if(is.null(rho)){
+        rho <- time_grid(time, event, m)
+      }
+      m <- length(rho)-1
+    }
+    baseline = baseline$baseline
+  }
+
   output <- list(call = Call, formula = stats::formula(mt), offset = offset,
                  terms = mt, mf = mf, baseline = baseline, survreg = "eh",
-                 n = n, p = p, tau = tau, labels = labels)
+                 n = n, p = p, tau = tau, m = m, labels = labels)
+
+  if(baseline != "piecewise"){
+    rho <- array(0, dim=0)
+  }
+
+  if(baseline == "piecewise"){
+    output$rho <- rho
+  }
 
   if(init == 0 & baseline == "ggprentice"){
-    init <- inits("eh", p)
+    init <- inits("yp", p)
   }
+
+  if(baseline != "piecewise"){
+    rho <- array(0, dim=0)
+  }
+
   baseline <- set_baseline(baseline)
 
   stan_data <- list(time=y, event=event, X=X, n=n, p=p, offset = offset,
-                    baseline=baseline, survreg = 6, tau = tau)
+                    baseline=baseline, survreg = 5, tau = tau, m=m, rho = rho/tau)
+
+
   fit <- rstan::optimizing(stanmodels$survreg, data = stan_data, hessian = TRUE, init = init, ...)
-  res <- reparametrization(fit, survreg = "eh", output$baseline, labels, tau, p)
+  res <- reparametrization(fit, survreg = "eh", output$baseline, labels, tau, p, m)
   output$estimates <- res$estimates
   output$V <- res$V
   output$loglik = fit$value
@@ -75,7 +151,7 @@ ehreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
 
   p <- 2*p
   time <- time/exp(lp1)
-  H0 <- cumhaz(time, pars, baseline, p)
+  H0 <- cumhaz(time, pars, baseline, p, m)
 
   output$residuals <- H0*exp(lp1+lp2)
   output$event <- event

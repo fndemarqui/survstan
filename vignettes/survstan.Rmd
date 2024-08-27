@@ -23,6 +23,7 @@ The code below shows the model fitting of an AFT model with Weibull baseline dis
 ```{r setup, message=FALSE}
 library(survstan)
 library(dplyr)
+library(GGally)
 
 ovarian <- ovarian %>%
   mutate(
@@ -34,7 +35,7 @@ survreg <- survreg(
   dist = "weibull", data = ovarian
 )
 
-survstan <- aftreg(
+aftreg <- aftreg(
   Surv(futime, fustat) ~ ecog.ps + rx, 
   dist = "weibull", data = ovarian
 )
@@ -47,21 +48,27 @@ To see that, let us summarize the fitted models:
 
 ```{r}
 summary(survreg)
-summary(survstan)
+summary(aftreg)
+
+models <- list(survreg = survreg, aftreg = aftreg)
+ggcoef_compare(models)
 ```
 
 Next, we show how to fit a PH model using the `survstan::phreg()` function. For comparison purposes, the semiparametric Cox model is also fitted to the same data using the function `survival::coxph()`.
 
 ```{r}
-survstan <- phreg(
+phreg <- phreg(
   Surv(futime, fustat) ~ ecog.ps + rx, 
   data = ovarian, dist = "weibull"
 )
-cox <- coxph(
+coxph <- coxph(
   Surv(futime, fustat) ~ ecog.ps + rx, data = ovarian
 )
-coef(survstan)
-coef(cox)
+coef(phreg)
+coef(coxph)
+
+models <- list(coxph = coxph, phreg = phreg)
+ggcoef_compare(models)
 ```
 
 
