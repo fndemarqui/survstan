@@ -1,138 +1,53 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/404.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/articles/LRT.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/articles/survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/AIC.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/Gompertz.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/aftreg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/ahreg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/anova.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/coef.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/confint.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/cross_time-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/cross_time.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/ehreg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/emmeans-survstan-helpers.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/estimates.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/extractAIC.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/gastric.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/ggprentice.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/ggresiduals.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/ggresiduals.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/ggstacy.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/ipass.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/logLik.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/model.matrix.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/phreg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/poreg.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/print.summary.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/rank_models.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/residuals.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/se.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/se.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/summary.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/survfit.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/survstan-package.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/tidy.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/vcov.survstan.html</loc>
-  </url>
-  <url>
-    <loc>https://fndemarqui.github.io/survstan/reference/ypreg.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://fndemarqui.github.io/survstan/404.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/LICENSE-text.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/LICENSE.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/articles/LRT.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/articles/index.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/articles/survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/authors.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/index.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/news/index.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/AIC.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/Gompertz.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/aftreg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/ahreg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/anova.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/bernstein.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/coef.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/confint.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/cross_time-methods.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/cross_time.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/ehreg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/emmeans-survstan-helpers.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/estimates.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/extractAIC.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/gastric.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/ggprentice.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/ggresiduals.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/ggresiduals.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/ggstacy.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/index.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/ipass.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/logLik.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/model.matrix.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/pehaz.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/pexp.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/phreg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/piecewise.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/poreg.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/print.summary.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/rank_models.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/reexports.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/residuals.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/se.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/se.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/summary.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/survfit.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/survstan-package.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/tidy.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/time_grid.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/vcov.survstan.html</loc></url>
+<url><loc>https://fndemarqui.github.io/survstan/reference/ypreg.html</loc></url>
 </urlset>
+
