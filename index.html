@@ -6,16 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Fitting Survival Regression Models via Stan • survstan</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Fitting Survival Regression Models via Stan">
 <meta name="description" content="Parametric survival regression models under the maximum likelihood approach via Stan. Implemented regression models include accelerated failure time (AFT) models, proportional hazards (PH) models, proportional odds (PO) models, accelerated hazard (AH) models, Yang and Prentice (YP) models, and extended hazard (EH) models. Available baseline survival distributions include exponential, Weibull, log-normal, log-logistic, gamma, generalized gamma, rayleigh, Gompertz and fatigue (Birnbaum-Saunders) distributions. The baseline survival distribution can be further modeled using Bernstein polynomails' approximation of the baseline hazard function. References: Lawless (2002) &lt;ISBN:9780471372158&gt;; Bennett (1982) &lt;doi:10.1002/sim.4780020223&gt;; Chen and Wang(2000) &lt;doi:10.1080/01621459.2000.10474236&gt;; Demarqui and Mayrink (2021) &lt;doi:10.1214/20-BJPS471&gt;.">
 <meta property="og:description" content="Parametric survival regression models under the maximum likelihood approach via Stan. Implemented regression models include accelerated failure time (AFT) models, proportional hazards (PH) models, proportional odds (PO) models, accelerated hazard (AH) models, Yang and Prentice (YP) models, and extended hazard (EH) models. Available baseline survival distributions include exponential, Weibull, log-normal, log-logistic, gamma, generalized gamma, rayleigh, Gompertz and fatigue (Birnbaum-Saunders) distributions. The baseline survival distribution can be further modeled using Bernstein polynomails' approximation of the baseline hazard function. References: Lawless (2002) &lt;ISBN:9780471372158&gt;; Bennett (1982) &lt;doi:10.1002/sim.4780020223&gt;; Chen and Wang(2000) &lt;doi:10.1080/01621459.2000.10474236&gt;; Demarqui and Mayrink (2021) &lt;doi:10.1214/20-BJPS471&gt;.">
@@ -217,10 +216,10 @@ S(t|\mu, \sigma, \varphi) =
 <h3 id="gompertz-distribution">Gompertz Distribution<a class="anchor" aria-label="anchor" href="#gompertz-distribution"></a>
 </h3>
 <p>If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>∼</mo><mtext mathvariant="normal">Gamma</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo>,</mo><mi>γ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">T \sim \mbox{Gamma}(\alpha, \gamma)</annotation></semantics></math>, then</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mi>α</mi><mo>,</mo><mi>λ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>α</mi><mo>exp</mo><mrow><mo stretchy="true" form="prefix">{</mo><mi>γ</mi><mi>x</mi><mo>−</mo><mfrac><mi>α</mi><mi>γ</mi></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>e</mi><mrow><mi>γ</mi><mi>x</mi></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">}</mo></mrow><msub><mi>I</mi><mrow><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mi>∞</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">f(t|\alpha, \lambda) = \alpha\exp\left\{\gamma x-\frac{\alpha}{\gamma}\left(e^{\gamma x} - 1\right)\right\}I_{[0, \infty)}(t).</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mi>α</mi><mo>,</mo><mi>λ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>α</mi><mo>exp</mo><mrow><mo stretchy="true" form="prefix">{</mo><mi>γ</mi><mi>t</mi><mo>−</mo><mfrac><mi>α</mi><mi>γ</mi></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>e</mi><mrow><mi>γ</mi><mi>t</mi></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">}</mo></mrow><msub><mi>I</mi><mrow><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mi>∞</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">f(t|\alpha, \lambda) = \alpha\exp\left\{\gamma t-\frac{\alpha}{\gamma}\left(e^{\gamma t} - 1\right)\right\}I_{[0, \infty)}(t).</annotation></semantics></math></p>
 <p>The survival and hazard functions are given, respectively, by</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mi>α</mi><mo>,</mo><mi>λ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>exp</mo><mrow><mo stretchy="true" form="prefix">{</mo><mo>−</mo><mfrac><mi>α</mi><mi>γ</mi></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>e</mi><mrow><mi>γ</mi><mi>x</mi></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">}</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">S(t|\alpha, \lambda) = \exp\left\{-\frac{\alpha}{\gamma}\left(e^{\gamma x} - 1\right)\right\}.</annotation></semantics></math> and</p>
-<p><span class="math display">$$h(t|\alpha, \lambda) = \alpha\exp\{\gamma x}.$$</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mi>α</mi><mo>,</mo><mi>λ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>exp</mo><mrow><mo stretchy="true" form="prefix">{</mo><mo>−</mo><mfrac><mi>α</mi><mi>γ</mi></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>e</mi><mrow><mi>γ</mi><mi>t</mi></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">}</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">S(t|\alpha, \lambda) = \exp\left\{-\frac{\alpha}{\gamma}\left(e^{\gamma t} - 1\right)\right\}.</annotation></semantics></math> and</p>
+<p><span class="math display">$$h(t|\alpha, \lambda) = \alpha\exp\{\gamma t}.$$</span></p>
 </div>
 <div class="section level3">
 <h3 id="rayleigh-distribution">Rayleigh Distribution<a class="anchor" aria-label="anchor" href="#rayleigh-distribution"></a>
@@ -371,7 +370,7 @@ S(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = \frac{1}{1 + R_{0}(t|
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Fabio Demarqui <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0001-9236-1986" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Fabio Demarqui <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0001-9236-1986" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -395,7 +394,7 @@ S(t|\boldsymbol{\theta}, \boldsymbol{\beta}, \mathbf{x}) = \frac{1}{1 + R_{0}(t|
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>
