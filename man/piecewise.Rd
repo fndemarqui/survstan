@@ -2,7 +2,7 @@
 % Please edit documentation in R/piecewise.R
 \name{piecewise}
 \alias{piecewise}
-\title{Piecewise baseline}
+\title{Piecewise exponential baseline}
 \usage{
 piecewise(rho = NULL, m = NULL)
 }

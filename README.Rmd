@@ -221,14 +221,14 @@ $$h(t|\alpha, \gamma, \kappa) = \frac{f(t|\alpha, \gamma, \kappa)}{S(t|\alpha, \
 
 If $T \sim \mbox{Gamma}(\alpha, \gamma)$, then 
  
-$$f(t|\alpha, \lambda) = \alpha\exp\left\{\gamma x-\frac{\alpha}{\gamma}\left(e^{\gamma x} - 1\right)\right\}I_{[0, \infty)}(t).$$ 
+$$f(t|\alpha, \lambda) = \alpha\exp\left\{\gamma t-\frac{\alpha}{\gamma}\left(e^{\gamma t} - 1\right)\right\}I_{[0, \infty)}(t).$$ 
 
 The survival and hazard functions are given, respectively, by
 
-$$S(t|\alpha, \lambda) = \exp\left\{-\frac{\alpha}{\gamma}\left(e^{\gamma x} - 1\right)\right\}.$$ 
+$$S(t|\alpha, \lambda) = \exp\left\{-\frac{\alpha}{\gamma}\left(e^{\gamma t} - 1\right)\right\}.$$ 
 and
 
-$$h(t|\alpha, \lambda) = \alpha\exp\{\gamma x}.$$ 
+$$h(t|\alpha, \lambda) = \alpha\exp\{\gamma t}.$$ 
 
 ### Rayleigh Distribution
 

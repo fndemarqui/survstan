@@ -175,7 +175,7 @@ findInt <- function(time, rho){
 }
 
 
-#' Piecewise baseline
+#' Piecewise exponential baseline
 #' @description This function is used to allow the user to specify the piecewise exponential baseline with arbitrary time grid/number of intervals.
 #'
 #' @aliases piecewise

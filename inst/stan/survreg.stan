@@ -80,8 +80,8 @@ transformed data{
     is_xi = 1;
     for(i in 1:n){
       for(j in 1:m){
-        g[i, j] = exp( beta_lpdf(time[i]/(max(time)*(1+0.00001))| j, (m - j + 1)) );
-        G[i, j] = exp( beta_lcdf(time[i]/(max(time)*(1+0.00001))| j, (m - j + 1)) );
+        g[i, j] = beta_pdf(time[i]/(max(time)*(1 + machine_precision())),  j, (m - j + 1));
+        G[i, j] = exp( beta_lcdf(time[i]/(max(time)*(1 + machine_precision()))| j, (m - j + 1)) );
       }
     }
   }else if(baseline == 12){
@@ -153,6 +153,13 @@ model{
   }
 
 
+  if(survreg146*baseline == 11){
+    Tau = max(y)*(1+machine_precision());
+  }else{
+    Tau = tau;
+  }
+
+
   if(baseline == 1){ // exponential
     for(i in 1:n){
       lpdf[i] = exponential_lpdf(y[i]|lambda);
@@ -204,12 +211,11 @@ model{
           lsurv[i] = ggprentice_lccdf(y[i]|mu[1], sigma[1], varphi[1]);
     }
   }else if(baseline == 11){ // bernstein polynomials
-    Tau = max(y)*(1+0.00001);
     if(survreg146 == 1){
       for(i in 1:n){
         for(j in 1:m){
-          g2[i, j] = exp( beta_lpdf(y[i]/Tau| j, (m - j + 1)) );
-          G2[i, j] = exp( beta_lcdf(y[i]/Tau| j, (m - j + 1)) );
+          g2[i, j] = beta_pdf(y[i]/Tau,  j, (m - j + 1));
+          G2[i, j] = exp( beta_lcdf(y[i]/Tau | j, (m - j + 1)) );
         }
       }
       lpdf = bernstein_vlpdf(g2, G2, xi);
@@ -223,11 +229,6 @@ model{
     lsurv = piecewise_vlccdf(ttt, xi);
   }
 
-  if(survreg146*baseline == 11){
-    Tau = max(y)*(1+0.00001);
-  }else{
-    Tau = tau;
-  }
 
   if(p == 0){
     loglik = event .* lpdf + (1-event) .* lsurv;
@@ -254,6 +255,5 @@ model{
   target += sum(loglik);
 
 }
-
 
 

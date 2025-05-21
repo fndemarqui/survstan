@@ -35,11 +35,11 @@ delta_method <- function(estimates, V, pars){
 
 reparametrization <- function(object, survreg, baseline, labels, tau, p, m, ...){
   estimates <- object$par
-  V <- try(chol2inv(chol(-object$hessian)), TRUE)
-  if(class(V)[1] == "try-error"){
-    V <- MASS::ginv(-object$hessian)
-  }
-  V <- as.matrix(Matrix::nearPD(V)$mat)
+  H <- object$hessian
+  mH <- as.matrix(Matrix::nearPD(-H)$mat)
+  V <- MASS::ginv(mH)
+  #V <- MASS::ginv(-object$hessian)
+  #V <- as.matrix(Matrix::nearPD(V)$mat)
 
   npar <- length(estimates)
   v <- diag(npar)
@@ -125,8 +125,8 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, m, ...)
     colnames(v) = labels
     rownames(v) = labels
     V <- delta_method(estimates, V, c("alpha", "gamma"))
-    estimates["gamma"] <- estimates["gamma"]/tau
-    diag(v)["gamma"] <- 1/tau
+    estimates[c("alpha", "gamma")] <- estimates[c("alpha", "gamma")]/tau
+    diag(v)[c("alpha", "gamma")] <- 1/tau
     V <- v%*%V%*%v
   }else if(baseline == "ggstacy"){
     labels <- c(labels, "alpha", "gamma", "kappa")

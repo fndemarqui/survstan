@@ -120,7 +120,7 @@ ehreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
   }
 
   if(init == 0 & baseline == "ggprentice"){
-    init <- inits("yp", p)
+    init <- inits("eh", p)
   }
 
   if(baseline != "piecewise"){
@@ -131,7 +131,6 @@ ehreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
 
   stan_data <- list(time=y, event=event, X=X, n=n, p=p, input_offset = offset,
                     baseline=baseline, survreg = 5, tau = tau, m=m, rho = rho/tau)
-
 
   fit <- rstan::optimizing(stanmodels$survreg, data = stan_data, hessian = TRUE, init = init, ...)
   res <- reparametrization(fit, survreg = "eh", output$baseline, labels, tau, p, m)
