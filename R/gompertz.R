@@ -37,7 +37,7 @@
 ##' @export
 ##' @rdname Gompertz
 dgompertz <- function(x, alpha = 1, gamma = 1,  log = FALSE, ...){
-  lf <- log(alpha) + log(gamma) + gamma*x - alpha*expm1(gamma*x)
+  lf <- log(alpha) + gamma*x - alpha*expm1(gamma*x)/gamma
   if(isTRUE(log)){
     return(lf)
   }else{
@@ -48,7 +48,7 @@ dgompertz <- function(x, alpha = 1, gamma = 1,  log = FALSE, ...){
 ##' @export
 ##' @rdname Gompertz
 pgompertz <- function(q, alpha = 1, gamma = 1,  lower.tail = TRUE, log.p = FALSE, ...){
-  aux <- -alpha*expm1(gamma*q)
+  aux <- -alpha*expm1(gamma*q)/gamma
   if(isTRUE(lower.tail)){
     p <- -expm1(aux)
   }else{
@@ -65,9 +65,9 @@ pgompertz <- function(q, alpha = 1, gamma = 1,  lower.tail = TRUE, log.p = FALSE
 ##' @rdname Gompertz
 qgompertz <- function(p, alpha = 1, gamma = 1, lower.tail = FALSE, log.p = FALSE, ...){
   if(isTRUE(lower.tail)){
-    v <- -log(p)/alpha + 1
+    v <- -gamma*log(1-p)/alpha + 1
   }else{
-    v <- -log(1-p)/alpha + 1
+    v <- -gamma*log(p)/alpha + 1
   }
   t <- log(v)/gamma
   return(t)
