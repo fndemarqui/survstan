@@ -118,7 +118,7 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
   }
 
   if(init == 0 & baseline == "ggprentice"){
-    init <- inits("ph", p)
+    init <- inits("aft", p)
   }
 
   baseline <- set_baseline(baseline)

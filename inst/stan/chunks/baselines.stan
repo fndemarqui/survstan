@@ -41,12 +41,12 @@ real fatigue_lccdf(real x, real alpha, real gamma){
 // Gompertz distribution:
 
 real gompertz_lpdf(real x, real alpha, real gamma){
-  real lpdf = log(alpha) + log(gamma) + gamma*x - alpha*expm1(gamma*x);
+  real lpdf = log(alpha) + gamma*x - alpha*expm1(gamma*x)/gamma;
   return lpdf;
 }
 
 real gompertz_lccdf(real x, real alpha, real gamma){
-  real lsurv = - alpha*expm1(gamma*x);
+  real lsurv = - alpha*expm1(gamma*x)/gamma;
   return lsurv;
 }
 
@@ -117,13 +117,34 @@ real ggprentice_lccdf(real x, real mu, real sigma, real varphi){
 // *****************************************************************
 // Bernstein Polynomials:
 
+real beta_pdf(real x, real a, real b){
+  real pdf = 0;
+  if(x == 0 && a == 1 || x == 1 && b == 1){
+    pdf = exp(-lbeta(a, b));
+  }else{
+    pdf = exp(beta_lpdf(x| a, b));
+  }
+  return pdf;
+}
+
+// For compatibility with R dbeta function:
+// real beta_pdf(real x, real a, real b){
+//   real pdf = 0;
+//   if(x == 0 && a == 1 || x == 1 && b == 1){
+//     pdf = exp(-lbeta(a, b));
+//   }else{
+//     pdf = exp(beta_lpdf(x| a, b));
+//   }
+//   return pdf;
+// }
+
 // real bernstein_lpdf(real y, vector xi){
 //   int m = num_elements(xi);
 //   real lpdf;
 //   real ht = 0;
 //   real Ht = 0;
 //   for(j in 1:m){
-//     ht += exp(beta_lpdf(y| j, m - j + 1))*xi[j];
+//     ht += beta_pdf(y, j, m - j + 1)*xi[j];
 //     Ht += beta_cdf(y| j, m - j + 1)*xi[j];
 //   }
 //   lpdf = log(ht) - Ht;
@@ -146,7 +167,7 @@ real bernstein_lpdf(real y, vector xi){
   row_vector[m] g;
   row_vector[m] G;
   for(j in 1:m){
-    g[j] = exp( beta_lpdf(y| j, (m - j + 1)) );
+    g[j] = beta_pdf(y, j, m - j + 1);
     G[j] = exp( beta_lcdf(y| j, (m - j + 1)) );
   }
   lpdf = log(g*xi) - G*xi;
@@ -162,7 +183,7 @@ real bernstein_lccdf(real y, vector xi){
   return(-G*xi);
 }
 
-vector bernstein_vlpdf(matrix g,matrix G, vector xi){
+vector bernstein_vlpdf(matrix g, matrix G, vector xi){
   return log(g*xi) - G*xi;
 }
 
