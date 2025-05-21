@@ -211,10 +211,10 @@ vector bernstein_vlccdf(matrix G, vector xi){
 }
 
 
-int[] IDT(vector time, vector rho){
+array[] int IDT(vector time, vector rho){
   int n = num_elements(time);
   int j;
-  int idt[n];
+  array[n] int idt;
     for(i in 1:n){
       j = 0;
       while(time[i] > rho[j+1]){
@@ -226,7 +226,7 @@ int[] IDT(vector time, vector rho){
 }
 
 // version 1:
-vector piecewise_vlpdf(matrix ttt, int[] idt, vector xi){
+vector piecewise_vlpdf(matrix ttt, array[] int idt, vector xi){
   return log(xi[idt]) - ttt*xi;
 }
 

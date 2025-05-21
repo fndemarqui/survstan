@@ -11,7 +11,7 @@ data{
   vector[n] time;
   vector[n] event;
   matrix[p == 0 ? 0 : n, p] X;
-  vector[n] offset;
+  vector[n] input_offset;
   real tau;
   int baseline;
   int survreg;    // 1 - AFT; 2 - PH; 3 - PO; 4 - AH; 5 - YP; 6 - EH
@@ -32,7 +32,7 @@ transformed data{
   vector[p == 0 ? n : 0] zeros;
   matrix[baseline == 11 ? n : 0, m] g;
   matrix[baseline == 11 ? n : 0, m] G;
-  int idt[baseline == 12 ? n : 0];
+  array[baseline == 12 ? n : 0] int idt;
   matrix[baseline == 12 ? n : 0, m] ttt;
 
   int survreg146 = 0;
@@ -128,20 +128,20 @@ model{
   real Tau;
 
   if(p>0){
-    lp = X*beta + offset;
+    lp = X*beta + input_offset;
     if(survreg > 4){
       if(survreg == 5){
-        lp2 = X*phi + offset;
+        lp2 = X*phi + input_offset;
         K =  exp(X*(beta-phi));
       }else{
-        lp2 = X*phi + offset;
+        lp2 = X*phi + input_offset;
         K =  exp(lp+lp2);
       }
     }
   }else{
-    lp = zeros + offset;
+    lp = zeros + input_offset;
     if(survreg > 4){
-      lp2 = zeros + offset;
+      lp2 = zeros + input_offset;
       K = exp(zeros);
     }
   }
