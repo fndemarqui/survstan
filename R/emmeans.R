@@ -28,8 +28,10 @@ emm_basis.survstan = function(object, trms, xlev, grid, ...) {
   nbasis = matrix(NA)
   dfargs = list(df = Inf)
   dffun = function(k, dfargs) dfargs$df
-  list(X = X, bhat = bhat, nbasis = nbasis, V = V,                  #10
-       dffun = dffun, dfargs = dfargs)
+  result <- list(X = X, bhat = bhat, nbasis = nbasis, V = V, dffun = dffun,
+                 dfargs = dfargs)
+  result$misc$tran = "log"
+  return(result)
 }
 
 
@@ -65,8 +67,10 @@ emm_basis.ypreg = function(object, trms, xlev, grid, term = c("short", "long"), 
   nbasis = matrix(NA)
   dfargs = list(df = Inf)
   dffun = function(k, dfargs) dfargs$df
-  list(X = X, bhat = bhat, nbasis = nbasis, V = V,
-       dffun = dffun, dfargs = dfargs)
+  result <- list(X = X, bhat = bhat, nbasis = nbasis, V = V, dffun = dffun,
+                 dfargs = dfargs)
+  result$misc$tran = "log"
+  return(result)
 }
 
 
@@ -102,8 +106,10 @@ emm_basis.ehreg = function(object, trms, xlev, grid, term = c("AF", "RH"), ...){
   nbasis = matrix(NA)
   dfargs = list(df = Inf)
   dffun = function(k, dfargs) dfargs$df
-  list(X = X, bhat = bhat, nbasis = nbasis, V = V,
-       dffun = dffun, dfargs = dfargs)
+  result <- list(X = X, bhat = bhat, nbasis = nbasis, V = V, dffun = dffun,
+                 dfargs = dfargs)
+  result$misc$tran = "log"
+  return(result)
 }
 
 
