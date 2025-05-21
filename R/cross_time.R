@@ -124,7 +124,7 @@ cross_time.survstan <- function(object, newdata1, newdata2,
 
   ci <- matrix(nrow=nrow(newdata1), ncol=2)
   for(i in 1:nrow(newdata1)){
-    aux <- apply(pars, 1, crossing_time, X1=X1[i,], X2=X2[i,], tau0=tau0, tau=tau, baseline=baseline, p=p, m=m)
+    aux <- apply(pars, 1, FUN = crossing_time, X1=X1[i,], X2=X2[i,], offset1=offset1, offset2=offset2, tau0=tau0, tau=tau, baseline=baseline, survreg=survreg, p, m)
     ci[i,] <- stats::quantile(aux, probs=prob, na.rm=TRUE)
   }
 
