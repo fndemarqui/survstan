@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   LRT: LRT.html
   survstan: survstan.html
-last_built: 2025-05-21T18:13Z
+last_built: 2025-05-23T17:21Z
 urls:
   reference: https://fndemarqui.github.io/survstan/reference
   article: https://fndemarqui.github.io/survstan/articles
