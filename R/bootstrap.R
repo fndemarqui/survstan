@@ -43,6 +43,7 @@ bootstrap <- function(object, nboot, cores, ...){
   n <- object$n
   p <- object$p
   tau <- object$tau
+  rho <- object$rho
 
 
   index <- 1:n
@@ -53,20 +54,18 @@ bootstrap <- function(object, nboot, cores, ...){
   pars_hat <- estimates(object)
   k <- length(estimates(object))
 
+  object$formula <- formula
+
   if(cores>1){
     pars <- foreach::foreach(
       b = 1:nboot, .combine = rbind,
-      .options.future = list(seed = TRUE)
+      .options.future = list(seed = TRUE, packages = c("survstan"))
     ) %dofuture% {
       samp1 <- sample(index1, size=n1, replace=TRUE)
       samp2 <- sample(index2, size=n2, replace=TRUE)
       samp <- c(samp1, samp2)
       mydata <- dplyr::slice(data, samp)
-      switch(survreg,
-        "yp" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ypreg(formula, data=mydata, baseline = baseline)))}),
-        "eh" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ehreg(formula, data=mydata, baseline = baseline)))}),
-        "ah" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ahreg(formula, data=mydata, baseline = baseline)))})
-      )
+      suppressWarnings({invisible(fit <- update(object, data = mydata))})
       if(!is(object, "try-error")){
         survstan::estimates(fit)
       }
@@ -79,11 +78,7 @@ bootstrap <- function(object, nboot, cores, ...){
       samp2 <- sample(index2, size=n2, replace=TRUE)
       samp <- c(samp1, samp2)
       mydata <- dplyr::slice(data, samp)
-      switch(survreg,
-        "yp" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ypreg(formula, data=mydata, baseline = baseline)))}),
-        "eh" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ehreg(formula, data=mydata, baseline = baseline)))}),
-        "ah" = suppressWarnings({invisible(utils::capture.output(fit <- survstan::ahreg(formula, data=mydata, baseline = baseline)))})
-      )
+      suppressWarnings({invisible(fit <- update(object, data = mydata))})
       if(!is(object, "try-error")){
         survstan::estimates(fit)
       }
