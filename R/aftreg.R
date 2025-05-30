@@ -142,7 +142,7 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
   }
 
   time <- time*exp(-lp)
-  output$residuals <- cumhaz(time, pars, baseline, p, m)
+  output$residuals <- cumhaz(time, pars, baseline, p, m, rho, tau)
   output$event <- event
 
   class(output) <- c("aftreg", "survstan")

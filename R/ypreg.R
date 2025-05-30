@@ -139,7 +139,7 @@ ypreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
   }
 
   p <- 2*p
-  H0 <- cumhaz(time, pars, baseline, p, m, rho)
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
   ratio <- exp(lp_short-lp_long)
   Rt <- expm1(H0)*ratio
   output$residuals <- log1p(Rt)*exp(lp_long)

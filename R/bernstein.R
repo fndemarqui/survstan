@@ -14,9 +14,18 @@ bernstein <- function(m = NULL){
   return(list(baseline = "bernstein", m = m))
 }
 
-# Computes the Bernstein polynomial's bases. (note: for computation stability, b is not divided by tau here)
 
-bp <- function(x, m, tau){
+bp_b <- function(x, m, tau){
+  n <- length(x)
+  y <- x/tau
+  b <- matrix(nrow=n, ncol=m)
+  for(k in 1:m){
+    b[,k] <- stats::dbeta(y, k, m - k + 1)/tau
+  }
+  return(b)
+}
+
+bp_B <- function(x, m, tau){
   n <- length(x)
   y <- x/tau
   B <- matrix(nrow=n, ncol=m)
@@ -26,8 +35,9 @@ bp <- function(x, m, tau){
   return(B)
 }
 
+# Computes the Bernstein polynomial's bases. (note: for computation stability, b is not divided by tau here)
 BP <- function(x, m, tau) {
-  tau <- tau*(1)
+  #tau <- tau*(1)
   n <- length(x)
   y <- x/tau
   b <- matrix(nrow=n, ncol=m)
@@ -41,7 +51,7 @@ BP <- function(x, m, tau) {
 
 
 dbernstein <- function(x, xi, tau, log = FALSE){
-  tau <- tau*(1+0.00001)
+  #tau <- tau*(1+0.00001)
   m <- length(xi)
   bp <- BP(x, m, tau)
   lht <- as.numeric(log(bp$b%*%xi)) - log(tau)
@@ -55,10 +65,18 @@ dbernstein <- function(x, xi, tau, log = FALSE){
 }
 
 
-pbernstein <- function(x, xi, tau, lower.tail=TRUE, log.p=FALSE){
-  tau <- tau*(1+0.00001)
+Hbernstein <- function(x, xi, tau){
+  #tau <- tau*(1+0.00001)
   m <- length(xi)
-  B <- bp(x, m, tau)
+  B <- bp_B(x, m, tau)
+  Ht <- as.numeric(B%*%xi)
+  return(Ht)
+}
+
+pbernstein <- function(x, xi, tau, lower.tail=TRUE, log.p=FALSE){
+  #tau <- tau*(1+0.00001)
+  m <- length(xi)
+  B <- bp_B(x, m, tau)
   Ht <- as.numeric(B%*%xi)
   if(isTRUE(lower.tail)){
     p <- -expm1(-Ht)
@@ -75,7 +93,7 @@ pbernstein <- function(x, xi, tau, lower.tail=TRUE, log.p=FALSE){
 
 qbernstein <- function(p, xi, tau, lower.tail = FALSE, log.p = FALSE, ...){
 
-  tau <- tau*(1+0.00001)
+  #tau <- tau*(1+0.00001)
 
   if(isTRUE(lower.tail)){
     u <- 1-p
@@ -85,7 +103,7 @@ qbernstein <- function(p, xi, tau, lower.tail = FALSE, log.p = FALSE, ...){
 
   cumhaz <- function(x, xi, tau){
     m <- length(xi)
-    B <- bp(x, m, tau)
+    B <- bp_B(x, m, tau)
     Ht <- as.numeric(B%*%xi)
     return(Ht)
   }

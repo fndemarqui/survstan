@@ -141,7 +141,7 @@ ahreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
     time <- time*exp(-lp)
   }
 
-  H0 <- cumhaz(time, pars, baseline, p, m)
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
   output$residuals <- H0*exp(lp)
   output$event <- event
 

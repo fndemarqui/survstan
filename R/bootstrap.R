@@ -44,6 +44,7 @@ bootstrap <- function(object, nboot, cores, ...){
   p <- object$p
   tau <- object$tau
   rho <- object$rho
+  m <- object$m
 
 
   index <- 1:n
@@ -65,7 +66,14 @@ bootstrap <- function(object, nboot, cores, ...){
       samp2 <- sample(index2, size=n2, replace=TRUE)
       samp <- c(samp1, samp2)
       mydata <- dplyr::slice(data, samp)
-      suppressWarnings({invisible(fit <- update(object, data = mydata))})
+      if(baseline == "pieceiwse"){
+        suppressWarnings({invisible(fit <- update(object, data = mydata, dist = piecewise(m=m)))})
+      }else if(baseline == "bernstein"){
+        suppressWarnings({invisible(fit <- update(object, data = mydata, dist = bernstein(m=m)))})
+      }else{
+        suppressWarnings({invisible(fit <- update(object, data = mydata))})
+      }
+
       if(!is(object, "try-error")){
         survstan::estimates(fit)
       }

@@ -1,35 +1,35 @@
 
-surv_aft <- function(time, pars, lp, baseline, p, m){
+surv_aft <- function(time, pars, lp, baseline, p, m, rho, tau){
   time <- time*exp(-lp)
-  H0 <- cumhaz(time, pars, baseline, p, m)
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
   surv <- exp(-H0)
   return(surv)
 }
 
-surv_ah <- function(time, pars, lp, baseline, p, m){
+surv_ah <- function(time, pars, lp, baseline, p, m, rho, tau){
   time <- time*exp(-lp)
-  H0 <- cumhaz(time, pars, baseline, p, m)
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
   surv <- exp(-H0*exp(lp))
   return(surv)
 }
 
-surv_ph <- function(time, pars, lp, baseline, p, m, rho){
-  H0 <- cumhaz(time, pars, baseline, p, m)
+surv_ph <- function(time, pars, lp, baseline, p, m, rho, tau){
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
   surv <- exp(-H0*exp(lp))
   return(surv)
 }
 
-surv_po <- function(time, pars, lp, baseline, p, m, rho){
-  H0 <- cumhaz(time, pars, baseline, p, m, rho)
+surv_po <- function(time, pars, lp, baseline, p, m, rho, tau){
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
   Rt = expm1(H0)*exp(lp)
   surv <- exp(-log1p(Rt))
   return(surv)
 }
 
 
-surv_yp <- function(time, pars, lp_short, lp_long, baseline, p, m, rho){
+surv_yp <- function(time, pars, lp_short, lp_long, baseline, p, m, rho, tau){
   p <- 2*p
-  H0 <- cumhaz(time, pars, baseline, p, m, rho)
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
   ratio <- exp(lp_short - lp_long)
   Rt = expm1(H0)*ratio
   theta <- exp(lp_long)
@@ -38,10 +38,10 @@ surv_yp <- function(time, pars, lp_short, lp_long, baseline, p, m, rho){
 }
 
 
-surv_eh <- function(time, pars, lp1, lp2, baseline, p, m){
+surv_eh <- function(time, pars, lp1, lp2, baseline, p, m, rho, tau){
   p <- 2*p
   time <- time/exp(lp1)
-  H0 <- cumhaz(time, pars, baseline, p, m)
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
   surv <- exp(- H0*exp(lp1+lp2))
   return(surv)
 }
@@ -82,9 +82,10 @@ survfit.survstan <- function(formula, newdata = NULL, ...){
   pars <- estimates(object)
   m <- object$m
   rho <- object$rho
+  tau <- object$tau
 
   if(is.null(newdata)){
-    H0 <- cumhaz(time, pars, baseline, p=0, m, rho)
+    H0 <- cumhaz(time, pars, baseline, p=0, m, rho, tau)
     surv <- data.frame(
       time = time,
       surv = exp(-H0)
@@ -124,12 +125,12 @@ survfit.survstan <- function(formula, newdata = NULL, ...){
     J <- N/n
 
     surv <- switch (survreg,
-                    "aft" = with(df, surv_aft(time, pars, lp, baseline, p, m)),
-                    "ph" = with(df, surv_ph(time, pars, lp, baseline, p, m, rho)),
-                    "po" = with(df, surv_po(time, pars, lp, baseline, p, m, rho)),
-                    "ah" = with(df, surv_ah(time, pars, lp, baseline, p, m)),
-                    "yp" = with(df, surv_yp(time, pars, lp_short, lp_long, baseline, p, m, rho)),
-                    "eh" = with(df, surv_eh(time, pars, lp1, lp2, baseline, p, m))
+                    "aft" = with(df, surv_aft(time, pars, lp, baseline, p, m, rho, tau)),
+                    "ph" = with(df, surv_ph(time, pars, lp, baseline, p, m, rho, tau)),
+                    "po" = with(df, surv_po(time, pars, lp, baseline, p, m, rho, tau)),
+                    "ah" = with(df, surv_ah(time, pars, lp, baseline, p, m, rho, tau)),
+                    "yp" = with(df, surv_yp(time, pars, lp_short, lp_long, baseline, p, m, rho, tau)),
+                    "eh" = with(df, surv_eh(time, pars, lp1, lp2, baseline, p, m, rho, tau))
     )
 
     surv <- df %>%

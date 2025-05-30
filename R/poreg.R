@@ -129,7 +129,7 @@ poreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
     lp <- as.numeric(X%*%pars[1:p]) + offset
   }
 
-  H0 <- cumhaz(time, pars, baseline, p, m, rho)
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
   Rt <- expm1(H0)*exp(lp)
   output$residuals <- log1p(Rt)
   output$event <- event

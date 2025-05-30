@@ -11,3 +11,11 @@ inst/doc
 /Meta/
 .Rd2pdf10127
 .quarto
+src
+src/
+src/RcppExports.o
+src/stanExports_survreg.o
+src/stanExports_survreg.h
+src/survstan.so
+src/survstan.o
+survstan.Rproj

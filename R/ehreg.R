@@ -150,7 +150,7 @@ ehreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, ..
 
   p <- 2*p
   time <- time/exp(lp1)
-  H0 <- cumhaz(time, pars, baseline, p, m)
+  H0 <- cumhaz(time, pars, baseline, p, m, rho, tau)
 
   output$residuals <- H0*exp(lp1+lp2)
   output$event <- event

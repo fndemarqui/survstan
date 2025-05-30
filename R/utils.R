@@ -244,8 +244,8 @@ logLik.survstan <- function(object, ...){
 
 
 # This internal function returns the cumulative baseline hazard function
-cumhaz <- function(time, pars, baseline, p, m = NULL, rho = NULL){
-  tau <- max(time)
+cumhaz <- function(time, pars, baseline, p, m = NULL, rho = NULL, tau){
+  #tau <- max(time)
   H0 <- switch(baseline,
                exponential = -stats::pexp(time, rate = pars[p+1], lower.tail = FALSE, log.p = TRUE),
                weibull = -stats::pweibull(time, shape = pars[p+1], scale = pars[p+2], lower.tail = FALSE, log.p = TRUE),
