@@ -109,7 +109,7 @@ considered for the data analysis.</p>
 <span></span>
 <span><span class="va">km</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html" class="external-link">survfit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">arm</span>, data <span class="op">=</span> <span class="va">ipass</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggsurv.html" class="external-link">ggsurv</a></span><span class="op">(</span><span class="va">km</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="LRT_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="LRT_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" width="700"></p>
 <p>Since the YP models includes both the PH and PO models as particular
 cases, we can perform LRT as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -146,31 +146,25 @@ cases, we can perform LRT as follows:</p>
 <span><span class="co">#&gt; weibull(aft) 1: Surv(time, status) ~ arm </span></span>
 <span><span class="co">#&gt; weibull(eh) 2: Surv(time, status) ~ arm </span></span>
 <span><span class="co">#&gt; --- </span></span>
-<span><span class="co">#&gt;                   loglik       LR df  Pr(&gt;Chi)    </span></span>
-<span><span class="co">#&gt; weibull(aft) 1: -2839.24   133.72  1 &lt; 2.2e-16 ***</span></span>
-<span><span class="co">#&gt; weibull(eh) 2:  -2772.38        -  -         -    </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt;                      loglik          LR df Pr(&gt;Chi)</span></span>
+<span><span class="co">#&gt; weibull(aft) 1: -2.8392e+03  1.0821e-06  1   0.9992</span></span>
+<span><span class="co">#&gt; weibull(eh) 2:  -2.8392e+03           -  -        -</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ah</span>, <span class="va">eh</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; weibull(ah) 1: Surv(time, status) ~ arm </span></span>
 <span><span class="co">#&gt; weibull(eh) 2: Surv(time, status) ~ arm </span></span>
 <span><span class="co">#&gt; --- </span></span>
-<span><span class="co">#&gt;                  loglik       LR df  Pr(&gt;Chi)    </span></span>
-<span><span class="co">#&gt; weibull(ah) 1: -2839.24   133.72  1 &lt; 2.2e-16 ***</span></span>
-<span><span class="co">#&gt; weibull(eh) 2: -2772.38        -  -         -    </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt;                     loglik          LR df Pr(&gt;Chi)</span></span>
+<span><span class="co">#&gt; weibull(ah) 1: -2.8392e+03  2.2572e-07  1   0.9996</span></span>
+<span><span class="co">#&gt; weibull(eh) 2: -2.8392e+03           -  -        -</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ph</span>, <span class="va">eh</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; weibull(ph) 1: Surv(time, status) ~ arm </span></span>
 <span><span class="co">#&gt; weibull(eh) 2: Surv(time, status) ~ arm </span></span>
 <span><span class="co">#&gt; --- </span></span>
-<span><span class="co">#&gt;                  loglik       LR df  Pr(&gt;Chi)    </span></span>
-<span><span class="co">#&gt; weibull(ph) 1: -2839.24   133.72  1 &lt; 2.2e-16 ***</span></span>
-<span><span class="co">#&gt; weibull(eh) 2: -2772.38        -  -         -    </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
+<span><span class="co">#&gt;                     loglik          LR df Pr(&gt;Chi)</span></span>
+<span><span class="co">#&gt; weibull(ph) 1: -2.8392e+03  5.0196e-06  1   0.9982</span></span>
+<span><span class="co">#&gt; weibull(eh) 2: -2.8392e+03           -  -        -</span></span></code></pre></div>
 <!-- ## Veteran data -->
 <!-- The `survival::veteran` data has been widely used in the literature as a real data application of PO models. -->
 <!-- ```{r} -->
@@ -212,7 +206,7 @@ cases, we can perform LRT as follows:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
