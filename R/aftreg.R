@@ -127,22 +127,29 @@ aftreg <- function(formula, data, baseline = "weibull", dist = NULL, init = 0, .
                     baseline=baseline, survreg = 1, tau = tau, m = m, rho = rho/tau)
 
   fit <- rstan::optimizing(stanmodels$survreg, data = stan_data, hessian = TRUE, init = init, ...)
+
+  # CONFERIR TAU AQUI E EM EH E AH
+  pars <- fit$par
+  if(p==0){
+    lp <- 0 + offset
+  }else{
+    lp <- as.numeric(X%*%pars[1:p]) + offset
+  }
+  time <- exp(log(time) - lp)
+
+  if(baseline == "bernstein"){
+    tau <- max(time)
+  }
+
   res <- reparametrization(fit, survreg = "aft", output$baseline, labels, tau, p, m)
   output$estimates <- res$estimates
   output$V <- res$V
   output$loglik = fit$value
   output$return_code = fit$return_code
 
-
+  # updated pars vector:
   pars <- output$estimates
-  if(p==0){
-    lp <- 0 + offset
-  }else{
-    lp <- as.numeric(X%*%pars[1:p]) + offset
-  }
-
-  time <- time*exp(-lp)
-  output$residuals <- cumhaz(time, pars, baseline, p, m, rho, tau)
+  output$residuals <- cumhaz(time = time, pars = pars, baseline = baseline, p = p, m = m, rho = rho, tau = tau)
   output$event <- event
 
   class(output) <- c("aftreg", "survstan")

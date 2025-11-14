@@ -117,49 +117,17 @@ real ggprentice_lccdf(real x, real mu, real sigma, real varphi){
 // *****************************************************************
 // Bernstein Polynomials:
 
-real beta_pdf(real x, real a, real b){
-  real pdf = 0;
-  if(x == 0 && a == 1 || x == 1 && b == 1){
-    pdf = exp(-lbeta(a, b));
-  }else{
-    pdf = exp(beta_lpdf(x| a, b));
+  real beta_pdf(real x, real a, real b){
+    real pdf = 0;
+    if(x == 0){
+      pdf = exp(beta_lpdf(x + machine_precision()| a, b));
+    }else if(x == 1){
+      pdf = exp(beta_lpdf(x - machine_precision()| a, b));
+    }else{
+      pdf = exp(beta_lpdf(x| a, b));
+    }
+    return pdf;
   }
-  return pdf;
-}
-
-// For compatibility with R dbeta function:
-// real beta_pdf(real x, real a, real b){
-//   real pdf = 0;
-//   if(x == 0 && a == 1 || x == 1 && b == 1){
-//     pdf = exp(-lbeta(a, b));
-//   }else{
-//     pdf = exp(beta_lpdf(x| a, b));
-//   }
-//   return pdf;
-// }
-
-// real bernstein_lpdf(real y, vector xi){
-//   int m = num_elements(xi);
-//   real lpdf;
-//   real ht = 0;
-//   real Ht = 0;
-//   for(j in 1:m){
-//     ht += beta_pdf(y, j, m - j + 1)*xi[j];
-//     Ht += beta_cdf(y| j, m - j + 1)*xi[j];
-//   }
-//   lpdf = log(ht) - Ht;
-//   return(lpdf);
-// }
-//
-//
-// real bernstein_lccdf(real y, vector xi){
-//   int m = num_elements(xi);
-//   real Ht = 0;
-//   for(j in 1:m){
-//     Ht += beta_cdf(y| j, m - j + 1)*xi[j];
-//   }
-//   return(-Ht);
-// }
 
 real bernstein_lpdf(real y, vector xi){
   int m = num_elements(xi);
@@ -168,7 +136,7 @@ real bernstein_lpdf(real y, vector xi){
   row_vector[m] G;
   for(j in 1:m){
     g[j] = beta_pdf(y, j, m - j + 1);
-    G[j] = exp( beta_lcdf(y| j, (m - j + 1)) );
+    G[j] = beta_cdf(y| j, m - j + 1);
   }
   lpdf = log(g*xi) - G*xi;
   return(lpdf);
@@ -178,7 +146,7 @@ real bernstein_lccdf(real y, vector xi){
   int m = num_elements(xi);
   row_vector[m] G;
   for(j in 1:m){
-    G[j] = exp( beta_lcdf(y| j, (m - j + 1)) );
+    G[j] = beta_cdf(y| j, m - j + 1);
   }
   return(-G*xi);
 }

@@ -38,8 +38,12 @@ reparametrization <- function(object, survreg, baseline, labels, tau, p, m, ...)
   H <- object$hessian
   mH <- as.matrix(Matrix::nearPD(-H)$mat)
   V <- MASS::ginv(mH)
-  #V <- MASS::ginv(-object$hessian)
-  #V <- as.matrix(Matrix::nearPD(V)$mat)
+  #V <- chol2inv(chol(mH))
+
+
+  # svd_result <- svd(mH)
+  # D_inv <- diag(1/svd_result$d)
+  # V <- svd_result$v %*% D_inv %*% t(svd_result$u)
 
   npar <- length(estimates)
   v <- diag(npar)

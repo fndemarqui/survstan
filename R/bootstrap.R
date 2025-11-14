@@ -57,7 +57,7 @@ bootstrap <- function(object, nboot, cores, ...){
 
   object$formula <- formula
 
-  if(cores>1){
+  if(cores > 1){
     pars <- foreach::foreach(
       b = 1:nboot, .combine = rbind,
       .options.future = list(seed = TRUE, packages = c("survstan"))
@@ -66,15 +66,17 @@ bootstrap <- function(object, nboot, cores, ...){
       samp2 <- sample(index2, size=n2, replace=TRUE)
       samp <- c(samp1, samp2)
       mydata <- dplyr::slice(data, samp)
+      #suppressWarnings({invisible(fit <- try(stats::update(object, data = mydata), TRUE))})
+
       if(baseline == "pieceiwse"){
-        suppressWarnings({invisible(fit <- update(object, data = mydata, dist = piecewise(m=m)))})
+        suppressWarnings({invisible(fit <- try(stats::update(object, data = mydata, dist = piecewise(m=m)), TRUE))})
       }else if(baseline == "bernstein"){
-        suppressWarnings({invisible(fit <- update(object, data = mydata, dist = bernstein(m=m)))})
+        suppressWarnings({invisible(fit <- try(stats::update(object, data = mydata, dist = bernstein(m=m)), TRUE))})
       }else{
-        suppressWarnings({invisible(fit <- update(object, data = mydata))})
+        suppressWarnings({invisible(fit <- try(stats::update(object, data = mydata), TRUE))})
       }
 
-      if(!is(object, "try-error")){
+      if(!is(fit, "try-error")){
         survstan::estimates(fit)
       }
     }
@@ -86,8 +88,17 @@ bootstrap <- function(object, nboot, cores, ...){
       samp2 <- sample(index2, size=n2, replace=TRUE)
       samp <- c(samp1, samp2)
       mydata <- dplyr::slice(data, samp)
-      suppressWarnings({invisible(fit <- update(object, data = mydata))})
-      if(!is(object, "try-error")){
+      #suppressWarnings({invisible(fit <- try(stats::update(object, data = mydata), TRUE))})
+
+      if(baseline == "pieceiwse"){
+        suppressWarnings({invisible(fit <- try(stats::update(object, data = mydata, dist = piecewise(m=m)), TRUE))})
+      }else if(baseline == "bernstein"){
+        suppressWarnings({invisible(fit <- try(stats::update(object, data = mydata, dist = bernstein(m=m)), TRUE))})
+      }else{
+        suppressWarnings({invisible(fit <- try(stats::update(object, data = mydata), TRUE))})
+      }
+
+      if(!is(fit, "try-error")){
         survstan::estimates(fit)
       }
     }

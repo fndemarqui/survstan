@@ -10,6 +10,7 @@ generics::tidy
 #' @param x a fitted model object.
 #' @param conf.int Logical indicating whether or not to include a confidence interval in the tidied output. Defaults to FALSE.
 #' @param conf.level the confidence level required.
+#' @param exponentiate Logical indicating whether or not to exponentiate the the coefficient estimates. Defaults to FALSE.
 #' @details Convert a fitted model into a tibble.
 #' @param ... further arguments passed to or from other methods.
 #' @return a tibble with a summary of the fit.
@@ -20,7 +21,7 @@ generics::tidy
 #' tidy(fit)
 #' }
 #'
-tidy.survstan <- function(x, conf.int = FALSE, conf.level = 0.95, ...) {
+tidy.survstan <- function(x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, ...) {
 
   result <- summary(x)$coefficients %>%
     tibble::as_tibble(rownames = "term")
@@ -31,6 +32,12 @@ tidy.survstan <- function(x, conf.int = FALSE, conf.level = 0.95, ...) {
     ci <- ci %>%
       tibble::as_tibble(rownames = "term")
     result <- dplyr::left_join(result, ci, by = "term")
+  }
+  if(exponentiate){
+    result <- result %>%
+      dplyr::mutate(
+        dplyr::across(-c("term", "std.error", "statistic", "p.value"), exp)
+      )
   }
   return(result)
 }

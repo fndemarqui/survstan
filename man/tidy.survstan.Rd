@@ -4,7 +4,7 @@
 \alias{tidy.survstan}
 \title{Tidy a survstan object}
 \usage{
-\method{tidy}{survstan}(x, conf.int = FALSE, conf.level = 0.95, ...)
+\method{tidy}{survstan}(x, conf.int = FALSE, conf.level = 0.95, exponentiate = FALSE, ...)
 }
 \arguments{
 \item{x}{a fitted model object.}
@@ -12,6 +12,8 @@
 \item{conf.int}{Logical indicating whether or not to include a confidence interval in the tidied output. Defaults to FALSE.}
 
 \item{conf.level}{the confidence level required.}
+
+\item{exponentiate}{Logical indicating whether or not to exponentiate the the coefficient estimates. Defaults to FALSE.}
 
 \item{...}{further arguments passed to or from other methods.}
 }

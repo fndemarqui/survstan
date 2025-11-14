@@ -119,6 +119,7 @@ cross_time.survstan <- function(object, newdata1, newdata2,
   prob <- c(alpha/2, 1-alpha/2)
 
   t <- c()
+  se <- c()
 
   # for(i in 1:nrow(newdata1)){
   #   t[i] <- crossing_time(X1=X1[i,], X2=X2[i,], offset1=offset1, offset2=offset2, tau0=tau0, tau=tau, pars=pars, baseline=baseline, survreg=survreg, p=p, m=m, rho=rho)
@@ -130,12 +131,13 @@ cross_time.survstan <- function(object, newdata1, newdata2,
   ci <- matrix(nrow=nrow(newdata1), ncol=2)
   for(i in 1:nrow(newdata1)){
     aux <- apply(pars, 1, FUN = crossing_time, X1=X1[i,], X2=X2[i,], offset1=offset1, offset2=offset2, tau0=tau0, tau=tau, baseline=baseline, survreg=survreg, p=p, m=m, rho=rho)
-    t[i] <- mean(aux)
-    ci[i,] <- stats::quantile(aux, probs=prob, na.rm=TRUE)
+    t[i] <- mean(aux, na.rm = TRUE)
+    se[i] <- sd(aux, na.rm = TRUE)
+    ci[i,] <- stats::quantile(aux, probs=prob, na.rm = TRUE)
   }
 
-  t <- data.frame(cbind(t, ci))
-  names(t) <- c("Est.", paste(100*prob, "%", sep=""))
+  t <- data.frame(cbind(t, se, ci))
+  names(t) <- c("Estimate",  "Std. Error", paste(100*prob, "%", sep=""))
   return(t)
 }
 

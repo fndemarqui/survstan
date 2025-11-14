@@ -11,7 +11,6 @@ vector loglik_aft(vector lpdf, vector lsurv, vector event, vector lp, real tau){
 vector loglik_ah(vector lpdf, vector lsurv, vector event, vector lp, real tau){
   int n = num_elements(lpdf);
   vector[n] loglik;
-  // loglik = event  .* (lpdf - lsurv - log(tau)) +  exp(-lp) .* lsurv ;
   loglik = event  .* (lpdf - lsurv - log(tau)) +  exp(lp) .* lsurv ;
   return loglik;
 }

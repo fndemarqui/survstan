@@ -80,8 +80,8 @@ transformed data{
     is_xi = 1;
     for(i in 1:n){
       for(j in 1:m){
-        g[i, j] = beta_pdf(time[i]/(max(time)*(1 + machine_precision())),  j, (m - j + 1));
-        G[i, j] = exp( beta_lcdf(time[i]/(max(time)*(1 + machine_precision()))| j, (m - j + 1)) );
+        g[i, j] = beta_pdf(time[i],  j, m - j + 1);
+        G[i, j] = beta_cdf(time[i]| j, m - j + 1);
       }
     }
   }else if(baseline == 12){
@@ -149,12 +149,17 @@ model{
   if(survreg == 2 || survreg == 3 || survreg == 5){
     y = time;
   }else{
-    y = time ./ exp(lp);
+    if(baseline == 11){
+      y = exp(log(time) + log(tau) - lp);
+    }else{
+     y = exp(log(time) - lp);
+    }
+
   }
 
 
   if(survreg146*baseline == 11){
-    Tau = max(y)*(1+machine_precision());
+    Tau = max(y);
   }else{
     Tau = tau;
   }
@@ -214,8 +219,10 @@ model{
     if(survreg146 == 1){
       for(i in 1:n){
         for(j in 1:m){
-          g2[i, j] = beta_pdf(y[i]/Tau,  j, (m - j + 1));
-          G2[i, j] = exp( beta_lcdf(y[i]/Tau | j, (m - j + 1)) );
+          // g2[i, j] = beta_pdf(exp(log(y[i]) - log(Tau)),  j, m - j + 1);
+          // G2[i, j] = beta_cdf(exp(log(y[i]) - log(Tau)) | j, m - j + 1) ;
+          g2[i, j] = beta_pdf(log_sum_exp(y[i], - Tau),  j, m - j + 1);
+          G2[i, j] = beta_cdf(log_sum_exp(y[i], - Tau) | j, m - j + 1) ;
         }
       }
       lpdf = bernstein_vlpdf(g2, G2, xi);
@@ -231,7 +238,7 @@ model{
 
 
   if(p == 0){
-    loglik = event .* lpdf + (1-event) .* lsurv;
+    loglik = event .* (lpdf - log(Tau)) + (1-event) .* lsurv;
   }else{
     if(survreg ==  1){ //AFT model
       loglik = loglik_aft(lpdf, lsurv, event, lp, Tau);
@@ -246,10 +253,6 @@ model{
     }else{ // EH model
       loglik = loglik_eh(event, lpdf, lsurv, lp2, K, Tau);
     }
-  }
-
-  if(survreg146*baseline == 11){
-    loglik = loglik - event .* log(tau);
   }
 
   target += sum(loglik);
