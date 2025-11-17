@@ -36,15 +36,3 @@ tcross
 
 
 
-
-fit <- ehreg(
-  Surv(time, status) ~ arm,
-  dist = bernstein(m=3),
-  data = ipass,
-)
-
-
-surv <- survfit(fit, newdata)
-
-tcross <- cross_time(fit, newdata1, newdata2, nboot = 10)
-tcross
