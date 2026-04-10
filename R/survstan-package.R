@@ -15,6 +15,7 @@
 #' @importFrom ggplot2 aes ggplot geom_abline geom_point geom_jitter geom_smooth position_jitter labs xlab xlim ylim
 #' @importFrom Rdpack reprompt
 #' @importFrom rlang .data
+#' @importFrom car Anova
 #' @importFrom rstan sampling
 #'
 #' @references
